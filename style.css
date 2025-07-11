@@ -245,3 +245,23 @@ input:focus, select:focus {
 .volumen-individual::-moz-range-thumb { width: 16px; height: 16px; background: var(--color-acento-secundario); cursor: pointer; border-radius: 50%; }
 .loop-btn { width: 30%; background-color: var(--color-fondo-principal); border: 1px solid var(--color-borde); color: var(--color-texto-secundario); border-radius: 5px; cursor: pointer; }
 .loop-btn.activo { background-color: var(--color-acento-secundario); border-color: var(--color-acento-secundario); color: white; }
+/* --- Pie de Página --- */
+footer {
+    width: 100%;
+    text-align: center;
+    padding: 40px 20px 20px 20px; /* Espacio arriba y abajo */
+    margin-top: 30px;
+    border-top: 1px solid var(--color-borde);
+    color: var(--color-texto-secundario);
+    font-size: 0.9em;
+}
+
+footer a {
+    color: var(--color-acento-primario);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
