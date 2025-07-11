@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DnD Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>DnD Dashboard</h1>
+        <div class="controles-globales">
+            <button id="stop-global" class="control-btn">STOP ⏹️</button>
+            <div class="control-volumen">
+                <label for="volumen-global">Música:</label>
+                <input type="range" id="volumen-global" min="0" max="1" step="0.05" value="0.5">
+            </div>
+        </div>
+        <input type="text" id="buscador" placeholder="Buscar en todos los sonidos...">
+    </header>
+
+    <div class="layout-principal">
+        <main id="panel-principal" class="columna-sonidos">
+            </main>
+
+        <aside class="columna-herramientas">
+            <div class="contenedor-pestañas">
+                <div class="pestañas-nav">
+                    <button class="pestaña-btn" data-pestaña="pestaña-combate">Combate ⚔️</button>
+                    <button class="pestaña-btn" data-pestaña="pestaña-campaña">Campaña 📅</button>
+                    <button class="pestaña-btn activo" data-pestaña="pestaña-visor">Visor 🗺️</button>
+                    <button class="pestaña-btn" data-pestaña="pestaña-dados">Dados 🎲</button>
+                    <button class="pestaña-btn" data-pestaña="pestaña-generadores">Generadores 📜</button>
+                </div>
+
+                <div id="pestaña-combate" class="contenido-pestaña">
+                    <h2>Tracker de Iniciativa</h2>
+                    <form id="form-iniciativa" class="modulo-herramienta">
+                        <div class="fila-form">
+                            <input type="text" id="nombre-combatiente" placeholder="Nombre" required>
+                            <input type="number" id="iniciativa-combatiente" placeholder="Iniciativa" required>
+                        </div>
+                        <div class="fila-form">
+                            <label><input type="checkbox" id="es-jugador"> Es Jugador</label>
+                            <button type="submit">Añadir</button>
+                        </div>
+                    </form>
+                    <div class="controles-combate modulo-herramienta">
+                        <button id="comenzar-combate">Comenzar Combate</button>
+                        <button id="siguiente-turno">Siguiente Turno</button>
+                        <button id="finalizar-combate">Finalizar Combate</button>
+                    </div>
+                    <ul id="lista-iniciativa"></ul>
+                </div>
+                
+                <div id="pestaña-campaña" class="contenido-pestaña">
+                    <div class="modulo-herramienta">
+                        <h2>Reloj de Campaña</h2>
+                        <div id="display-fecha">Día 1</div>
+                        <div id="display-hora"><span>☀️</span> Mañana</div>
+                        <div class="controles-reloj">
+                            <button id="btn-add-1h">+1 Hora</button>
+                            <button id="btn-add-8h">+8 Horas</button>
+                            <button id="btn-add-1d">+1 Día</button>
+                        </div>
+                        <button id="btn-reset-reloj" class="btn-reset">Resetear Reloj</button>
+                    </div>
+                    <div class="modulo-herramienta">
+                        <h2>Cronómetro</h2>
+                        <div id="display-cronometro">00:00</div>
+                        <div class="controles-cronometro">
+                            <button id="btn-start-stop-cronometro">Empezar</button>
+                            <button id="btn-reset-cronometro">Resetear</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="pestaña-visor" class="contenido-pestaña activo">
+                    <h2>Visor de Imágenes y Mapas</h2>
+                    <div class="modulo-herramienta">
+                        <label for="input-imagen" class="btn-subir-imagen">Subir Imagen</label>
+                        <input type="file" id="input-imagen" accept="image/*" multiple>
+                    </div>
+                    <div id="galeria-imagenes">
+                        </div>
+                </div>
+
+                <div id="pestaña-dados" class="contenido-pestaña">
+                    <h2>Lanzador de Dados</h2>
+                    <div class="resultado-dado" id="resultado-dado">d20</div>
+                    <div class="botones-dados">
+                        <button class="dado-btn" data-dado="4">d4</button>
+                        <button class="dado-btn" data-dado="6">d6</button>
+                        <button class="dado-btn" data-dado="8">d8</button>
+                        <button class="dado-btn" data-dado="10">d10</button>
+                        <button class="dado-btn" data-dado="12">d12</button>
+                        <button class="dado-btn" data-dado="20">d20</button>
+                    </div>
+                </div>
+
+                <div id="pestaña-generadores" class="contenido-pestaña">
+                    <div class="modulo-herramienta">
+                        <h3>Generador de Nombres de PNJ</h3>
+                        <div class="control-generador">
+                            <select id="selector-raza">
+                                <option value="humano">Humano</option>
+                                <option value="elfo">Elfo</option>
+                                <option value="enano">Enano</option>
+                            </select>
+                            <button id="btn-generar-nombre">Generar</button>
+                        </div>
+                        <p class="resultado-generador" id="resultado-nombre">...</p>
+                    </div>
+                    <div class="modulo-herramienta">
+                        <h3>Generador de Pifias</h3>
+                        <button id="btn-generar-pifia">¡Pifia!</button>
+                        <p class="resultado-generador" id="resultado-pifia">...</p>
+                    </div>
+                     <div class="modulo-herramienta">
+                        <h3>Generador de Tesoros y Botín</h3>
+                        <div class="control-generador">
+                            <select id="selector-tesoro">
+                                <option value="insignificante">Insignificante</option>
+                                <option value="menor">Menor</option>
+                                <option value="moderado">Moderado</option>
+                                <option value="mayor">Mayor</option>
+                                <option value="legendario">Legendario</option>
+                            </select>
+                            <button id="btn-generar-tesoro">Generar</button>
+                        </div>
+                        <div class="resultado-generador" id="resultado-tesoro"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div id="reproductor-youtube"></div>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="script.js"></script>
+</body>
+</html>
