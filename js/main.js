@@ -21,6 +21,7 @@ window.onload = () => {
   renderStrahd();
   loadTarotFromStorage();
   renderTarot();
+  renderMapa();
   setInterval(() => { if (unsaved) saveSession(); }, 30000);
   if (combatSeconds > 0) {
     const m = String(Math.floor(combatSeconds / 60)).padStart(2, '0');
