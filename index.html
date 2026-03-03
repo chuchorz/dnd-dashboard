@@ -21,6 +21,8 @@
   <div class="main-tab"       onclick="switchMain('notes')">📜 Notas</div>
   <div class="main-tab"       onclick="switchMain('npcs')">👤 NPCs</div>
   <div class="main-tab"       onclick="switchMain('encounters')">🎲 Encuentros</div>
+  <div class="main-tab"       onclick="switchMain('strahd')">⚰️ Strahd</div>
+  <div class="main-tab"       onclick="switchMain('tarot')">🔮 Tarot</div>
 </div>
 
 <!-- ══ SOUNDBOARD ══ -->
@@ -287,12 +289,250 @@
 </div>
 </div>
 
+<!-- ══ STRAHD ══ -->
+<div id="panel-strahd" class="main-panel">
+<div class="container" style="margin-top:12px;">
+
+  <div class="card" style="margin-bottom:12px;">
+    <div class="card-title" style="justify-content:space-between;">
+      <span style="display:flex;align-items:center;gap:10px;">
+        <span style="font-family:'UnifrakturMaguntia',cursive;font-size:1.6rem;color:var(--blood-bright);">Strahd von Zarovich</span>
+      </span>
+      <span style="font-family:'Cinzel',serif;font-size:.62rem;color:var(--text-dim);letter-spacing:.15em;">El Vampiro • El Diablo • El Señor</span>
+    </div>
+    <p style="font-size:.84rem;color:var(--text-dim);font-style:italic;line-height:1.65;">
+      Monstruo CR 15 · No-muerto (vampiro) · Caótico Maligno · Tamaño mediano · Visión en oscuridad 120 ft
+    </p>
+  </div>
+
+  <div id="strahd-panel-inner">
+    <div class="no-data">Cargando panel de Strahd...</div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══ TAROT ══ -->
+<div id="panel-tarot" class="main-panel">
+<div class="container" style="margin-top:12px;">
+
+  <div class="card" style="margin-bottom:12px;">
+    <div class="card-title" style="justify-content:space-between;">
+      <span>🔮 La Lectura de Madam Eva</span>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-blood btn-sm" onclick="drawTarot()">🃏 Tirar las Cartas</button>
+        <button class="btn btn-ghost btn-sm" onclick="revealAll()">👁 Revelar Todas</button>
+      </div>
+    </div>
+    <p class="tarot-intro">
+      Las cinco cartas revelan el destino de los aventureros en Barovia. Haz clic en cada carta para revelarla cuando sea el momento dramático adecuado.
+    </p>
+    <div class="tarot-grid" id="tarot-cards">
+      <div class="no-data" style="grid-column:1/-1;padding:40px;">
+        Haz clic en "Tirar las Cartas" para que Madam Eva haga la lectura...
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📖 Las 5 Posiciones</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;">
+      <div class="defense-box"><div class="defense-title">💰 El Tesoro</div>El objeto o arma capaz de destruir o debilitar a Strahd.</div>
+      <div class="defense-box"><div class="defense-title">🛡️ El Tótem</div>La persona, símbolo o lugar que infunde esperanza y fortaleza.</div>
+      <div class="defense-box"><div class="defense-title">📖 El Tomo</div>El conocimiento mágico o el arma arcana necesaria.</div>
+      <div class="defense-box"><div class="defense-title">⛪ La Reliquia</div>El símbolo sagrado que puede proteger contra la oscuridad.</div>
+      <div class="defense-box"><div class="defense-title">🏰 El Señor</div>La carta que describe a Strahd en este momento de la campaña.</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══ STRAHD ══ -->
+<div id="panel-strahd" class="main-panel">
+<div class="container" style="margin-top:12px;display:flex;flex-direction:column;gap:12px;">
+
+  <div class="grid-2" style="gap:12px;align-items:start;">
+
+    <!-- Izquierda: HP, Fase, Acciones -->
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="card">
+        <div class="card-title" style="justify-content:space-between;">
+          <span>🧛 Strahd von Zarovich</span>
+          <span style="font-size:.65rem;color:var(--text-dim);">CA 16 · Velocidad 9m · Vuelo 18m</span>
+        </div>
+        <div class="strahd-hp-wrap">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
+            <div class="strahd-phase-badge" id="strahd-phase-badge">🧛 Fase 1 — El Señor de Ravenloft</div>
+            <div style="font-family:'UnifrakturMaguntia',cursive;font-size:1.8rem;color:var(--gold);">
+              <span id="strahd-hp-val">144</span><span style="font-size:.9rem;color:var(--text-dim);">/144</span>
+            </div>
+          </div>
+          <div class="strahd-hp-bar-bg">
+            <div class="strahd-hp-bar" id="strahd-hp-bar" style="width:100%;background:#5a9a5a;"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;">
+            <span class="strahd-phase-range" id="strahd-phase-range">144–97 PV</span>
+          </div>
+          <div class="strahd-phase-desc mt-8" id="strahd-phase-desc"></div>
+        </div>
+        <!-- Controles HP -->
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;">
+          <button class="btn btn-blood btn-sm" onclick="adjStrahdHp(-5)">−5</button>
+          <button class="btn btn-blood btn-sm" onclick="adjStrahdHp(-10)">−10</button>
+          <button class="btn btn-blood btn-sm" onclick="adjStrahdHp(-20)">−20</button>
+          <button class="btn btn-ghost btn-sm" onclick="adjStrahdHp(20)">+20 Regen</button>
+          <button class="btn btn-ghost btn-sm" onclick="adjStrahdHp(144)">Restaurar</button>
+          <button class="btn btn-ghost btn-sm" onclick="resetStrahd()">↺ Reset</button>
+        </div>
+        <div style="display:flex;gap:6px;margin-top:8px;">
+          <input type="number" id="strahd-hp-input" placeholder="PV exactos..." style="width:160px;">
+          <button class="btn btn-gold btn-sm" onclick="setStrahdHpManual()">Aplicar</button>
+        </div>
+        <div id="strahd-hp-log" style="margin-top:10px;max-height:120px;overflow-y:auto;"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">⚔️ Acciones</div>
+        <table style="width:100%;border-collapse:collapse;">
+          <thead><tr>
+            <th style="text-align:left;font-family:'Cinzel',serif;font-size:.58rem;color:var(--text-dim);padding:4px 8px;border-bottom:1px solid var(--border);">Acción</th>
+            <th style="text-align:left;font-family:'Cinzel',serif;font-size:.58rem;color:var(--text-dim);padding:4px 8px;border-bottom:1px solid var(--border);">Bono</th>
+            <th style="text-align:left;font-family:'Cinzel',serif;font-size:.58rem;color:var(--text-dim);padding:4px 8px;border-bottom:1px solid var(--border);">Daño / Efecto</th>
+          </tr></thead>
+          <tbody id="strahd-actions" style="font-size:.8rem;"></tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title">⭐ Acciones Legendarias <span style="font-size:.65rem;color:var(--text-dim);font-family:'IM Fell English',serif;font-weight:normal;">(3/ronda, al final del turno de otro)</span></div>
+        <div id="strahd-legendary"></div>
+      </div>
+    </div>
+
+    <!-- Derecha: Humor, Ubicación, Resistencias -->
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="card">
+        <div class="card-title">🎭 Estado Actual</div>
+        <div style="margin-bottom:10px;">
+          <label style="font-family:'Cinzel',serif;font-size:.6rem;color:var(--text-dim);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:6px;">Humor</label>
+          <select id="strahd-mood-select" onchange="updateMoodDisplay()" style="margin-bottom:10px;">
+            <option value="curious">🔍 Curioso</option>
+            <option value="obsessed">🌹 Obsesionado</option>
+            <option value="wrathful">🔥 Colérico</option>
+            <option value="playful">😈 Juguetón</option>
+            <option value="melancholy">🌑 Melancólico</option>
+            <option value="absent">🌫️ Ausente</option>
+          </select>
+          <div class="strahd-mood-box">
+            <span class="strahd-mood-icon" id="strahd-mood-icon">🔍</span>
+            <div>
+              <span class="mood-label" id="strahd-mood-label">Curioso</span>
+              <span class="mood-desc" id="strahd-mood-desc"></span>
+            </div>
+          </div>
+        </div>
+        <hr class="divider">
+        <label style="font-family:'Cinzel',serif;font-size:.6rem;color:var(--text-dim);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:8px;">Ubicación</label>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;">
+          <button class="strahd-loc-btn active" data-loc="unknown"   onclick="setStrahdLocation('unknown')">❓ Desconocida</button>
+          <button class="strahd-loc-btn" data-loc="ravenloft"        onclick="setStrahdLocation('ravenloft')">🏰 Ravenloft</button>
+          <button class="strahd-loc-btn" data-loc="crypt"            onclick="setStrahdLocation('crypt')">⚰️ Cripta</button>
+          <button class="strahd-loc-btn" data-loc="road"             onclick="setStrahdLocation('road')">🌫️ Caminos</button>
+          <button class="strahd-loc-btn" data-loc="village"          onclick="setStrahdLocation('village')">🏚️ Aldea</button>
+          <button class="strahd-loc-btn" data-loc="tser"             onclick="setStrahdLocation('tser')">🔮 Tser Pool</button>
+          <button class="strahd-loc-btn" data-loc="watching"         onclick="setStrahdLocation('watching')">👁️ Observando</button>
+          <button class="strahd-loc-btn" data-loc="absent"           onclick="setStrahdLocation('absent')">🌑 Ausente</button>
+        </div>
+        <div id="strahd-loc-desc" style="font-size:.8rem;color:var(--text-mid);font-style:italic;padding:8px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;">
+          ❓ Desconocida — Los PJs no saben dónde está.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🛡️ Resistencias e Inmunidades</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:.8rem;">
+          <div><span style="font-family:'Cinzel',serif;font-size:.62rem;color:var(--gold);display:block;margin-bottom:3px;">RESISTENCIAS</span>
+            <span style="color:var(--text);">Daño no mágico (salvo plata o armas consagradas), Necrótico, Frío</span></div>
+          <div><span style="font-family:'Cinzel',serif;font-size:.62rem;color:var(--gold);display:block;margin-bottom:3px;">INMUNIDADES</span>
+            <span style="color:var(--text);">Veneno, Enfermedad · Condiciones: Asustado, Envenenado</span></div>
+          <div><span style="font-family:'Cinzel',serif;font-size:.62rem;color:#f0a080;display:block;margin-bottom:3px;">DEBILIDADES</span>
+            <span style="color:var(--text);">☀️ Luz solar: desventaja en ataques, no regenera · ⚔️ Estaca en el corazón: incapacitado · 🧄 Ajo: repulsión · 🌊 Agua corriente: no puede cruzar voluntariamente</span></div>
+          <div><span style="font-family:'Cinzel',serif;font-size:.62rem;color:var(--gold);display:block;margin-bottom:3px;">REGENERACIÓN</span>
+            <span style="color:var(--text);">Recupera 20 PV al inicio de su turno si tiene ≥1 PV y no está en luz solar ni agua bendita</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📖 Notas de Combate</div>
+        <textarea style="min-height:100px;resize:vertical;font-size:.83rem;" placeholder="Anota lo que hacen los PJs, tácticas de Strahd, efectos activos..."></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══ TAROT ══ -->
+<div id="panel-tarot" class="main-panel">
+<div class="container" style="margin-top:12px;display:flex;flex-direction:column;gap:12px;">
+
+  <div class="card">
+    <div class="card-title" style="justify-content:space-between;">
+      <span>🔮 Tirada de Madam Eva</span>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-blood" onclick="drawAllTarot()">🎴 Tirada Completa</button>
+        <button class="btn btn-ghost btn-sm" onclick="resetTarot()">↺ Limpiar</button>
+      </div>
+    </div>
+    <p style="font-size:.82rem;color:var(--text-dim);font-style:italic;margin-bottom:14px;line-height:1.65;">
+      Las cinco cartas de la profecía. Haz clic en una carta individual para redibujarla, o usa "Tirada Completa" para tirar todas a la vez. La tirada se guarda automáticamente.
+    </p>
+    <div class="tarot-grid" id="tarot-cards">
+      <!-- Renderizado por JS -->
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📜 Guía de Interpretación</div>
+    <div class="grid-2" style="gap:10px;font-size:.8rem;">
+      <div style="padding:10px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;">
+        <strong style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold);display:block;margin-bottom:6px;">💎 EL TESORO</strong>
+        El Símbolo Sagrado de Ravenloft es el objeto más poderoso contra Strahd. Sin él, derrotarlo es casi imposible. Lanza esta carta al inicio de la campaña y no la cambies.
+      </div>
+      <div style="padding:10px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;">
+        <strong style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold);display:block;margin-bottom:6px;">🤝 EL ALIADO</strong>
+        Un personaje que puede convertirse en un aliado poderoso. Puede requerir que los PJs completen una misión o ganen su confianza primero.
+      </div>
+      <div style="padding:10px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;">
+        <strong style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold);display:block;margin-bottom:6px;">⚰️ LA TUMBA</strong>
+        El lugar donde descansa el poder de Strahd — posiblemente el Tomo de Strahd u otro objeto clave. Explorar este lugar puede revelar sus secretos o debilidades.
+      </div>
+      <div style="padding:10px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;">
+        <strong style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold);display:block;margin-bottom:6px;">🏰 LA FORTALEZA</strong>
+        El lugar exacto en el Castillo Ravenloft donde encontrarán a Strahd para el enfrentamiento final. Prepara esa zona con detalle.
+      </div>
+      <div style="padding:10px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;">
+        <strong style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold);display:block;margin-bottom:6px;">🌟 EL LECTOR</strong>
+        El héroe de la profecía entre los PJs. No lo reveles directamente — deja que los jugadores lo descubran. Puede ser el que menos se esperan.
+      </div>
+      <div style="padding:10px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;color:var(--text-dim);font-style:italic;">
+        <strong style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--text-dim);display:block;margin-bottom:6px;">💡 CONSEJO</strong>
+        Realiza la tirada antes de la sesión 1 o cuando los PJs visiten a Madam Eva. Las cartas determinan la estructura de toda la campaña. Guárdalas.
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
 <!-- ══ SCRIPTS ══ -->
 <script src="js/soundboard.js"></script>
 <script src="js/initiative.js"></script>
 <script src="js/notes.js"></script>
 <script src="js/npcs.js"></script>
 <script src="js/encounters.js"></script>
+<script src="js/strahd.js"></script>
+
 <script src="js/main.js"></script>
 
 </body>
