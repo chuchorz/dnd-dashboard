@@ -502,7 +502,7 @@ const SB = {
     {id:'laugh',    icon:'😈', name:'Risa malévola'},
   ],
   epicas: [
-    {id:'ep1',icon:'🎼',name:'Secunda',         desc:'[ Añade tu URL ]', url:'<iframe width="560" height="315" src="https://www.youtube.com/embed/PzLUI1M513M?si=sGU0ZFTk6WSbA9pd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'},
+    {id:'ep1',icon:'🎼',name:'Secunda',         desc:'[ Añade tu URL ]',              url:'<iframe width="560" height="315" src="https://www.youtube.com/embed/PzLUI1M513M?si=sGU0ZFTk6WSbA9pd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'},
     {id:'ep2',icon:'🎼',name:'Épica 2',         desc:'[ Añade tu URL ]',              url:''},
     {id:'ep3',icon:'🎼',name:'Épica 3',         desc:'[ Añade tu URL ]',              url:''},
     {id:'ep4',icon:'🎶',name:'Sugerencia: Dark Souls OST',  desc:'Ambient épico oscuro', url:'https://www.youtube.com/embed/videoseries?list=PLAy7CPlUkfnfKVUEZiaMFjZgEYAV5XMAO&autoplay=1'},
@@ -573,12 +573,18 @@ function playItem(id) {
   const item = SB[currentCat].find(i=>i.id===id);
   if (!item) return;
   playingId = id;
-  // Update mini bar
   document.getElementById('mp-icon').textContent = item.icon;
   document.getElementById('mp-name').textContent = item.name;
   document.getElementById('mp-sub').textContent  = item.desc || '';
   document.getElementById('mp-info').classList.remove('mp-idle');
-  const url = item.url || '';
+
+  let url = item.url || '';
+  // Si pegaron un iframe entero, extraer el src
+  const srcMatch = url.match(/src="([^"]+)"/);
+  if (srcMatch) url = srcMatch[1];
+  // Añadir autoplay automáticamente
+  if (url && !url.includes('autoplay')) url += (url.includes('?') ? '&' : '?') + 'autoplay=1';
+
   const frame = document.getElementById('yt-frame');
   if (url) { frame.src = url; }
   else { frame.src=''; document.getElementById('mp-sub').textContent = '⚠ Asigna una URL en el código'; }
@@ -807,7 +813,3 @@ window.onload=()=>{
 </script>
 </body>
 </html>
-
-
-
-
