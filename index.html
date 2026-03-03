@@ -4,40 +4,39 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Curse of Strahd — DM Screen</title>
-<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <header>
-  <div class="candles"><span class="candle">🕯</span><span class="candle">🕯</span></div>
-  <h1>Maldición de Strahd</h1>
-  <p>⚔ &nbsp; Pantalla del Dungeon Master &nbsp; ⚔</p>
+  <div class="candles"><span class="candle">&#x1F56F;</span><span class="candle">&#x1F56F;</span></div>
+  <h1>Maldici&#xF3;n de Strahd</h1>
+  <p>&#x2694; &nbsp; Pantalla del Dungeon Master &nbsp; &#x2694;</p>
 </header>
 
 <div class="main-tabs">
-  <div class="main-tab active" onclick="switchMain('soundboard')">🎵 Soundboard</div>
-  <div class="main-tab"       onclick="switchMain('initiative')">⚔️ Iniciativa</div>
-  <div class="main-tab"       onclick="switchMain('notes')">📜 Notas</div>
-  <div class="main-tab"       onclick="switchMain('npcs')">👤 NPCs</div>
-  <div class="main-tab"       onclick="switchMain('encounters')">🎲 Encuentros</div>
-  <div class="main-tab"       onclick="switchMain('strahd')">⚰️ Strahd</div>
-  <div class="main-tab"       onclick="switchMain('tarot')">🔮 Tarot</div>
-  <div class="main-tab"       onclick="switchMain('mapa')">🗺️ Mapa</div>
+  <div class="main-tab active" onclick="switchMain('soundboard')">&#x1F3B5; Soundboard</div>
+  <div class="main-tab" onclick="switchMain('initiative')">&#x2694;&#xFE0F; Iniciativa</div>
+  <div class="main-tab" onclick="switchMain('notes')">&#x1F4DC; Notas</div>
+  <div class="main-tab" onclick="switchMain('npcs')">&#x1F464; NPCs</div>
+  <div class="main-tab" onclick="switchMain('encounters')">&#x1F3B2; Encuentros</div>
+  <div class="main-tab" onclick="switchMain('strahd')">&#x26B0;&#xFE0F; Strahd</div>
+  <div class="main-tab" onclick="switchMain('tarot')">&#x1F52E; Tarot</div>
+  <div class="main-tab" onclick="switchMain('mapa')">&#x1F5FA;&#xFE0F; Mapa</div>
 </div>
 
-<!-- ══ SOUNDBOARD ══ -->
+<!-- SOUNDBOARD -->
 <div id="panel-soundboard" class="main-panel active">
-<div class="container">
-<div style="margin-top:12px;">
+<div class="container"><div style="margin-top:12px;">
   <div class="card">
-    <div class="card-title">🎛️ Biblioteca de Sonidos</div>
+    <div class="card-title">Biblioteca de Sonidos</div>
     <div class="sb-cats">
-      <div class="sb-cat active" data-cat="areas"   onclick="switchCat('areas')">🗺 Áreas de Barovia</div>
-      <div class="sb-cat" data-cat="ambiente"        onclick="switchCat('ambiente')">🌿 Ambiente</div>
-      <div class="sb-cat" data-cat="efectos"         onclick="switchCat('efectos')">⚡ Efectos</div>
-      <div class="sb-cat" data-cat="epicas"          onclick="switchCat('epicas')">🎼 Épicas</div>
-      <div class="sb-cat" data-cat="batallas"        onclick="switchCat('batallas')">🔥 Batallas</div>
+      <div class="sb-cat active" data-cat="areas" onclick="switchCat('areas')">Areas de Barovia</div>
+      <div class="sb-cat" data-cat="ambiente" onclick="switchCat('ambiente')">Ambiente</div>
+      <div class="sb-cat" data-cat="efectos" onclick="switchCat('efectos')">Efectos</div>
+      <div class="sb-cat" data-cat="epicas" onclick="switchCat('epicas')">Epicas</div>
+      <div class="sb-cat" data-cat="batallas" onclick="switchCat('batallas')">Batallas</div>
     </div>
     <div id="sb-stream-grid" class="sb-grid"></div>
     <div id="sb-sfx-layout" style="display:none;">
@@ -45,162 +44,149 @@
       <div class="sfx-log" id="sfx-log">Sin efectos recientes...</div>
     </div>
   </div>
-  <div class="cat-info mt-12" id="cat-info-box">
-    <div class="cat-info-title" id="cat-info-title"></div>
-    <p id="cat-info-text"></p>
-  </div>
-</div>
-</div>
+  <div class="cat-info mt-12"><div class="cat-info-title" id="cat-info-title"></div><p id="cat-info-text"></p></div>
+</div></div>
 </div>
 
-<!-- ══ MINI PLAYER BAR (fijo abajo) ══ -->
-<div class="mini-player" id="mini-player">
-  <span class="mp-icon" id="mp-icon">🎵</span>
+<!-- MINI PLAYER -->
+<div class="mini-player">
+  <span class="mp-icon" id="mp-icon">&#x1F3B5;</span>
   <div class="mp-info mp-idle" id="mp-info">
-    <div class="mp-name" id="mp-name">Sin reproducción activa</div>
-    <div class="mp-sub"  id="mp-sub">Selecciona una escena del soundboard</div>
+    <div class="mp-name" id="mp-name">Sin reproducci&#xF3;n activa</div>
+    <div class="mp-sub" id="mp-sub">Selecciona una escena del soundboard</div>
   </div>
   <div class="mp-url-wrap">
     <input type="text" id="custom-url" placeholder="Pega URL de YouTube...">
     <button class="btn btn-gold btn-sm" onclick="loadCustom()">Cargar</button>
   </div>
   <div class="mp-controls">
-    <button class="mp-stop" onclick="stopPlayer()" title="Detener">⏹</button>
+    <button class="mp-stop" onclick="stopPlayer()" title="Detener">&#x23F9;</button>
   </div>
 </div>
 <iframe id="yt-frame" class="yt-hidden" src="" allowfullscreen allow="autoplay;encrypted-media"></iframe>
 
-<!-- ══ INICIATIVA ══ -->
+<!-- INICIATIVA -->
 <div id="panel-initiative" class="main-panel">
 <div class="container" style="margin-top:12px;display:flex;flex-direction:column;gap:12px;">
-
   <div class="card">
     <div class="card-title" style="justify-content:space-between;">
-      <span>⚔️ Orden de Combate</span>
+      <span>Orden de Combate</span>
       <div style="display:flex;gap:6px;align-items:center;">
         <span class="round-label" id="round-label">Ronda 1</span>
         <span id="combat-timer" style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--text-dim);letter-spacing:.1em;">00:00</span>
       </div>
     </div>
     <div class="round-bar">
-      <button class="btn btn-blood btn-sm" onclick="nextTurn()">▶ Siguiente Turno</button>
-      <button class="btn btn-ghost btn-sm" onclick="sortInit()">↕ Ordenar</button>
-      <button class="btn btn-ghost btn-sm" onclick="resetCombat()">↺ Reset</button>
-      <button class="btn btn-ghost btn-sm" onclick="rollAllInit()">🎲 Tirar Init Todo</button>
+      <button class="btn btn-blood btn-sm" onclick="nextTurn()">Siguiente Turno</button>
+      <button class="btn btn-ghost btn-sm" onclick="sortInit()">Ordenar</button>
+      <button class="btn btn-ghost btn-sm" onclick="resetCombat()">Reset</button>
+      <button class="btn btn-ghost btn-sm" onclick="rollAllInit()">Tirar Init Todo</button>
     </div>
-    <div class="init-list" id="init-list"><div class="no-data">Añade combatientes para comenzar...</div></div>
+    <div class="init-list" id="init-list"><div class="no-data">A&ntilde;ade combatientes para comenzar...</div></div>
     <hr class="divider">
     <div style="display:grid;grid-template-columns:1fr 58px 60px 80px auto;gap:6px;align-items:center;">
-      <input type="text"   id="new-name" placeholder="Nombre del combatiente">
+      <input type="text" id="new-name" placeholder="Nombre del combatiente">
       <input type="number" id="new-init" placeholder="Init" min="1" max="30">
-      <input type="number" id="new-hp"   placeholder="PV" min="1">
+      <input type="number" id="new-hp" placeholder="PV" min="1">
       <select id="new-type">
         <option value="enemy">Enemigo</option>
         <option value="ally">Aliado</option>
         <option value="neutral">Neutro</option>
       </select>
-      <button class="btn btn-blood" onclick="addCombatant()">+ Añadir</button>
+      <button class="btn btn-blood" onclick="addCombatant()">+ A&ntilde;adir</button>
     </div>
     <div class="mt-12">
-      <p class="text-dim" style="margin-bottom:7px;">Añadir rápido:</p>
+      <p class="text-dim" style="margin-bottom:7px;">A&ntilde;adir r&aacute;pido:</p>
       <div style="display:flex;flex-wrap:wrap;gap:6px;">
-        <button class="btn btn-ghost btn-sm" onclick="quickAdd('Zombi',8,22)">🧟 Zombi</button>
-        <button class="btn btn-ghost btn-sm" onclick="quickAdd('Esqueleto',13,13)">💀 Esqueleto</button>
-        <button class="btn btn-ghost btn-sm" onclick="quickAdd('Lobo',13,11)">🐺 Lobo</button>
-        <button class="btn btn-ghost btn-sm" onclick="quickAdd('Murciélago Gigante',6,22)">🦇 Murc. Gigante</button>
-        <button class="btn btn-ghost btn-sm" onclick="quickAdd('Guardia Vampiro',12,45)">🧛 G.Vampiro</button>
-        <button class="btn btn-ghost btn-sm" onclick="quickAdd('Espectro',12,22)">👻 Espectro</button>
-        <button class="btn btn-ghost btn-sm" onclick="quickAdd('Hombre Lobo',11,58)">🐺 H.Lobo</button>
-        <button class="btn btn-ghost btn-sm" onclick="quickAdd('Strahd',10,144)">⚰️ Strahd</button>
+        <button class="btn btn-ghost btn-sm" onclick="quickAdd('Zombi',8,22)">Zombi</button>
+        <button class="btn btn-ghost btn-sm" onclick="quickAdd('Esqueleto',13,13)">Esqueleto</button>
+        <button class="btn btn-ghost btn-sm" onclick="quickAdd('Lobo',13,11)">Lobo</button>
+        <button class="btn btn-ghost btn-sm" onclick="quickAdd('Murcielago Gigante',6,22)">Murc. Gigante</button>
+        <button class="btn btn-ghost btn-sm" onclick="quickAdd('Guardia Vampiro',12,45)">G.Vampiro</button>
+        <button class="btn btn-ghost btn-sm" onclick="quickAdd('Espectro',12,22)">Espectro</button>
+        <button class="btn btn-ghost btn-sm" onclick="quickAdd('Hombre Lobo',11,58)">H.Lobo</button>
+        <button class="btn btn-ghost btn-sm" onclick="quickAdd('Strahd',10,144)">Strahd</button>
       </div>
     </div>
   </div>
-
   <div class="card">
-    <div class="card-title">🩸 Referencia de Condiciones</div>
+    <div class="card-title">Referencia de Condiciones</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;">
-      <div class="cond-ref"><strong>Asustado</strong> — Desventaja en tiradas con la fuente visible. No puede acercarse voluntariamente.</div>
-      <div class="cond-ref"><strong>Cegado</strong> — Falla automáticamente Percepción visual. Desventaja en ataques. Ventaja contra él.</div>
-      <div class="cond-ref"><strong>Paralizado</strong> — Incapacitado. Falla Fue y Des. Ataques tienen ventaja. Crítico si a 1m.</div>
-      <div class="cond-ref"><strong>Envenenado</strong> — Desventaja en ataques y tiradas de característica.</div>
-      <div class="cond-ref"><strong>Aturdido</strong> — Incapacitado. Falla Fue y Des. Ataques tienen ventaja.</div>
-      <div class="cond-ref"><strong>Hechizado</strong> — No puede atacar al hechizador. Ventaja en social del hechizador.</div>
-      <div class="cond-ref"><strong>Inconsciente</strong> — Incapacitado, cae. Falla Fue y Des. Ataques ventaja. Crítico a 1m.</div>
-      <div class="cond-ref"><strong>Derribado</strong> — Movimiento a mitad. Desventaja en ataques. Ventaja vs él a 1m.</div>
-      <div class="cond-ref"><strong>Atrapado</strong> — Velocidad 0. Desventaja en ataques. Ventaja en ataques vs él.</div>
-      <div class="cond-ref"><strong>Petrificado</strong> — Transformado, incapacitado. Resistencia a todo daño. Inmune a veneno.</div>
-      <div class="cond-ref"><strong>Invisible</strong> — Imposible ver sin magia. Ventaja en ataques. Desventaja vs él.</div>
-      <div class="cond-ref"><strong>Maldito</strong> — Desventaja en tiradas vs el lanzador. Vulnerabilidad a daño necrótico.</div>
+      <div class="cond-ref"><strong>Asustado</strong> &mdash; Desventaja en tiradas con la fuente visible.</div>
+      <div class="cond-ref"><strong>Cegado</strong> &mdash; Falla Percepci&oacute;n visual. Desventaja ataques.</div>
+      <div class="cond-ref"><strong>Paralizado</strong> &mdash; Incapacitado. Falla Fue y Des. Cr&iacute;tico si a 1m.</div>
+      <div class="cond-ref"><strong>Envenenado</strong> &mdash; Desventaja en ataques y tiradas de caracter&iacute;stica.</div>
+      <div class="cond-ref"><strong>Aturdido</strong> &mdash; Incapacitado. Falla Fue y Des. Ataques con ventaja.</div>
+      <div class="cond-ref"><strong>Hechizado</strong> &mdash; No puede atacar al hechizador.</div>
+      <div class="cond-ref"><strong>Inconsciente</strong> &mdash; Incapacitado, cae. Cr&iacute;tico si a 1m.</div>
+      <div class="cond-ref"><strong>Derribado</strong> &mdash; Movimiento a mitad. Desventaja ataques.</div>
+      <div class="cond-ref"><strong>Atrapado</strong> &mdash; Velocidad 0. Desventaja ataques.</div>
+      <div class="cond-ref"><strong>Petrificado</strong> &mdash; Incapacitado. Resistencia todo da&ntilde;o.</div>
+      <div class="cond-ref"><strong>Invisible</strong> &mdash; Ventaja ataques. Desventaja contra &eacute;l.</div>
+      <div class="cond-ref"><strong>Maldito</strong> &mdash; Desventaja vs lanzador. Vuln. necr&oacute;tico.</div>
     </div>
   </div>
-
 </div>
 </div>
 
-<!-- ══ NOTAS ══ -->
+<!-- NOTAS -->
 <div id="panel-notes" class="main-panel">
 <div class="container" style="margin-top:12px;display:flex;flex-direction:column;gap:12px;">
-
   <div class="card">
     <div class="card-title" style="justify-content:space-between;">
-      <span>💾 Gestión de Sesiones</span>
+      <span>Gesti&oacute;n de Sesiones</span>
       <span id="save-indicator" style="font-size:.7rem;color:var(--text-dim);font-style:italic;"></span>
     </div>
     <div style="display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;">
       <select id="session-select" onchange="loadSession(this.value)">
-        <option value="">— Nueva sesión —</option>
+        <option value="">Nueva sesi&oacute;n</option>
       </select>
-      <button class="btn btn-blood btn-sm" onclick="saveSession()">💾 Guardar</button>
+      <button class="btn btn-blood btn-sm" onclick="saveSession()">Guardar</button>
       <button class="btn btn-ghost btn-sm" onclick="newSession()">+ Nueva</button>
-      <button class="btn btn-ghost btn-sm" onclick="deleteSession()" style="color:#f09090;">🗑 Borrar</button>
+      <button class="btn btn-ghost btn-sm" onclick="deleteSession()" style="color:#f09090;">Borrar</button>
     </div>
     <div style="margin-top:8px;display:flex;gap:8px;align-items:center;">
-      <input type="text" id="session-title" placeholder="Título de la sesión (ej: Sesión 4 — La caída de Vallaki)">
+      <input type="text" id="session-title" placeholder="T&iacute;tulo de la sesi&oacute;n">
       <span id="session-date" style="font-size:.72rem;color:var(--text-dim);white-space:nowrap;"></span>
     </div>
   </div>
-
   <div class="notes-grid">
     <div class="card">
       <div class="card-title" style="justify-content:space-between;">
-        <span>📜 Notas de Sesión</span>
+        <span>Notas de Sesi&oacute;n</span>
         <button class="btn btn-ghost btn-sm" onclick="clearTA('session-notes')">Limpiar</button>
       </div>
-      <textarea class="notes-ta" id="session-notes" oninput="markUnsaved()"
-        placeholder="Lo que ocurre en la sesión...&#10;&#10;• Pistas encontradas&#10;• Decisiones clave&#10;• PX otorgados"></textarea>
+      <textarea class="notes-ta" id="session-notes" oninput="markUnsaved()" placeholder="Lo que ocurre..."></textarea>
     </div>
     <div class="card">
       <div class="card-title" style="justify-content:space-between;">
-        <span>🗺 Lugares &amp; Clues</span>
+        <span>Lugares y Clues</span>
         <button class="btn btn-ghost btn-sm" onclick="clearTA('location-notes')">Limpiar</button>
       </div>
-      <textarea class="notes-ta" id="location-notes" oninput="markUnsaved()"
-        placeholder="ALDEA DE BAROVIA:&#10;-&#10;&#10;VALLAKI:&#10;-&#10;&#10;CASTILLO RAVENLOFT:&#10;-"></textarea>
+      <textarea class="notes-ta" id="location-notes" oninput="markUnsaved()" placeholder="ALDEA:&#10;-&#10;&#10;VALLAKI:&#10;-"></textarea>
     </div>
   </div>
-
   <div class="card">
-    <div class="card-title">📌 Notas Rápidas</div>
+    <div class="card-title">Notas R&aacute;pidas</div>
     <div id="qnotes-list"></div>
     <div style="display:flex;gap:8px;margin-top:8px;">
-      <input type="text" id="qnote-input" placeholder="Nota rápida..." onkeydown="if(event.key==='Enter')addQNote()">
-      <button class="btn btn-blood btn-sm" style="white-space:nowrap;" onclick="addQNote()">+ Añadir</button>
+      <input type="text" id="qnote-input" placeholder="Nota r&aacute;pida..." onkeydown="if(event.key==='Enter')addQNote()">
+      <button class="btn btn-blood btn-sm" style="white-space:nowrap;" onclick="addQNote()">+ A&ntilde;adir</button>
     </div>
   </div>
-
 </div>
 </div>
 
-<!-- ══ NPCs ══ -->
+<!-- NPCs -->
 <div id="panel-npcs" class="main-panel">
 <div class="container" style="margin-top:12px;">
 <div class="grid-2" style="gap:12px;">
   <div class="card">
-    <div class="card-title">🎲 Generador de Nombres</div>
+    <div class="card-title">Generador de Nombres</div>
     <div style="display:flex;gap:8px;margin-bottom:10px;">
       <select id="name-origin">
         <option value="barovian">Baroviano</option>
-        <option value="noble">Noble / Vampírico</option>
+        <option value="noble">Noble / Vamp&iacute;rico</option>
         <option value="vistani">Vistani</option>
         <option value="werewolf">Hombre Lobo</option>
       </select>
@@ -209,42 +195,42 @@
         <option value="f">Femenino</option>
         <option value="any">Ambos</option>
       </select>
-      <button class="btn btn-blood btn-sm" onclick="genName()">🎲</button>
+      <button class="btn btn-blood btn-sm" onclick="genName()">Tirar</button>
     </div>
-    <div class="name-big" id="name-result">— — —</div>
+    <div class="name-big" id="name-result">--- ---</div>
     <button class="btn btn-ghost btn-sm" style="width:100%;margin-bottom:10px;" onclick="genMultiple()">Generar 5 nombres</button>
     <div id="name-list"></div>
     <hr class="divider">
-    <div class="card-title" style="margin-top:4px;">✨ Rasgos del NPC</div>
-    <button class="btn btn-ghost btn-sm" style="width:100%;margin-bottom:10px;" onclick="genTraits()">🎲 Rasgos aleatorios</button>
+    <div class="card-title" style="margin-top:4px;">Rasgos del NPC</div>
+    <button class="btn btn-ghost btn-sm" style="width:100%;margin-bottom:10px;" onclick="genTraits()">Rasgos aleatorios</button>
     <div class="grid-2" style="gap:7px;">
-      <div class="trait-box"><label>Apariencia</label><span id="t0" class="text-dim">—</span></div>
-      <div class="trait-box"><label>Personalidad</label><span id="t1" class="text-dim">—</span></div>
-      <div class="trait-box"><label>Defecto</label><span id="t2" class="text-dim">—</span></div>
-      <div class="trait-box"><label>Motivación</label><span id="t3" class="text-dim">—</span></div>
+      <div class="trait-box"><label>Apariencia</label><span id="t0" class="text-dim">-</span></div>
+      <div class="trait-box"><label>Personalidad</label><span id="t1" class="text-dim">-</span></div>
+      <div class="trait-box"><label>Defecto</label><span id="t2" class="text-dim">-</span></div>
+      <div class="trait-box"><label>Motivaci&oacute;n</label><span id="t3" class="text-dim">-</span></div>
     </div>
   </div>
   <div class="card">
-    <div class="card-title">📋 NPCs de la Campaña</div>
+    <div class="card-title">NPCs de la Campa&ntilde;a</div>
     <div id="npc-list" style="max-height:380px;overflow-y:auto;"></div>
     <hr class="divider">
     <div style="display:flex;flex-direction:column;gap:6px;">
       <input type="text" id="npc-name" placeholder="Nombre del NPC">
-      <input type="text" id="npc-role" placeholder="Rol / Descripción breve">
+      <input type="text" id="npc-role" placeholder="Rol / Descripci&oacute;n breve">
       <textarea id="npc-notes" placeholder="Notas, secretos, actitud..." style="min-height:54px;resize:vertical;font-size:.83rem;"></textarea>
-      <button class="btn btn-blood btn-sm" onclick="addNpc()">+ Añadir NPC</button>
+      <button class="btn btn-blood btn-sm" onclick="addNpc()">+ A&ntilde;adir NPC</button>
     </div>
   </div>
 </div>
 </div>
 </div>
 
-<!-- ══ ENCUENTROS ══ -->
+<!-- ENCUENTROS -->
 <div id="panel-encounters" class="main-panel">
 <div class="container" style="margin-top:12px;">
 <div class="grid-2" style="gap:12px;">
   <div class="card">
-    <div class="card-title">🎲 Dados</div>
+    <div class="card-title">Dados</div>
     <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px;">
       <button class="btn btn-blood" onclick="rollDie(4)">d4</button>
       <button class="btn btn-blood" onclick="rollDie(6)">d6</button>
@@ -255,21 +241,21 @@
       <button class="btn btn-blood" onclick="rollDie(100)">d100</button>
     </div>
     <div style="min-height:90px;display:flex;align-items:center;justify-content:center;">
-      <div class="dice-big" id="dice-result">—</div>
+      <div class="dice-big" id="dice-result">-</div>
     </div>
     <div id="dice-history" style="margin-top:8px;max-height:130px;overflow-y:auto;"></div>
     <hr class="divider">
     <div style="display:flex;gap:6px;align-items:center;">
-      <input type="number" id="d-num"   value="1"  min="1" max="20" style="width:50px;">
+      <input type="number" id="d-num" value="1" min="1" max="20" style="width:50px;">
       <span style="color:var(--text-dim);">d</span>
       <input type="number" id="d-sides" value="20" min="2" style="width:55px;">
       <span style="color:var(--text-dim);">+</span>
-      <input type="number" id="d-mod"   value="0"  style="width:50px;">
-      <button class="btn btn-gold btn-sm" onclick="rollCustom()">🎲 Tirar</button>
+      <input type="number" id="d-mod" value="0" style="width:50px;">
+      <button class="btn btn-gold btn-sm" onclick="rollCustom()">Tirar</button>
     </div>
   </div>
   <div class="card">
-    <div class="card-title">🐺 Encuentros Aleatorios</div>
+    <div class="card-title">Encuentros Aleatorios</div>
     <div style="display:flex;gap:8px;margin-bottom:10px;">
       <select id="enc-zone" onchange="renderEncTable(this.value)" style="flex:1;">
         <option value="forest">Bosque Svalich</option>
@@ -279,7 +265,7 @@
         <option value="road">Camino</option>
         <option value="tavern">Taberna</option>
       </select>
-      <button class="btn btn-blood btn-sm" onclick="rollEncounter()">🎲 Tirar</button>
+      <button class="btn btn-blood btn-sm" onclick="rollEncounter()">Tirar</button>
     </div>
     <div id="enc-result"></div>
     <div style="margin-top:10px;max-height:280px;overflow-y:auto;">
@@ -290,423 +276,58 @@
 </div>
 </div>
 
-<!-- ══ STRAHD ══ -->
+<!-- STRAHD -->
 <div id="panel-strahd" class="main-panel">
 <div class="container" style="margin-top:12px;">
-
   <div class="card" style="margin-bottom:12px;">
     <div class="card-title" style="justify-content:space-between;">
-      <span style="display:flex;align-items:center;gap:10px;">
-        <span style="font-family:'UnifrakturMaguntia',cursive;font-size:1.6rem;color:var(--blood-bright);">Strahd von Zarovich</span>
-      </span>
-      <span style="font-family:'Cinzel',serif;font-size:.62rem;color:var(--text-dim);letter-spacing:.15em;">El Vampiro • El Diablo • El Señor</span>
+      <span style="font-family:'UnifrakturMaguntia',cursive;font-size:1.5rem;color:var(--blood-bright);">Strahd von Zarovich</span>
+      <span style="font-family:'Cinzel',serif;font-size:.6rem;color:var(--text-dim);">CR 15 &middot; No-muerto &middot; Vampiro</span>
     </div>
-    <p style="font-size:.84rem;color:var(--text-dim);font-style:italic;line-height:1.65;">
-      Monstruo CR 15 · No-muerto (vampiro) · Caótico Maligno · Tamaño mediano · Visión en oscuridad 120 ft
-    </p>
+    <p style="font-size:.83rem;color:var(--text-dim);font-style:italic;">CA 16 &middot; 144 PV &middot; Velocidad 9m &middot; Vuelo 18m &middot; Visión oscura 120ft</p>
   </div>
-
-  <div id="strahd-panel-inner">
-    <div class="no-data">Cargando panel de Strahd...</div>
-  </div>
-
+  <div id="strahd-panel-inner"><div class="no-data">Cargando...</div></div>
 </div>
 </div>
 
-<!-- ══ TAROT ══ -->
+<!-- TAROT -->
 <div id="panel-tarot" class="main-panel">
 <div class="container" style="margin-top:12px;">
-
-  <div class="card" style="margin-bottom:12px;">
+  <div class="card">
     <div class="card-title" style="justify-content:space-between;">
-      <span>🔮 Lectura de Madam Eva — Las Cartas del Tarokka</span>
+      <span>Lectura de Madam Eva - Cartas del Tarokka</span>
       <div style="display:flex;gap:8px;">
-        <button class="btn btn-gold btn-sm"  onclick="revealAll()">👁 Revelar Todas</button>
-        <button class="btn btn-ghost btn-sm" onclick="hideAll()">🙈 Ocultar Todas</button>
+        <button class="btn btn-gold btn-sm" onclick="revealAll()">Revelar Todas</button>
+        <button class="btn btn-ghost btn-sm" onclick="hideAll()">Ocultar</button>
       </div>
     </div>
-    <p style="font-size:.84rem;color:var(--text-dim);font-style:italic;line-height:1.7;text-align:center;padding:8px 20px;border-bottom:1px solid var(--border);margin-bottom:16px;">
-      Las cartas han sido tiradas. Cinco destinos aguardan ser revelados.<br>
-      Haz clic en cada carta en el momento dramático adecuado para revelarla ante los jugadores.
+    <p style="font-size:.83rem;color:var(--text-dim);font-style:italic;text-align:center;padding:8px 20px;border-bottom:1px solid var(--border);margin-bottom:16px;">
+      Haz clic en cada carta para revelarla en el momento dram&aacute;tico adecuado.
     </p>
     <div id="tarot-cards"></div>
   </div>
-
 </div>
 </div>
 
-<!-- ══ MAPA ══ -->
+<!-- MAPA -->
 <div id="panel-mapa" class="main-panel">
 <div class="container" style="margin-top:12px;">
-
-  <div class="card" style="margin-bottom:12px;">
-    <div class="card-title" style="justify-content:space-between;">
-      <span>🗺️ Mapa de Barovia</span>
-      <div style="display:flex;gap:8px;align-items:center;">
-        <span id="map-selected-name" style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold);letter-spacing:.1em;"></span>
-        <button class="btn btn-ghost btn-sm" onclick="clearMapSelection()">✕ Limpiar</button>
-      </div>
-    </div>
-
-    <!-- Mapa SVG interactivo -->
-    <div style="position:relative;width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:2px;overflow:hidden;">
-      <svg id="barovia-map" viewBox="0 0 900 600" style="width:100%;display:block;cursor:pointer;">
-
-        <!-- Fondo niebla / terreno -->
-        <defs>
-          <radialGradient id="fogGrad" cx="50%" cy="50%" r="60%">
-            <stop offset="0%"   stop-color="#1c1508"/>
-            <stop offset="100%" stop-color="#0e0b07"/>
-          </radialGradient>
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="3" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
-
-        <rect width="900" height="600" fill="url(#fogGrad)"/>
-
-        <!-- Montañas (decorativas) -->
-        <g fill="#1a1408" stroke="#2a2010" stroke-width="1" opacity="0.8">
-          <!-- Norte -->
-          <polygon points="0,80 60,20 120,80"/>
-          <polygon points="80,90 150,10 220,90"/>
-          <polygon points="180,85 240,25 300,85"/>
-          <polygon points="580,75 650,5  720,75"/>
-          <polygon points="680,80 740,15 810,80"/>
-          <polygon points="780,85 850,10 920,85"/>
-          <!-- Sur -->
-          <polygon points="0,520 60,460 120,520"/>
-          <polygon points="80,530 150,455 220,530"/>
-          <polygon points="750,515 820,450 890,515"/>
-          <polygon points="820,525 880,460 940,525"/>
-        </g>
-
-        <!-- Río Ivlis -->
-        <path d="M 280,50 C 300,150 270,200 290,280 C 310,360 280,420 300,500" 
-              fill="none" stroke="#203050" stroke-width="8" opacity="0.6"/>
-        <path d="M 280,50 C 300,150 270,200 290,280 C 310,360 280,420 300,500" 
-              fill="none" stroke="#304060" stroke-width="3" opacity="0.4"/>
-
-        <!-- Lago Zarovich -->
-        <ellipse cx="480" cy="180" rx="70" ry="40" fill="#1a2840" stroke="#253550" stroke-width="2" opacity="0.8"/>
-        <text x="480" y="185" text-anchor="middle" fill="#405070" font-size="9" font-style="italic">Lago Zarovich</text>
-
-        <!-- Bosque Svalich (áreas) -->
-        <g fill="#0f1a0a" opacity="0.5">
-          <ellipse cx="200" cy="300" rx="150" ry="120"/>
-          <ellipse cx="600" cy="350" rx="130" ry="100"/>
-          <ellipse cx="400" cy="480" rx="100" ry="70"/>
-        </g>
-
-        <!-- LOCALIZACIONES — puntos interactivos -->
-        <!-- Cada grupo tiene: círculo, icono, label, y onclick -->
-
-        <!-- 1. Aldea de Barovia -->
-        <g class="map-loc" onclick="selectLocation('aldea')" id="loc-aldea" transform="translate(300,400)">
-          <circle r="18" fill="#1c1508" stroke="#5a3020" stroke-width="2" class="loc-circle"/>
-          <text y="5"  text-anchor="middle" font-size="16">🏚️</text>
-          <text y="30" text-anchor="middle" fill="#c4a870" font-size="9" font-family="Cinzel">Aldea de Barovia</text>
-        </g>
-
-        <!-- 2. Vallaki -->
-        <g class="map-loc" onclick="selectLocation('vallaki')" id="loc-vallaki" transform="translate(460,310)">
-          <circle r="18" fill="#1c1508" stroke="#5a3020" stroke-width="2" class="loc-circle"/>
-          <text y="5"  text-anchor="middle" font-size="16">🏘️</text>
-          <text y="30" text-anchor="middle" fill="#c4a870" font-size="9" font-family="Cinzel">Vallaki</text>
-        </g>
-
-        <!-- 3. Castillo Ravenloft -->
-        <g class="map-loc" onclick="selectLocation('ravenloft')" id="loc-ravenloft" transform="translate(550,200)">
-          <circle r="22" fill="#1c0808" stroke="#8b0000" stroke-width="2.5" class="loc-circle"/>
-          <text y="6"  text-anchor="middle" font-size="20">🏰</text>
-          <text y="32" text-anchor="middle" fill="#e8a080" font-size="9" font-family="Cinzel">Castillo Ravenloft</text>
-        </g>
-
-        <!-- 4. Krezk -->
-        <g class="map-loc" onclick="selectLocation('krezk')" id="loc-krezk" transform="translate(200,250)">
-          <circle r="16" fill="#1c1508" stroke="#5a3020" stroke-width="2" class="loc-circle"/>
-          <text y="5"  text-anchor="middle" font-size="14">⛩️</text>
-          <text y="28" text-anchor="middle" fill="#c4a870" font-size="9" font-family="Cinzel">Krezk</text>
-        </g>
-
-        <!-- 5. Tser Pool Vistani -->
-        <g class="map-loc" onclick="selectLocation('tser')" id="loc-tser" transform="translate(370,200)">
-          <circle r="16" fill="#1c1508" stroke="#5a3020" stroke-width="2" class="loc-circle"/>
-          <text y="5"  text-anchor="middle" font-size="14">🔮</text>
-          <text y="28" text-anchor="middle" fill="#c4a870" font-size="9" font-family="Cinzel">Tser Pool</text>
-        </g>
-
-        <!-- 6. Wizards of Wines -->
-        <g class="map-loc" onclick="selectLocation('winery')" id="loc-winery" transform="translate(280,350)">
-          <circle r="15" fill="#1c1508" stroke="#5a3020" stroke-width="2" class="loc-circle"/>
-          <text y="5"  text-anchor="middle" font-size="13">🍷</text>
-          <text y="27" text-anchor="middle" fill="#c4a870" font-size="8" font-family="Cinzel">Wizards of Wines</text>
-        </g>
-
-        <!-- 7. Argynvostholt -->
-        <g class="map-loc" onclick="selectLocation('argyn')" id="loc-argyn" transform="translate(650,320)">
-          <circle r="16" fill="#1c1508" stroke="#4a6090" stroke-width="2" class="loc-circle"/>
-          <text y="5"  text-anchor="middle" font-size="14">🛡️</text>
-          <text y="28" text-anchor="middle" fill="#a0b8e0" font-size="8" font-family="Cinzel">Argynvostholt</text>
-        </g>
-
-        <!-- 8. Torre de Van Richten -->
-        <g class="map-loc" onclick="selectLocation('torre')" id="loc-torre" transform="translate(500,130)">
-          <circle r="16" fill="#1c1508" stroke="#8060c0" stroke-width="2" class="loc-circle"/>
-          <text y="5"  text-anchor="middle" font-size="14">🔭</text>
-          <text y="28" text-anchor="middle" fill="#b090e0" font-size="8" font-family="Cinzel">Torre Van Richten</text>
-        </g>
-
-        <!-- 9. Molino de los Huesos -->
-        <g class="map-loc" onclick="selectLocation('mill')" id="loc-mill" transform="translate(360,460)">
-          <circle r="15" fill="#1c1508" stroke="#5a3020" stroke-width="2" class="loc-circle"/>
-          <text y="5"  text-anchor="middle" font-size="13">⚙️</text>
-          <text y="27" text-anchor="middle" fill="#c4a870" font-size="8" font-family="Cinzel">Molino de Huesos</text>
-        </g>
-
-        <!-- 10. Mansión Wachterhaus -->
-        <g class="map-loc" onclick="selectLocation('wachter')" id="loc-wachter" transform="translate(490,360)">
-          <circle r="15" fill="#1c1508" stroke="#5a3020" stroke-width="2" class="loc-circle"/>
-          <text y="5"  text-anchor="middle" font-size="13">🕯️</text>
-          <text y="27" text-anchor="middle" fill="#c4a870" font-size="8" font-family="Cinzel">Wachterhaus</text>
-        </g>
-
-        <!-- 11. Templo del Ámbar -->
-        <g class="map-loc" onclick="selectLocation('amber')" id="loc-amber" transform="translate(720,150)">
-          <circle r="17" fill="#1c1508" stroke="#c08020" stroke-width="2" class="loc-circle"/>
-          <text y="5"  text-anchor="middle" font-size="15">🔶</text>
-          <text y="29" text-anchor="middle" fill="#e8c060" font-size="8" font-family="Cinzel">Templo del Ámbar</text>
-        </g>
-
-        <!-- 12. Guarida Hombres Lobo -->
-        <g class="map-loc" onclick="selectLocation('wolves')" id="loc-wolves" transform="translate(170,420)">
-          <circle r="15" fill="#1c1508" stroke="#5a3020" stroke-width="2" class="loc-circle"/>
-          <text y="5"  text-anchor="middle" font-size="13">🐺</text>
-          <text y="27" text-anchor="middle" fill="#c4a870" font-size="8" font-family="Cinzel">Guarida Lobos</text>
-        </g>
-
-        <!-- 13. Ruinas de Berez -->
-        <g class="map-loc" onclick="selectLocation('berez')" id="loc-berez" transform="translate(400,530)">
-          <circle r="15" fill="#1c1508" stroke="#5a3020" stroke-width="2" class="loc-circle"/>
-          <text y="5"  text-anchor="middle" font-size="13">🌿</text>
-          <text y="27" text-anchor="middle" fill="#c4a870" font-size="8" font-family="Cinzel">Ruinas de Berez</text>
-        </g>
-
-        <!-- Leyenda: tesoros de la profecía -->
-        <g transform="translate(750,400)">
-          <rect width="140" height="130" rx="2" fill="#12100a" stroke="#3a2e18" stroke-width="1"/>
-          <text x="70" y="18" text-anchor="middle" fill="#e8c87a" font-size="9" font-family="Cinzel">PROFECÍA</text>
-          <line x1="10" y1="24" x2="130" y2="24" stroke="#3a2e18"/>
-          <circle cx="20" cy="40"  r="5" fill="#8060c0" stroke="#6040a0"/>
-          <text x="30" y="44" fill="#b090e0" font-size="8">📖 Tomo — Van Richten</text>
-          <circle cx="20" cy="58"  r="5" fill="#a04020" stroke="#803010"/>
-          <text x="30" y="62" fill="#e0a080" font-size="8">✝️ Símbolo — Argynv.</text>
-          <circle cx="20" cy="76"  r="5" fill="#c08020" stroke="#a06010"/>
-          <text x="30" y="80" fill="#e8c060" font-size="8">☀️ Espada — Ámbar</text>
-          <circle cx="20" cy="94"  r="5" fill="#205080" stroke="#104060"/>
-          <text x="30" y="98" fill="#80b0e0" font-size="8">🌫️ Aliada — Errante</text>
-          <circle cx="20" cy="112" r="5" fill="#7a0000" stroke="#500000"/>
-          <text x="30" y="116" fill="#e08060" font-size="8">⚰️ Strahd — K86</text>
-        </g>
-
-      </svg>
-    </div>
-
-    <!-- Panel de info al seleccionar localización -->
-    <div id="map-info-panel" style="display:none;margin-top:12px;"></div>
-
-  </div>
-</div>
-</div>
-
-<!-- ══ STRAHD ══ -->
-<div id="panel-strahd" class="main-panel">
-<div class="container" style="margin-top:12px;display:flex;flex-direction:column;gap:12px;">
-
-  <div class="grid-2" style="gap:12px;align-items:start;">
-
-    <!-- Izquierda: HP, Fase, Acciones -->
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      <div class="card">
-        <div class="card-title" style="justify-content:space-between;">
-          <span>🧛 Strahd von Zarovich</span>
-          <span style="font-size:.65rem;color:var(--text-dim);">CA 16 · Velocidad 9m · Vuelo 18m</span>
-        </div>
-        <div class="strahd-hp-wrap">
-          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
-            <div class="strahd-phase-badge" id="strahd-phase-badge">🧛 Fase 1 — El Señor de Ravenloft</div>
-            <div style="font-family:'UnifrakturMaguntia',cursive;font-size:1.8rem;color:var(--gold);">
-              <span id="strahd-hp-val">144</span><span style="font-size:.9rem;color:var(--text-dim);">/144</span>
-            </div>
-          </div>
-          <div class="strahd-hp-bar-bg">
-            <div class="strahd-hp-bar" id="strahd-hp-bar" style="width:100%;background:#5a9a5a;"></div>
-          </div>
-          <div style="display:flex;justify-content:space-between;">
-            <span class="strahd-phase-range" id="strahd-phase-range">144–97 PV</span>
-          </div>
-          <div class="strahd-phase-desc mt-8" id="strahd-phase-desc"></div>
-        </div>
-        <!-- Controles HP -->
-        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;">
-          <button class="btn btn-blood btn-sm" onclick="adjStrahdHp(-5)">−5</button>
-          <button class="btn btn-blood btn-sm" onclick="adjStrahdHp(-10)">−10</button>
-          <button class="btn btn-blood btn-sm" onclick="adjStrahdHp(-20)">−20</button>
-          <button class="btn btn-ghost btn-sm" onclick="adjStrahdHp(20)">+20 Regen</button>
-          <button class="btn btn-ghost btn-sm" onclick="adjStrahdHp(144)">Restaurar</button>
-          <button class="btn btn-ghost btn-sm" onclick="resetStrahd()">↺ Reset</button>
-        </div>
-        <div style="display:flex;gap:6px;margin-top:8px;">
-          <input type="number" id="strahd-hp-input" placeholder="PV exactos..." style="width:160px;">
-          <button class="btn btn-gold btn-sm" onclick="setStrahdHpManual()">Aplicar</button>
-        </div>
-        <div id="strahd-hp-log" style="margin-top:10px;max-height:120px;overflow-y:auto;"></div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">⚔️ Acciones</div>
-        <table style="width:100%;border-collapse:collapse;">
-          <thead><tr>
-            <th style="text-align:left;font-family:'Cinzel',serif;font-size:.58rem;color:var(--text-dim);padding:4px 8px;border-bottom:1px solid var(--border);">Acción</th>
-            <th style="text-align:left;font-family:'Cinzel',serif;font-size:.58rem;color:var(--text-dim);padding:4px 8px;border-bottom:1px solid var(--border);">Bono</th>
-            <th style="text-align:left;font-family:'Cinzel',serif;font-size:.58rem;color:var(--text-dim);padding:4px 8px;border-bottom:1px solid var(--border);">Daño / Efecto</th>
-          </tr></thead>
-          <tbody id="strahd-actions" style="font-size:.8rem;"></tbody>
-        </table>
-      </div>
-
-      <div class="card">
-        <div class="card-title">⭐ Acciones Legendarias <span style="font-size:.65rem;color:var(--text-dim);font-family:'IM Fell English',serif;font-weight:normal;">(3/ronda, al final del turno de otro)</span></div>
-        <div id="strahd-legendary"></div>
-      </div>
-    </div>
-
-    <!-- Derecha: Humor, Ubicación, Resistencias -->
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      <div class="card">
-        <div class="card-title">🎭 Estado Actual</div>
-        <div style="margin-bottom:10px;">
-          <label style="font-family:'Cinzel',serif;font-size:.6rem;color:var(--text-dim);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:6px;">Humor</label>
-          <select id="strahd-mood-select" onchange="updateMoodDisplay()" style="margin-bottom:10px;">
-            <option value="curious">🔍 Curioso</option>
-            <option value="obsessed">🌹 Obsesionado</option>
-            <option value="wrathful">🔥 Colérico</option>
-            <option value="playful">😈 Juguetón</option>
-            <option value="melancholy">🌑 Melancólico</option>
-            <option value="absent">🌫️ Ausente</option>
-          </select>
-          <div class="strahd-mood-box">
-            <span class="strahd-mood-icon" id="strahd-mood-icon">🔍</span>
-            <div>
-              <span class="mood-label" id="strahd-mood-label">Curioso</span>
-              <span class="mood-desc" id="strahd-mood-desc"></span>
-            </div>
-          </div>
-        </div>
-        <hr class="divider">
-        <label style="font-family:'Cinzel',serif;font-size:.6rem;color:var(--text-dim);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:8px;">Ubicación</label>
-        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;">
-          <button class="strahd-loc-btn active" data-loc="unknown"   onclick="setStrahdLocation('unknown')">❓ Desconocida</button>
-          <button class="strahd-loc-btn" data-loc="ravenloft"        onclick="setStrahdLocation('ravenloft')">🏰 Ravenloft</button>
-          <button class="strahd-loc-btn" data-loc="crypt"            onclick="setStrahdLocation('crypt')">⚰️ Cripta</button>
-          <button class="strahd-loc-btn" data-loc="road"             onclick="setStrahdLocation('road')">🌫️ Caminos</button>
-          <button class="strahd-loc-btn" data-loc="village"          onclick="setStrahdLocation('village')">🏚️ Aldea</button>
-          <button class="strahd-loc-btn" data-loc="tser"             onclick="setStrahdLocation('tser')">🔮 Tser Pool</button>
-          <button class="strahd-loc-btn" data-loc="watching"         onclick="setStrahdLocation('watching')">👁️ Observando</button>
-          <button class="strahd-loc-btn" data-loc="absent"           onclick="setStrahdLocation('absent')">🌑 Ausente</button>
-        </div>
-        <div id="strahd-loc-desc" style="font-size:.8rem;color:var(--text-mid);font-style:italic;padding:8px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;">
-          ❓ Desconocida — Los PJs no saben dónde está.
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">🛡️ Resistencias e Inmunidades</div>
-        <div style="display:flex;flex-direction:column;gap:8px;font-size:.8rem;">
-          <div><span style="font-family:'Cinzel',serif;font-size:.62rem;color:var(--gold);display:block;margin-bottom:3px;">RESISTENCIAS</span>
-            <span style="color:var(--text);">Daño no mágico (salvo plata o armas consagradas), Necrótico, Frío</span></div>
-          <div><span style="font-family:'Cinzel',serif;font-size:.62rem;color:var(--gold);display:block;margin-bottom:3px;">INMUNIDADES</span>
-            <span style="color:var(--text);">Veneno, Enfermedad · Condiciones: Asustado, Envenenado</span></div>
-          <div><span style="font-family:'Cinzel',serif;font-size:.62rem;color:#f0a080;display:block;margin-bottom:3px;">DEBILIDADES</span>
-            <span style="color:var(--text);">☀️ Luz solar: desventaja en ataques, no regenera · ⚔️ Estaca en el corazón: incapacitado · 🧄 Ajo: repulsión · 🌊 Agua corriente: no puede cruzar voluntariamente</span></div>
-          <div><span style="font-family:'Cinzel',serif;font-size:.62rem;color:var(--gold);display:block;margin-bottom:3px;">REGENERACIÓN</span>
-            <span style="color:var(--text);">Recupera 20 PV al inicio de su turno si tiene ≥1 PV y no está en luz solar ni agua bendita</span></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">📖 Notas de Combate</div>
-        <textarea style="min-height:100px;resize:vertical;font-size:.83rem;" placeholder="Anota lo que hacen los PJs, tácticas de Strahd, efectos activos..."></textarea>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
-<!-- ══ TAROT ══ -->
-<div id="panel-tarot" class="main-panel">
-<div class="container" style="margin-top:12px;display:flex;flex-direction:column;gap:12px;">
-
   <div class="card">
-    <div class="card-title" style="justify-content:space-between;">
-      <span>🔮 Tirada de Madam Eva</span>
-      <div style="display:flex;gap:8px;">
-        <button class="btn btn-blood" onclick="drawAllTarot()">🎴 Tirada Completa</button>
-        <button class="btn btn-ghost btn-sm" onclick="resetTarot()">↺ Limpiar</button>
-      </div>
-    </div>
-    <p style="font-size:.82rem;color:var(--text-dim);font-style:italic;margin-bottom:14px;line-height:1.65;">
-      Las cinco cartas de la profecía. Haz clic en una carta individual para redibujarla, o usa "Tirada Completa" para tirar todas a la vez. La tirada se guarda automáticamente.
-    </p>
-    <div class="tarot-grid" id="tarot-cards">
-      <!-- Renderizado por JS -->
-    </div>
+    <div class="card-title">Barovia - Mapa Interactivo</div>
+    <div id="mapa-wrap"></div>
+    <div id="map-info" style="display:none;"></div>
   </div>
-
-  <div class="card">
-    <div class="card-title">📜 Guía de Interpretación</div>
-    <div class="grid-2" style="gap:10px;font-size:.8rem;">
-      <div style="padding:10px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;">
-        <strong style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold);display:block;margin-bottom:6px;">💎 EL TESORO</strong>
-        El Símbolo Sagrado de Ravenloft es el objeto más poderoso contra Strahd. Sin él, derrotarlo es casi imposible. Lanza esta carta al inicio de la campaña y no la cambies.
-      </div>
-      <div style="padding:10px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;">
-        <strong style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold);display:block;margin-bottom:6px;">🤝 EL ALIADO</strong>
-        Un personaje que puede convertirse en un aliado poderoso. Puede requerir que los PJs completen una misión o ganen su confianza primero.
-      </div>
-      <div style="padding:10px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;">
-        <strong style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold);display:block;margin-bottom:6px;">⚰️ LA TUMBA</strong>
-        El lugar donde descansa el poder de Strahd — posiblemente el Tomo de Strahd u otro objeto clave. Explorar este lugar puede revelar sus secretos o debilidades.
-      </div>
-      <div style="padding:10px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;">
-        <strong style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold);display:block;margin-bottom:6px;">🏰 LA FORTALEZA</strong>
-        El lugar exacto en el Castillo Ravenloft donde encontrarán a Strahd para el enfrentamiento final. Prepara esa zona con detalle.
-      </div>
-      <div style="padding:10px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;">
-        <strong style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold);display:block;margin-bottom:6px;">🌟 EL LECTOR</strong>
-        El héroe de la profecía entre los PJs. No lo reveles directamente — deja que los jugadores lo descubran. Puede ser el que menos se esperan.
-      </div>
-      <div style="padding:10px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;color:var(--text-dim);font-style:italic;">
-        <strong style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--text-dim);display:block;margin-bottom:6px;">💡 CONSEJO</strong>
-        Realiza la tirada antes de la sesión 1 o cuando los PJs visiten a Madam Eva. Las cartas determinan la estructura de toda la campaña. Guárdalas.
-      </div>
-    </div>
-  </div>
-
 </div>
 </div>
 
-<!-- ══ SCRIPTS ══ -->
 <script src="js/soundboard.js"></script>
 <script src="js/initiative.js"></script>
 <script src="js/notes.js"></script>
 <script src="js/npcs.js"></script>
 <script src="js/encounters.js"></script>
 <script src="js/strahd.js"></script>
-
+<script src="js/tarot.js"></script>
 <script src="js/mapa.js"></script>
 <script src="js/main.js"></script>
-
 </body>
 </html>
