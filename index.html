@@ -5,212 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Curse of Strahd — DM Screen</title>
 <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
-<style>
-:root {
-  --blood: #7a0000;
-  --blood-bright: #b03020;
-  --blood-glow: rgba(176,48,32,0.35);
-  --gold: #e8c87a;
-  --gold-dim: #a07840;
-  --gold-glow: rgba(232,200,122,0.25);
-  --bg: #0e0b07;
-  --bg2: #181208;
-  --bg3: #201808;
-  --panel: #1c1508;
-  --border: #3a2e18;
-  --border-bright: #5a4828;
-  --text: #f0ddb8;
-  --text-dim: #8a7050;
-  --text-mid: #c4a870;
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--bg); color:var(--text); font-family:'IM Fell English',serif; min-height:100vh; overflow-x:hidden; padding-bottom:64px; }
-body::after { content:''; position:fixed; inset:0; background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.45) 100%); pointer-events:none; z-index:0; }
-
-/* HEADER */
-header { text-align:center; padding:18px 20px 12px; border-bottom:1px solid var(--border); background:linear-gradient(180deg,#140f04 0%,transparent 100%); position:relative; z-index:10; }
-header h1 { font-family:'UnifrakturMaguntia',cursive; font-size:clamp(1.6rem,4vw,2.8rem); color:var(--gold); text-shadow:0 0 40px rgba(232,200,122,.5),0 0 80px rgba(176,48,32,.4),0 2px 6px #000; letter-spacing:3px; }
-header p { font-family:'Cinzel',serif; font-size:.62rem; letter-spacing:.4em; color:var(--text-dim); text-transform:uppercase; margin-top:5px; }
-.candles { display:flex; justify-content:center; gap:60px; position:absolute; top:16px; left:0; right:0; pointer-events:none; }
-.candle { font-size:1.4rem; animation:flicker 2.5s ease-in-out infinite; }
-.candle:nth-child(2){animation-delay:.7s;}
-@keyframes flicker{0%,100%{opacity:1;transform:scaleY(1)}30%{opacity:.8;transform:scaleY(.96)}60%{opacity:1;transform:scaleY(1.03)}80%{opacity:.9;transform:scaleY(.98)}}
-
-/* MAIN TABS */
-.main-tabs { display:flex; background:var(--bg); border-bottom:2px solid var(--border); overflow-x:auto; padding:0 12px; position:relative; z-index:10; }
-.main-tab { font-family:'Cinzel',serif; font-size:.63rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text-dim); padding:10px 16px; cursor:pointer; border-bottom:2px solid transparent; white-space:nowrap; margin-bottom:-2px; transition:all .2s; user-select:none; }
-.main-tab:hover{color:var(--text-mid);}
-.main-tab.active{color:var(--gold);border-bottom-color:var(--gold-dim);}
-.main-panel{display:none; position:relative; z-index:5;}
-.main-panel.active{display:block;}
-
-/* LAYOUT */
-.container{max-width:1500px;margin:0 auto;padding:14px;}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
-
-/* CARDS */
-.card{background:var(--panel);border:1px solid var(--border);border-radius:2px;padding:14px;position:relative;}
-.card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(232,200,122,.03) 0%,transparent 60%);pointer-events:none;border-radius:2px;}
-.card-title{font-family:'Cinzel',serif;font-size:.67rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
-
-/* BUTTONS */
-.btn{font-family:'Cinzel',serif;font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border-radius:1px;cursor:pointer;transition:all .2s;border:1px solid;white-space:nowrap;}
-.btn-blood{background:var(--blood);border-color:var(--blood-bright);color:#ffd0a0;}
-.btn-blood:hover{background:var(--blood-bright);box-shadow:0 0 14px var(--blood-glow);}
-.btn-ghost{background:transparent;border-color:var(--border);color:var(--text-mid);}
-.btn-ghost:hover{border-color:var(--border-bright);color:var(--text);}
-.btn-gold{background:transparent;border-color:var(--gold-dim);color:var(--gold);}
-.btn-gold:hover{background:rgba(232,200,122,.08);box-shadow:0 0 10px var(--gold-glow);}
-.btn-sm{padding:4px 10px;font-size:.58rem;}
-
-/* INPUTS */
-input[type=text],input[type=number],textarea,select{background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:'IM Fell English',serif;font-size:.9rem;padding:7px 10px;border-radius:1px;outline:none;width:100%;transition:border-color .2s;}
-input:focus,textarea:focus,select:focus{border-color:var(--gold-dim);}
-select option{background:var(--bg2);}
-input[type=range]{-webkit-appearance:none;background:var(--border);height:3px;border-radius:2px;padding:0;border:none;width:100%;cursor:pointer;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:var(--gold);cursor:pointer;}
-
-/* ── SOUNDBOARD ── */
-.sb-cats{display:flex;gap:5px;margin-bottom:14px;flex-wrap:wrap;}
-.sb-cat{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:7px 15px;border:1px solid var(--border);cursor:pointer;color:var(--text-dim);transition:all .2s;border-radius:1px;user-select:none;}
-.sb-cat:hover{color:var(--text);border-color:var(--border-bright);}
-.sb-cat.active{color:var(--gold);border-color:var(--gold-dim);background:rgba(232,200,122,.07);}
-.sb-cat[data-cat=areas].active{color:#f0c080;border-color:#c08040;background:rgba(192,128,64,.1);}
-.sb-cat[data-cat=ambiente].active{color:#a8d4a8;border-color:#4a8a4a;background:rgba(74,138,74,.08);}
-.sb-cat[data-cat=efectos].active{color:#a8c0e8;border-color:#4060a0;background:rgba(64,96,160,.08);}
-.sb-cat[data-cat=batallas].active{color:#f0a888;border-color:#a04828;background:rgba(160,72,40,.1);}
-
-.sb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:8px;}
-.sb-item{border:1px solid var(--border);padding:12px 10px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;background:var(--bg2);border-radius:1px;user-select:none;}
-.sb-item:hover{border-color:var(--border-bright);background:var(--bg3);transform:translateY(-1px);}
-.sb-item.playing{border-color:var(--gold-dim);background:linear-gradient(135deg,rgba(232,200,122,.1),var(--bg2));box-shadow:0 0 16px rgba(232,200,122,.15),inset 0 0 20px rgba(232,200,122,.03);}
-.sb-item.playing::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(232,200,122,.06),transparent);animation:sweep 2.5s linear infinite;}
-@keyframes sweep{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
-.sb-item-icon{font-size:1.8rem;display:block;margin-bottom:6px;filter:drop-shadow(0 1px 3px rgba(0,0,0,.8));}
-.sb-item-name{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.08em;color:var(--text);display:block;margin-bottom:3px;}
-.sb-item.playing .sb-item-name{color:var(--gold);}
-.sb-item-desc{font-size:.76rem;color:var(--text-dim);font-style:italic;display:block;}
-.playing-dot{position:absolute;top:7px;right:7px;width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold-glow);animation:pulse 1.2s ease-in-out infinite;}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.65)}}
-
-/* MINI PLAYER BAR — fixed bottom like Spotify */
-.mini-player{
-  position:fixed; bottom:0; left:0; right:0; z-index:998;
-  background:linear-gradient(90deg,#12100600,#121006 8%,#121006 92%,#12100600);
-  border-top:1px solid var(--border);
-  backdrop-filter:blur(10px);
-  display:flex; align-items:center; gap:12px;
-  padding:0 20px; height:56px;
-}
-.mp-icon{font-size:1.4rem;flex-shrink:0;filter:drop-shadow(0 1px 4px rgba(0,0,0,.9));}
-.mp-info{flex:1;min-width:0;}
-.mp-name{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.1em;color:var(--gold);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.mp-sub{font-size:.72rem;color:var(--text-dim);font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.mp-idle .mp-name{color:var(--text-dim);}
-.mp-controls{display:flex;align-items:center;gap:8px;flex-shrink:0;}
-.mp-url-wrap{display:flex;gap:6px;align-items:center;flex:1;max-width:340px;}
-.mp-url-wrap input{font-size:.75rem;padding:5px 8px;height:30px;}
-.mp-stop{font-size:1rem;background:transparent;border:1px solid var(--border);color:var(--text-dim);width:30px;height:30px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
-.mp-stop:hover{border-color:var(--blood-bright);color:#f09090;}
-.yt-hidden{position:fixed;bottom:-200px;left:-200px;width:1px;height:1px;opacity:0;pointer-events:none;}
-
-.sfx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:6px;}
-.sfx-btn{border:1px solid var(--border);padding:10px 8px;cursor:pointer;text-align:center;transition:all .2s;background:var(--bg2);border-radius:1px;user-select:none;}
-.sfx-btn:hover{border-color:#3a4a8a;background:rgba(40,60,140,.12);}
-.sfx-btn:active{transform:scale(.96);}
-.sfx-icon{font-size:1.3rem;display:block;margin-bottom:4px;}
-.sfx-name{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.08em;color:var(--text-dim);display:block;}
-.sfx-log{margin-top:10px;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:1px;min-height:30px;font-size:.78rem;color:var(--text-dim);font-style:italic;}
-
-/* CAT INFO */
-.cat-info{padding:12px 14px;background:rgba(201,168,76,.03);border:1px solid var(--border);border-radius:2px;margin-top:12px;}
-.cat-info-title{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.15em;color:var(--gold-dim);margin-bottom:6px;text-transform:uppercase;}
-.cat-info p{font-size:.8rem;color:var(--text-dim);font-style:italic;line-height:1.65;}
-
-/* INITIATIVE */
-.init-list{display:flex;flex-direction:column;gap:5px;min-height:160px;}
-.combatant{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;transition:all .2s;}
-.combatant.current{border-color:var(--gold);background:rgba(232,200,122,.06);box-shadow:0 0 12px rgba(232,200,122,.12);}
-.combatant.enemy{border-left:3px solid var(--blood-bright);}
-.combatant.ally{border-left:3px solid #4a8a4a;}
-.combatant.neutral{border-left:3px solid #4a6a8a;}
-.init-num{font-family:'UnifrakturMaguntia',cursive;font-size:1.4rem;color:var(--gold);min-width:32px;text-align:center;}
-.c-name{flex:1;font-size:.92rem;color:var(--text);}
-.hp-col{display:flex;align-items:center;gap:5px;}
-.hp-col input{width:52px;text-align:center;padding:4px 6px;font-size:.8rem;}
-.hp-bar-wrap{width:55px;height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:4px;}
-.hp-bar{height:100%;border-radius:3px;transition:width .3s,background .3s;}
-.icon-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);width:25px;height:25px;border-radius:1px;cursor:pointer;font-size:.7rem;display:flex;align-items:center;justify-content:center;transition:all .2s;}
-.icon-btn:hover{border-color:var(--border-bright);color:var(--text);}
-.icon-btn.del:hover{border-color:var(--blood-bright);color:#f09090;}
-.add-form{display:grid;grid-template-columns:1fr 58px 60px 82px auto;gap:6px;margin-top:10px;align-items:center;}
-.round-bar{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
-.round-label{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;color:var(--gold);}
-.cond-tag{font-size:.62rem;padding:2px 8px;border:1px solid var(--blood-bright);background:rgba(122,0,0,.2);color:#f4b090;border-radius:10px;cursor:pointer;transition:all .2s;}
-.cond-tag:hover{background:rgba(122,0,0,.35);}
-.badge-turn{display:inline-block;padding:1px 7px;font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;border-radius:10px;background:rgba(232,200,122,.15);border:1px solid var(--gold-dim);color:var(--gold);}
-
-/* NOTES */
-.notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-textarea.notes-ta{min-height:280px;resize:vertical;line-height:1.65;font-size:.87rem;}
-.qnote{display:flex;align-items:flex-start;gap:6px;padding:8px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;margin-bottom:5px;}
-.qnote span{flex:1;font-size:.88rem;line-height:1.5;color:var(--text);}
-.qnote time{font-size:.65rem;color:var(--text-dim);white-space:nowrap;}
-
-/* NPCs */
-.npc-card{padding:10px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;margin-bottom:6px;}
-.npc-card strong{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.1em;color:var(--gold);display:block;margin-bottom:2px;}
-.npc-card em{font-size:.78rem;color:var(--text-mid);display:block;margin-bottom:4px;}
-.npc-card p{font-size:.84rem;line-height:1.5;color:var(--text);}
-.name-big{font-family:'UnifrakturMaguntia',cursive;font-size:2.2rem;color:var(--gold);text-align:center;padding:16px;text-shadow:0 0 20px var(--gold-glow);min-height:75px;display:flex;align-items:center;justify-content:center;}
-.name-chip{display:inline-block;padding:3px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;font-size:.77rem;cursor:pointer;color:var(--text-mid);margin:3px;transition:all .2s;}
-.name-chip:hover{border-color:var(--gold-dim);color:var(--gold);}
-.trait-box{padding:8px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;}
-.trait-box label{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);display:block;margin-bottom:3px;}
-.trait-box span{font-size:.86rem;font-style:italic;color:var(--text);}
-
-/* ENCOUNTERS */
-.enc-table{width:100%;border-collapse:collapse;}
-.enc-table th,.enc-table td{padding:7px 10px;border:1px solid var(--border);font-size:.8rem;text-align:left;}
-.enc-table th{background:rgba(232,200,122,.06);font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:normal;}
-.enc-table td{color:var(--text);}
-.enc-table tr:hover td{background:rgba(255,255,255,.02);}
-.enc-result{padding:14px;background:rgba(122,0,0,.1);border:1px solid var(--blood-bright);border-radius:1px;margin-top:10px;font-style:italic;line-height:1.65;font-size:.9rem;color:var(--text);}
-.dice-big{font-family:'UnifrakturMaguntia',cursive;font-size:3.5rem;color:var(--gold);text-align:center;text-shadow:0 0 30px var(--gold-glow);}
-@keyframes rollAnim{0%{transform:rotate(-12deg) scale(.7);opacity:0}100%{transform:rotate(0) scale(1);opacity:1}}
-.roll-anim{animation:rollAnim .35s ease;}
-
-/* CAT INFO */
-.cat-info{padding:12px 14px;background:rgba(232,200,122,.03);border:1px solid var(--border);border-radius:2px;margin-top:12px;}
-.cat-info-title{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.15em;color:var(--gold-dim);margin-bottom:6px;text-transform:uppercase;}
-.cat-info p{font-size:.82rem;color:var(--text-dim);font-style:italic;line-height:1.65;}
-
-/* SFX */
-.sfx-btn:hover{border-color:#4060a0;background:rgba(64,96,160,.1);}
-.sfx-btn:active{transform:scale(.96);}
-.sfx-icon{font-size:1.5rem;display:block;margin-bottom:4px;filter:drop-shadow(0 1px 3px rgba(0,0,0,.8));}
-.sfx-name{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.08em;color:var(--text-mid);display:block;}
-.sfx-log{margin-top:10px;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:1px;min-height:30px;font-size:.8rem;color:var(--text-dim);font-style:italic;}
-
-/* UTIL */
-.divider{border:none;border-top:1px solid var(--border);margin:12px 0;}
-.mt-8{margin-top:8px;}.mt-12{margin-top:12px;}.mt-16{margin-top:16px;}
-.text-dim{color:var(--text-dim);font-size:.8rem;}
-.no-data{text-align:center;color:var(--text-dim);font-style:italic;padding:28px 20px;font-size:.84rem;}
-
-::-webkit-scrollbar{width:5px;height:5px;}
-::-webkit-scrollbar-track{background:var(--bg);}
-::-webkit-scrollbar-thumb{background:var(--border-bright);border-radius:3px;}
-::-webkit-scrollbar-thumb:hover{background:var(--gold-dim);}
-
-@media(max-width:768px){
-  .grid-2,.grid-3,.notes-grid,.add-form{grid-template-columns:1fr;}
-  .sb-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));}
-  .sfx-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr));}
-  .mp-url-wrap{display:none;}
-}
-</style>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -221,11 +16,11 @@ textarea.notes-ta{min-height:280px;resize:vertical;line-height:1.65;font-size:.8
 </header>
 
 <div class="main-tabs">
-  <div class="main-tab active"   onclick="switchMain('soundboard')">🎵 Soundboard</div>
-  <div class="main-tab"          onclick="switchMain('initiative')">⚔️ Iniciativa</div>
-  <div class="main-tab"          onclick="switchMain('notes')">📜 Notas</div>
-  <div class="main-tab"          onclick="switchMain('npcs')">👤 NPCs</div>
-  <div class="main-tab"          onclick="switchMain('encounters')">🎲 Encuentros</div>
+  <div class="main-tab active" onclick="switchMain('soundboard')">🎵 Soundboard</div>
+  <div class="main-tab"       onclick="switchMain('initiative')">⚔️ Iniciativa</div>
+  <div class="main-tab"       onclick="switchMain('notes')">📜 Notas</div>
+  <div class="main-tab"       onclick="switchMain('npcs')">👤 NPCs</div>
+  <div class="main-tab"       onclick="switchMain('encounters')">🎲 Encuentros</div>
 </div>
 
 <!-- ══ SOUNDBOARD ══ -->
@@ -235,11 +30,11 @@ textarea.notes-ta{min-height:280px;resize:vertical;line-height:1.65;font-size:.8
   <div class="card">
     <div class="card-title">🎛️ Biblioteca de Sonidos</div>
     <div class="sb-cats">
-      <div class="sb-cat active" data-cat="areas"    onclick="switchCat('areas')">🗺 Áreas de Barovia</div>
-      <div class="sb-cat"        data-cat="ambiente"  onclick="switchCat('ambiente')">🌿 Ambiente</div>
-      <div class="sb-cat"        data-cat="efectos"   onclick="switchCat('efectos')">⚡ Efectos</div>
-      <div class="sb-cat"        data-cat="epicas"    onclick="switchCat('epicas')">🎼 Épicas</div>
-      <div class="sb-cat"        data-cat="batallas"  onclick="switchCat('batallas')">🔥 Batallas</div>
+      <div class="sb-cat active" data-cat="areas"   onclick="switchCat('areas')">🗺 Áreas de Barovia</div>
+      <div class="sb-cat" data-cat="ambiente"        onclick="switchCat('ambiente')">🌿 Ambiente</div>
+      <div class="sb-cat" data-cat="efectos"         onclick="switchCat('efectos')">⚡ Efectos</div>
+      <div class="sb-cat" data-cat="epicas"          onclick="switchCat('epicas')">🎼 Épicas</div>
+      <div class="sb-cat" data-cat="batallas"        onclick="switchCat('batallas')">🔥 Batallas</div>
     </div>
     <div id="sb-stream-grid" class="sb-grid"></div>
     <div id="sb-sfx-layout" style="display:none;">
@@ -255,7 +50,7 @@ textarea.notes-ta{min-height:280px;resize:vertical;line-height:1.65;font-size:.8
 </div>
 </div>
 
-<!-- ══ MINI PLAYER BAR (fixed bottom) ══ -->
+<!-- ══ MINI PLAYER BAR (fijo abajo) ══ -->
 <div class="mini-player" id="mini-player">
   <span class="mp-icon" id="mp-icon">🎵</span>
   <div class="mp-info mp-idle" id="mp-info">
@@ -263,34 +58,39 @@ textarea.notes-ta{min-height:280px;resize:vertical;line-height:1.65;font-size:.8
     <div class="mp-sub"  id="mp-sub">Selecciona una escena del soundboard</div>
   </div>
   <div class="mp-url-wrap">
-    <input type="text" id="custom-url" placeholder="Pega URL de YouTube..." style="font-size:.75rem;padding:5px 8px;height:30px;">
+    <input type="text" id="custom-url" placeholder="Pega URL de YouTube...">
     <button class="btn btn-gold btn-sm" onclick="loadCustom()">Cargar</button>
   </div>
   <div class="mp-controls">
     <button class="mp-stop" onclick="stopPlayer()" title="Detener">⏹</button>
   </div>
 </div>
-
-<!-- iframe oculto -->
 <iframe id="yt-frame" class="yt-hidden" src="" allowfullscreen allow="autoplay;encrypted-media"></iframe>
 
-<!-- ══ INITIATIVE ══ -->
+<!-- ══ INICIATIVA ══ -->
 <div id="panel-initiative" class="main-panel">
 <div class="container" style="margin-top:12px;display:flex;flex-direction:column;gap:12px;">
+
   <div class="card">
-    <div class="card-title">⚔️ Orden de Combate</div>
+    <div class="card-title" style="justify-content:space-between;">
+      <span>⚔️ Orden de Combate</span>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <span class="round-label" id="round-label">Ronda 1</span>
+        <span id="combat-timer" style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--text-dim);letter-spacing:.1em;">00:00</span>
+      </div>
+    </div>
     <div class="round-bar">
       <button class="btn btn-blood btn-sm" onclick="nextTurn()">▶ Siguiente Turno</button>
-      <button class="btn btn-ghost btn-sm" onclick="sortInit()">↕ Ordenar por Init</button>
-      <button class="btn btn-ghost btn-sm" onclick="resetCombat()">↺ Nuevo Combate</button>
-      <span class="round-label" id="round-label">Ronda 1</span>
+      <button class="btn btn-ghost btn-sm" onclick="sortInit()">↕ Ordenar</button>
+      <button class="btn btn-ghost btn-sm" onclick="resetCombat()">↺ Reset</button>
+      <button class="btn btn-ghost btn-sm" onclick="rollAllInit()">🎲 Tirar Init Todo</button>
     </div>
     <div class="init-list" id="init-list"><div class="no-data">Añade combatientes para comenzar...</div></div>
     <hr class="divider">
-    <div class="add-form">
-      <input type="text"   id="new-name"  placeholder="Nombre">
-      <input type="number" id="new-init"  placeholder="Init" min="1" max="30">
-      <input type="number" id="new-hp"    placeholder="PV"   min="1">
+    <div style="display:grid;grid-template-columns:1fr 58px 60px 80px auto;gap:6px;align-items:center;">
+      <input type="text"   id="new-name" placeholder="Nombre del combatiente">
+      <input type="number" id="new-init" placeholder="Init" min="1" max="30">
+      <input type="number" id="new-hp"   placeholder="PV" min="1">
       <select id="new-type">
         <option value="enemy">Enemigo</option>
         <option value="ally">Aliado</option>
@@ -304,40 +104,78 @@ textarea.notes-ta{min-height:280px;resize:vertical;line-height:1.65;font-size:.8
         <button class="btn btn-ghost btn-sm" onclick="quickAdd('Zombi',8,22)">🧟 Zombi</button>
         <button class="btn btn-ghost btn-sm" onclick="quickAdd('Esqueleto',13,13)">💀 Esqueleto</button>
         <button class="btn btn-ghost btn-sm" onclick="quickAdd('Lobo',13,11)">🐺 Lobo</button>
+        <button class="btn btn-ghost btn-sm" onclick="quickAdd('Murciélago Gigante',6,22)">🦇 Murc. Gigante</button>
         <button class="btn btn-ghost btn-sm" onclick="quickAdd('Guardia Vampiro',12,45)">🧛 G.Vampiro</button>
         <button class="btn btn-ghost btn-sm" onclick="quickAdd('Espectro',12,22)">👻 Espectro</button>
+        <button class="btn btn-ghost btn-sm" onclick="quickAdd('Hombre Lobo',11,58)">🐺 H.Lobo</button>
         <button class="btn btn-ghost btn-sm" onclick="quickAdd('Strahd',10,144)">⚰️ Strahd</button>
       </div>
     </div>
   </div>
+
   <div class="card">
-    <div class="card-title">🩸 Condiciones</div>
-    <div style="display:flex;flex-wrap:wrap;gap:6px;">
-      <span class="cond-tag">Asustado</span><span class="cond-tag">Cegado</span>
-      <span class="cond-tag">Paralizado</span><span class="cond-tag">Envenenado</span>
-      <span class="cond-tag">Aturdido</span><span class="cond-tag">Inconsciente</span>
-      <span class="cond-tag">Hechizado</span><span class="cond-tag">Derribado</span>
-      <span class="cond-tag">Atrapado</span><span class="cond-tag">Maldito</span>
-      <span class="cond-tag">Petrificado</span><span class="cond-tag">Invisible</span>
+    <div class="card-title">🩸 Referencia de Condiciones</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;">
+      <div class="cond-ref"><strong>Asustado</strong> — Desventaja en tiradas con la fuente visible. No puede acercarse voluntariamente.</div>
+      <div class="cond-ref"><strong>Cegado</strong> — Falla automáticamente Percepción visual. Desventaja en ataques. Ventaja contra él.</div>
+      <div class="cond-ref"><strong>Paralizado</strong> — Incapacitado. Falla Fue y Des. Ataques tienen ventaja. Crítico si a 1m.</div>
+      <div class="cond-ref"><strong>Envenenado</strong> — Desventaja en ataques y tiradas de característica.</div>
+      <div class="cond-ref"><strong>Aturdido</strong> — Incapacitado. Falla Fue y Des. Ataques tienen ventaja.</div>
+      <div class="cond-ref"><strong>Hechizado</strong> — No puede atacar al hechizador. Ventaja en social del hechizador.</div>
+      <div class="cond-ref"><strong>Inconsciente</strong> — Incapacitado, cae. Falla Fue y Des. Ataques ventaja. Crítico a 1m.</div>
+      <div class="cond-ref"><strong>Derribado</strong> — Movimiento a mitad. Desventaja en ataques. Ventaja vs él a 1m.</div>
+      <div class="cond-ref"><strong>Atrapado</strong> — Velocidad 0. Desventaja en ataques. Ventaja en ataques vs él.</div>
+      <div class="cond-ref"><strong>Petrificado</strong> — Transformado, incapacitado. Resistencia a todo daño. Inmune a veneno.</div>
+      <div class="cond-ref"><strong>Invisible</strong> — Imposible ver sin magia. Ventaja en ataques. Desventaja vs él.</div>
+      <div class="cond-ref"><strong>Maldito</strong> — Desventaja en tiradas vs el lanzador. Vulnerabilidad a daño necrótico.</div>
     </div>
   </div>
+
 </div>
 </div>
 
-<!-- ══ NOTES ══ -->
+<!-- ══ NOTAS ══ -->
 <div id="panel-notes" class="main-panel">
 <div class="container" style="margin-top:12px;display:flex;flex-direction:column;gap:12px;">
-  <div class="notes-grid">
-    <div class="card">
-      <div class="card-title" style="justify-content:space-between;"><span>📜 Notas de Sesión</span><button class="btn btn-ghost btn-sm" onclick="clearTA('session-notes')">Limpiar</button></div>
-      <input type="text" id="session-title" placeholder="Título de sesión..." style="margin-bottom:8px;font-size:.83rem;">
-      <textarea class="notes-ta" id="session-notes" placeholder="Lo que ocurre...&#10;&#10;• Pistas encontradas&#10;• Decisiones clave&#10;• PX otorgados"></textarea>
+
+  <div class="card">
+    <div class="card-title" style="justify-content:space-between;">
+      <span>💾 Gestión de Sesiones</span>
+      <span id="save-indicator" style="font-size:.7rem;color:var(--text-dim);font-style:italic;"></span>
     </div>
-    <div class="card">
-      <div class="card-title" style="justify-content:space-between;"><span>🗺 Lugares & Clues</span><button class="btn btn-ghost btn-sm" onclick="clearTA('location-notes')">Limpiar</button></div>
-      <textarea class="notes-ta" id="location-notes" placeholder="ALDEA DE BAROVIA:&#10;-&#10;&#10;VALLAKI:&#10;-&#10;&#10;CASTILLO RAVENLOFT:&#10;-"></textarea>
+    <div style="display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;">
+      <select id="session-select" onchange="loadSession(this.value)">
+        <option value="">— Nueva sesión —</option>
+      </select>
+      <button class="btn btn-blood btn-sm" onclick="saveSession()">💾 Guardar</button>
+      <button class="btn btn-ghost btn-sm" onclick="newSession()">+ Nueva</button>
+      <button class="btn btn-ghost btn-sm" onclick="deleteSession()" style="color:#f09090;">🗑 Borrar</button>
+    </div>
+    <div style="margin-top:8px;display:flex;gap:8px;align-items:center;">
+      <input type="text" id="session-title" placeholder="Título de la sesión (ej: Sesión 4 — La caída de Vallaki)">
+      <span id="session-date" style="font-size:.72rem;color:var(--text-dim);white-space:nowrap;"></span>
     </div>
   </div>
+
+  <div class="notes-grid">
+    <div class="card">
+      <div class="card-title" style="justify-content:space-between;">
+        <span>📜 Notas de Sesión</span>
+        <button class="btn btn-ghost btn-sm" onclick="clearTA('session-notes')">Limpiar</button>
+      </div>
+      <textarea class="notes-ta" id="session-notes" oninput="markUnsaved()"
+        placeholder="Lo que ocurre en la sesión...&#10;&#10;• Pistas encontradas&#10;• Decisiones clave&#10;• PX otorgados"></textarea>
+    </div>
+    <div class="card">
+      <div class="card-title" style="justify-content:space-between;">
+        <span>🗺 Lugares &amp; Clues</span>
+        <button class="btn btn-ghost btn-sm" onclick="clearTA('location-notes')">Limpiar</button>
+      </div>
+      <textarea class="notes-ta" id="location-notes" oninput="markUnsaved()"
+        placeholder="ALDEA DE BAROVIA:&#10;-&#10;&#10;VALLAKI:&#10;-&#10;&#10;CASTILLO RAVENLOFT:&#10;-"></textarea>
+    </div>
+  </div>
+
   <div class="card">
     <div class="card-title">📌 Notas Rápidas</div>
     <div id="qnotes-list"></div>
@@ -346,6 +184,7 @@ textarea.notes-ta{min-height:280px;resize:vertical;line-height:1.65;font-size:.8
       <button class="btn btn-blood btn-sm" style="white-space:nowrap;" onclick="addQNote()">+ Añadir</button>
     </div>
   </div>
+
 </div>
 </div>
 
@@ -397,7 +236,7 @@ textarea.notes-ta{min-height:280px;resize:vertical;line-height:1.65;font-size:.8
 </div>
 </div>
 
-<!-- ══ ENCOUNTERS ══ -->
+<!-- ══ ENCUENTROS ══ -->
 <div id="panel-encounters" class="main-panel">
 <div class="container" style="margin-top:12px;">
 <div class="grid-2" style="gap:12px;">
@@ -420,9 +259,9 @@ textarea.notes-ta{min-height:280px;resize:vertical;line-height:1.65;font-size:.8
     <div style="display:flex;gap:6px;align-items:center;">
       <input type="number" id="d-num"   value="1"  min="1" max="20" style="width:50px;">
       <span style="color:var(--text-dim);">d</span>
-      <input type="number" id="d-sides" value="20" min="2"          style="width:55px;">
+      <input type="number" id="d-sides" value="20" min="2" style="width:55px;">
       <span style="color:var(--text-dim);">+</span>
-      <input type="number" id="d-mod"   value="0"                   style="width:50px;">
+      <input type="number" id="d-mod"   value="0"  style="width:50px;">
       <button class="btn btn-gold btn-sm" onclick="rollCustom()">🎲 Tirar</button>
     </div>
   </div>
@@ -448,369 +287,13 @@ textarea.notes-ta{min-height:280px;resize:vertical;line-height:1.65;font-size:.8
 </div>
 </div>
 
-<script>
-// ══════ SOUNDBOARD DATA ══════
-const SB = {
-  areas: [
-    {id:'aldea',    icon:'🏚️', name:'Aldea de Barovia',          desc:'Silencio sepulcral, cuervos'},
-    {id:'vallaki',  icon:'🏘️', name:'Vallaki',                   desc:'Ciudad amurallada, tensión'},
-    {id:'krezk',    icon:'⛩️', name:'Krezk',                     desc:'Villa tranquila, Abadía'},
-    {id:'ravenloft',icon:'🏰', name:'Castillo Ravenloft',         desc:'Órgano lejano, oscuridad'},
-    {id:'tser',     icon:'🔮', name:'Tser Pool — Vistani',        desc:'Fuego, violines vistani'},
-    {id:'winery',   icon:'🍷', name:'Wizards of Wines',           desc:'Campo, viñedos, misterio'},
-    {id:'mill',     icon:'⚙️', name:'Viejo Molino de los Huesos', desc:'Crujidos, viento, horror'},
-    {id:'argyn',    icon:'🛡️', name:'Mansión Argynvostholt',      desc:'Gloria pasada, espectros'},
-    {id:'wachter',  icon:'🕯️', name:'Mansión Wachterhaus',        desc:'Conspiración, culto, velas'},
-    {id:'berez',    icon:'🌿', name:'Ruinas de Berez',            desc:'Pantano, bruja, desolación'},
-    {id:'wolves',   icon:'🐺', name:'Guarida Hombres Lobo',       desc:'Cueva, gruñidos, huesos'},
-    {id:'baratok',  icon:'⛰️', name:'Monte Baratok',              desc:'Viento helado, altura'},
-    {id:'lake',     icon:'🌊', name:'Lago Zarovich',              desc:'Agua oscura, barcas podridas'},
-    {id:'amber',    icon:'🔶', name:'Templo de Ámbar',            desc:'Oscuridad antigua, poder'},
-  ],
-  ambiente: [
-    {id:'bosque',   icon:'🌲', name:'Bosque',          desc:'Hojas, crujidos, animales'},
-    {id:'cueva',    icon:'🕳️', name:'Cueva / Mazmorra', desc:'Gotas, ecos, oscuridad'},
-    {id:'rio',      icon:'🌊', name:'Río / Agua',       desc:'Corriente suave'},
-    {id:'ciudad',   icon:'🏙️', name:'Ciudad medieval',  desc:'Mercado, gente, vida'},
-    {id:'taberna',  icon:'🍺', name:'Taberna',           desc:'Fuego, charlas, vino'},
-    {id:'lluvia',   icon:'🌧️', name:'Lluvia',            desc:'Lluvia suave y constante'},
-    {id:'tormenta', icon:'⛈️', name:'Tormenta',          desc:'Truenos y relámpagos'},
-    {id:'niebla',   icon:'🌫️', name:'Niebla',            desc:'Silencio, desorientación'},
-    {id:'noche',    icon:'🌙', name:'Noche',             desc:'Grillos, silencio'},
-    {id:'nieve',    icon:'❄️', name:'Nieve / Frío',      desc:'Viento helado, blancura'},
-    {id:'iglesia',  icon:'⛪', name:'Iglesia / Templo',  desc:'Coro, órgano, quietud'},
-    {id:'pantano',  icon:'🌾', name:'Pantano',           desc:'Ranas, barro, misterio'},
-  ],
-  efectos: [
-    {id:'horses',   icon:'🐎', name:'Caballos'},
-    {id:'carriage', icon:'🪨', name:'Carruaje'},
-    {id:'door_c',   icon:'🚪', name:'Puerta (crujido)'},
-    {id:'door_b',   icon:'🚪', name:'Puerta (golpe)'},
-    {id:'window',   icon:'🪟', name:'Ventana rota'},
-    {id:'swords',   icon:'⚔️', name:'Lucha espadas'},
-    {id:'arrows',   icon:'🏹', name:'Flechazos'},
-    {id:'explosion',icon:'💥', name:'Explosión'},
-    {id:'chains',   icon:'⛓️', name:'Cadenas'},
-    {id:'thunder',  icon:'⚡', name:'Trueno'},
-    {id:'wolves2',  icon:'🐺', name:'Aullido lobos'},
-    {id:'ravens',   icon:'🦅', name:'Cuervos'},
-    {id:'scream',   icon:'😱', name:'Grito'},
-    {id:'bell',     icon:'🔔', name:'Campana'},
-    {id:'fire',     icon:'🔥', name:'Fuego'},
-    {id:'magic',    icon:'✨', name:'Magia / Hechizo'},
-    {id:'coffin',   icon:'⚰️', name:'Ataúd abriendo'},
-    {id:'laugh',    icon:'😈', name:'Risa malévola'},
-  ],
-  epicas: [
-    {id:'ep1',icon:'🎼',name:'Secunda', desc:'[Épicas]', url:'<iframe width="560" height="315" src="https://www.youtube.com/embed/PzLUI1M513M?si=sGU0ZFTk6WSbA9pd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'},
-    {id:'ep2',icon:'🎼',name:'Épica 2',         desc:'[ Añade tu URL ]',              url:''},
-    {id:'ep3',icon:'🎼',name:'Épica 3',         desc:'[ Añade tu URL ]',              url:''},
-    {id:'ep4',icon:'🎶',name:'Sugerencia: Dark Souls OST',  desc:'Ambient épico oscuro', url:'https://www.youtube.com/embed/videoseries?list=PLAy7CPlUkfnfKVUEZiaMFjZgEYAV5XMAO&autoplay=1'},
-    {id:'ep5',icon:'🎶',name:'Sugerencia: Bloodborne OST',  desc:'Gótico orquestal',     url:'https://www.youtube.com/embed/videoseries?list=PLAy7CPlUkfnfKVUEZiaMFjZgEYAV5XMAO&autoplay=1'},
-    {id:'ep6',icon:'🎶',name:'Sugerencia: The Witcher OST', desc:'Eslavo, épico, oscuro', url:'https://www.youtube.com/embed/videoseries?list=PLAy7CPlUkfnfKVUEZiaMFjZgEYAV5XMAO&autoplay=1'},
-  ],
-  batallas: [
-    {id:'bat1',icon:'🔥',name:'Batalla 1',      desc:'[ Añade tu URL ]',              url:''},
-    {id:'bat2',icon:'🔥',name:'Batalla 2',      desc:'[ Añade tu URL ]',              url:''},
-    {id:'bat3',icon:'🔥',name:'Batalla 3',      desc:'[ Añade tu URL ]',              url:''},
-    {id:'bat4',icon:'⚔️',name:'Sugerencia: Two Steps From Hell', desc:'Épico orquestal intenso',url:'https://www.youtube.com/embed/videoseries?list=PLAy7CPlUkfnfKVUEZiaMFjZgEYAV5XMAO&autoplay=1'},
-    {id:'bat5',icon:'⚔️',name:'Sugerencia: Nier Automata Combat',desc:'Urgente, percusivo',      url:'https://www.youtube.com/embed/videoseries?list=PLAy7CPlUkfnfKVUEZiaMFjZgEYAV5XMAO&autoplay=1'},
-    {id:'bat6',icon:'⚔️',name:'Sugerencia: God of War OST',      desc:'Percusión brutal',        url:'https://www.youtube.com/embed/videoseries?list=PLAy7CPlUkfnfKVUEZiaMFjZgEYAV5XMAO&autoplay=1'},
-  ],
-};
+<!-- ══ SCRIPTS ══ -->
+<script src="js/soundboard.js"></script>
+<script src="js/initiative.js"></script>
+<script src="js/notes.js"></script>
+<script src="js/npcs.js"></script>
+<script src="js/encounters.js"></script>
+<script src="js/main.js"></script>
 
-const CAT_INFO = {
-  areas:    ['🗺️ Áreas de Barovia',  'Ambientes específicos para cada zona de la campaña. Haz clic en un área para cargarla en el reproductor. Puedes editar las URLs en el código para apuntar a tus playlists favoritas.'],
-  ambiente: ['🌿 Ambiente',          'Sonidos de entorno genéricos para cualquier escena. Úsalos como capa base antes de añadir música encima.'],
-  efectos:  ['⚡ Efectos de Sonido', 'Disparos puntuales para momentos concretos de la sesión. Haz clic en cualquier botón para "simular" el efecto. Próximamente: asignar URLs propias.'],
-  epicas:   ['🎼 Músicas Épicas',    'Para revelaciones dramáticas, escenas intensas y clímax narrativos. Los 3 primeros slots son tuyos — sustituye las URLs vacías por tus playlists.'],
-  batallas: ['🔥 Músicas de Batalla','Para combates. Los 3 primeros slots están listos para tus URLs. Las sugerencias apuntan a ejemplos — cámbialas por lo que uses en sesión.'],
-};
-
-// ══════ SOUNDBOARD STATE ══════
-let currentCat = 'areas';
-let playingId  = null;
-
-function switchMain(name) {
-  const tabs = ['soundboard','initiative','notes','npcs','encounters'];
-  document.querySelectorAll('.main-tab').forEach((t,i) => t.classList.toggle('active', tabs[i]===name));
-  document.querySelectorAll('.main-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('panel-'+name).classList.add('active');
-}
-
-function switchCat(cat) {
-  currentCat = cat;
-  document.querySelectorAll('.sb-cat').forEach(el => el.classList.toggle('active', el.dataset.cat===cat));
-  renderGrid();
-  const [title, text] = CAT_INFO[cat];
-  document.getElementById('cat-info-title').textContent = title;
-  document.getElementById('cat-info-text').textContent  = text;
-}
-
-function renderGrid() {
-  const sg = document.getElementById('sb-stream-grid');
-  const sl = document.getElementById('sb-sfx-layout');
-  if (currentCat === 'efectos') {
-    sg.style.display = 'none'; sl.style.display = 'block';
-    document.getElementById('sfx-grid').innerHTML = SB.efectos.map(s => `
-      <div class="sfx-btn" onclick="triggerSfx('${s.name}')">
-        <span class="sfx-icon">${s.icon}</span>
-        <span class="sfx-name">${s.name}</span>
-      </div>`).join('');
-    return;
-  }
-  sg.style.display = ''; sl.style.display = 'none';
-  sg.innerHTML = SB[currentCat].map(item => `
-    <div class="sb-item ${playingId===item.id?'playing':''}" onclick="playItem('${item.id}')">
-      ${playingId===item.id ? '<div class="playing-dot"></div>' : ''}
-      <span class="sb-item-icon">${item.icon}</span>
-      <span class="sb-item-name">${item.name}</span>
-      <span class="sb-item-desc">${item.desc||''}</span>
-    </div>`).join('');
-}
-
-function playItem(id) {
-  const item = SB[currentCat].find(i=>i.id===id);
-  if (!item) return;
-  playingId = id;
-  document.getElementById('mp-icon').textContent = item.icon;
-  document.getElementById('mp-name').textContent = item.name;
-  document.getElementById('mp-sub').textContent  = item.desc || '';
-  document.getElementById('mp-info').classList.remove('mp-idle');
-
-  let url = item.url || '';
-  // Si pegaron un iframe entero, extraer el src
-  const srcMatch = url.match(/src="([^"]+)"/);
-  if (srcMatch) url = srcMatch[1];
-  // Añadir autoplay automáticamente
-  if (url && !url.includes('autoplay')) url += (url.includes('?') ? '&' : '?') + 'autoplay=1';
-
-  const frame = document.getElementById('yt-frame');
-  if (url) { frame.src = url; }
-  else { frame.src=''; document.getElementById('mp-sub').textContent = '⚠ Asigna una URL en el código'; }
-  renderGrid();
-}
-
-function stopPlayer() {
-  playingId = null;
-  document.getElementById('yt-frame').src = '';
-  document.getElementById('mp-icon').textContent = '🎵';
-  document.getElementById('mp-name').textContent = 'Sin reproducción activa';
-  document.getElementById('mp-sub').textContent  = 'Selecciona una escena del soundboard';
-  document.getElementById('mp-info').classList.add('mp-idle');
-  renderGrid();
-}
-
-function loadCustom() {
-  let url = document.getElementById('custom-url').value.trim();
-  if (!url) return;
-  url = url.replace('watch?v=','embed/').replace('youtu.be/','www.youtube.com/embed/');
-  if (!url.includes('autoplay')) url += (url.includes('?')?'&':'?') + 'autoplay=1';
-  playingId = null;
-  document.getElementById('mp-icon').textContent = '🎵';
-  document.getElementById('mp-name').textContent = 'URL personalizada';
-  document.getElementById('mp-sub').textContent  = url.substring(0,50)+'...';
-  document.getElementById('mp-info').classList.remove('mp-idle');
-  document.getElementById('yt-frame').src = url;
-  renderGrid();
-}
-
-function triggerSfx(name) {
-  const log = document.getElementById('sfx-log');
-  const t = new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  log.innerHTML = `<span style="color:var(--gold)">${name}</span> — ${t}`;
-}
-
-// ══════ INITIATIVE ══════
-let combatants=[], currentTurn=0, round=1;
-
-function renderInit() {
-  const el = document.getElementById('init-list');
-  if (!combatants.length) { el.innerHTML='<div class="no-data">Añade combatientes para comenzar...</div>'; return; }
-  el.innerHTML = combatants.map((c,i) => {
-    const pct = Math.max(0,Math.min(100,c.hp/c.max*100));
-    const col = pct>50?'#c0392b':pct>25?'#c07020':'#555';
-    return `<div class="combatant ${c.type} ${i===currentTurn?'current':''}">
-      <span class="init-num">${c.init}</span>
-      <div style="flex:1;">
-        <div style="display:flex;align-items:center;gap:7px;">
-          <span class="c-name">${c.name}</span>
-          ${i===currentTurn?'<span class="badge-turn">TURNO</span>':''}
-        </div>
-        <div class="hp-bar-wrap"><div class="hp-bar" style="width:${pct}%;background:${col}"></div></div>
-      </div>
-      <div class="hp-col">
-        <input type="number" value="${c.hp}" min="0" max="${c.max}" onchange="setHp(${i},this.value)">
-        <span class="text-dim">/${c.max}</span>
-      </div>
-      <div style="display:flex;gap:4px;">
-        <button class="icon-btn" onclick="adjHp(${i},-5)">-5</button>
-        <button class="icon-btn" onclick="adjHp(${i},5)">+5</button>
-        <button class="icon-btn del" onclick="remC(${i})">✕</button>
-      </div>
-    </div>`;
-  }).join('');
-  document.getElementById('round-label').textContent = `Ronda ${round}`;
-}
-function addCombatant() {
-  const name=document.getElementById('new-name').value.trim();
-  const init=parseInt(document.getElementById('new-init').value)||10;
-  const hp=parseInt(document.getElementById('new-hp').value)||10;
-  const type=document.getElementById('new-type').value;
-  if(!name)return;
-  combatants.push({name,init,hp,max:hp,type});
-  ['new-name','new-init','new-hp'].forEach(id=>document.getElementById(id).value='');
-  renderInit();
-}
-function quickAdd(name,init,hp){combatants.push({name,init,hp,max:hp,type:'enemy'});renderInit();}
-function setHp(i,v){combatants[i].hp=Math.max(0,Math.min(combatants[i].max,parseInt(v)||0));renderInit();}
-function adjHp(i,d){setHp(i,combatants[i].hp+d);}
-function remC(i){combatants.splice(i,1);if(currentTurn>=combatants.length)currentTurn=0;renderInit();}
-function nextTurn(){if(!combatants.length)return;currentTurn=(currentTurn+1)%combatants.length;if(currentTurn===0)round++;renderInit();}
-function sortInit(){combatants.sort((a,b)=>b.init-a.init);currentTurn=0;renderInit();}
-function resetCombat(){combatants=[];currentTurn=0;round=1;renderInit();}
-
-// ══════ NOTES ══════
-let qnotes=[];
-function clearTA(id){if(confirm('¿Borrar estas notas?'))document.getElementById(id).value='';}
-function addQNote(){
-  const input=document.getElementById('qnote-input');
-  const txt=input.value.trim(); if(!txt)return;
-  qnotes.unshift({txt,t:new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'})});
-  input.value=''; renderQNotes();
-}
-function remQNote(i){qnotes.splice(i,1);renderQNotes();}
-function renderQNotes(){
-  const el=document.getElementById('qnotes-list');
-  if(!qnotes.length){el.innerHTML='<div class="no-data" style="padding:10px;">Sin notas rápidas...</div>';return;}
-  el.innerHTML=qnotes.map((n,i)=>`<div class="qnote"><span>${n.txt}</span><time>${n.t}</time><button class="icon-btn del" onclick="remQNote(${i})">✕</button></div>`).join('');
-}
-
-// ══════ NPCs ══════
-let npcs=[
-  {name:'Ireena Kolyana',     role:'Aliada — Hija de Kolyan',      notes:'Sangre especial. Obsesión de Strahd. Reencarnación de Tatyana.'},
-  {name:'Ismark el Menor',    role:'Alcalde interino de Barovia',   notes:'Quiere proteger a Ireena. Puede acompañar a los PJs.'},
-  {name:'Madam Eva',          role:'Adivina Vistani — Tser Pool',  notes:'Lectura de Tarot clave. No es lo que parece. Neutral peligrosa.'},
-  {name:'Strahd von Zarovich',role:'El Antagonista',                notes:'144 PV. Resistencia a no-mágico. Regeneración. Encantamiento.'},
-  {name:'Rahadin',            role:'Chambelán de Strahd',           notes:'Muy peligroso. Oído de muerte. Ejecutor implacable.'},
-];
-const NAMES={
-  barovian:{m:['Alek','Alexei','Boris','Dmitri','Gregor','Igor','Ivan','Kolyan','Mikhail','Nikolai','Pavel','Piotr','Sergei','Vasili','Viktor','Vladislav'],f:['Anya','Darya','Elena','Galena','Irina','Katya','Ludmila','Marta','Natasha','Olga','Petra','Sofia','Tatiana','Vasilka','Yeva','Zora']},
-  noble:   {m:['Argynvost','Azalin','Erasmus','Fidatov','Godfrey','Kasimir','Lief','Ludmil','Marek','Rahadin','Strahd','Vasili'],f:['Anastrasya','Bridgette','Helga','Ludmilla','Meredith','Volenta','Zuleika']},
-  vistani: {m:['Arrigal','Baratok','Bildrath','Luvash','Rictavio','Stanimir'],f:['Arabelle','Ezmerelda','Madame Eva','Tara','Zsofia']},
-  werewolf:{m:['Bray','Feral','Grolk','Kiril','Skennis','Szoldar','Yevgeni'],f:['Bianca','Helwa','Mala','Mirela','Zula']},
-};
-const TRAITS={
-  ap:['Ojos grises hundidos','Cicatriz en la mejilla','Cabello blanco prematuro','Manos siempre frías','Cojera leve','Ropa muy remendada','Piel casi traslúcida'],
-  pe:['Desconfía de extranjeros','Habla en susurros','Obsesionado con el vino','Fatalista: "Strahd siempre gana"','Ríe nervioso cuando miente','Siempre mira la puerta'],
-  de:['Bebe en exceso','Delata a cambio de protección','Cobarde en el momento clave','Adicto al juego','Miente compulsivamente'],
-  mo:['Proteger a su familia','Encontrar a un ser querido','Escapar de Barovia','Vengar una injusticia antigua','Simplemente sobrevivir'],
-};
-const pick=arr=>arr[Math.floor(Math.random()*arr.length)];
-function renderNpcs(){
-  document.getElementById('npc-list').innerHTML=npcs.map((n,i)=>`
-    <div class="npc-card">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-        <strong>${n.name}</strong><button class="icon-btn del" onclick="remNpc(${i})">✕</button>
-      </div>
-      <em>${n.role}</em><p>${n.notes}</p>
-    </div>`).join('');
-}
-function addNpc(){
-  const name=document.getElementById('npc-name').value.trim();
-  const role=document.getElementById('npc-role').value.trim();
-  const notes=document.getElementById('npc-notes').value.trim();
-  if(!name)return;
-  npcs.push({name,role,notes});
-  ['npc-name','npc-role','npc-notes'].forEach(id=>document.getElementById(id).value='');
-  renderNpcs();
-}
-function remNpc(i){npcs.splice(i,1);renderNpcs();}
-function genName(){
-  const o=document.getElementById('name-origin').value;
-  const g=document.getElementById('name-gender').value;
-  const pool=g==='any'?[...NAMES[o].m,...NAMES[o].f]:NAMES[o][g]||NAMES[o].m;
-  const el=document.getElementById('name-result');
-  el.textContent=pick(pool);
-  el.style.animation='none';el.offsetHeight;el.style.animation='rollAnim .3s ease';
-}
-function genMultiple(){
-  const o=document.getElementById('name-origin').value;
-  const g=document.getElementById('name-gender').value;
-  const pool=g==='any'?[...NAMES[o].m,...NAMES[o].f]:NAMES[o][g]||NAMES[o].m;
-  const five=[...pool].sort(()=>Math.random()-.5).slice(0,5);
-  document.getElementById('name-list').innerHTML=five.map(n=>`<span class="name-chip" onclick="document.getElementById('name-result').textContent=this.textContent">${n}</span>`).join('');
-}
-function genTraits(){
-  [TRAITS.ap,TRAITS.pe,TRAITS.de,TRAITS.mo].forEach((arr,i)=>{
-    const el=document.getElementById('t'+i);
-    el.textContent=pick(arr); el.style.color='var(--text)';
-    el.style.animation='none';el.offsetHeight;el.style.animation='rollAnim .3s ease';
-  });
-}
-
-// ══════ ENCOUNTERS ══════
-const ENCS={
-  forest: [{d:'1-2',t:'3d6 Lobos atacan desde el bosque'},{d:'3-4',t:'1d4 Zombis emergen del barro'},{d:'5',t:'Carromato Vistani volcado. Sangre reciente.'},{d:'6',t:'Lobo solitario os observa. No ataca.'},{d:'7',t:'2 Esqueletos montados bloquean el camino'},{d:'8',t:'Anciana con cesta — espía de Strahd'},{d:'9',t:'Niebla densa: CD 12 Sabiduría o perderse (2h)'},{d:'10',t:'Silencio. Solo la sensación de ser observados.'}],
-  village:[{d:'1-2',t:'Aldeanos huyen gritando sin explicación'},{d:'3-4',t:'Niño busca a sus padres (3 días desaparecidos)'},{d:'5',t:'Guardia borracho exige documentos y soborno'},{d:'6',t:'Vistani en las afueras: comercian o traicionan'},{d:'7',t:'Cuervos caídos — mensajeros de los Guardianes'},{d:'8',t:'Strahd pasa en carruaje. Os mira fijamente.'},{d:'9',t:'Funeral — el ataúd está vacío'},{d:'10',t:'Ismark busca aventureros con una oferta urgente.'}],
-  vallaki: [{d:'1-2',t:'Patrulla del Barón — papeles en orden'},{d:'3-4',t:'Miembros del culto de Wachterhaus os siguen'},{d:'5',t:'Mensaje cifrado de la Mansión Wachter'},{d:'6',t:'Festival del Sol Alegre en preparación'},{d:'7',t:'Preso escapado pide ayuda'},{d:'8',t:'Incendio en el mercado — sospechoso conveniente'},{d:'9',t:'Padre Lucian busca ayuda con los muertos'},{d:'10',t:'Rictavio os observa desde la sombra de la taberna'}],
-  castle:  [{d:'1-2',t:'2 Guardias Vampiro patrullan'},{d:'3-4',t:'Novia de Strahd os sigue invisible'},{d:'5',t:'Trampa arcana: CD 15 Percepción o 2d10 necrótico'},{d:'6',t:'El órgano toca solo. Nadie en la sala.'},{d:'7',t:'Puerta secreta (CD 16 Investigación)'},{d:'8',t:'Strahd aparece e invita a cenar cortésmente.'},{d:'9',t:'3 Zombis Nobles desde un armario'},{d:'10',t:'El castillo susurra el nombre de un PJ.'}],
-  road:    [{d:'1-2',t:'Supervivientes heridos junto a un carromato volcado'},{d:'3-4',t:'Guardia fronterizo exige tributo'},{d:'5',t:'Pasos en la niebla. Nadie visible.'},{d:'6',t:'Viejo señala el castillo y ríe. Desaparece.'},{d:'7',t:'Lobo herido — si curáis, os sigue (espía)'},{d:'8',t:'Tormenta repentina. Refugio: cabaña abandonada.'},{d:'9',t:'Niños jugando que huyen al veros'},{d:'10',t:'El tiempo se detiene 1 minuto. Silencio total.'}],
-  tavern:  [{d:'1-2',t:'Borracho dice haber visto a Strahd esa noche'},{d:'3-4',t:'Pelea involucra a un PJ (1d6 contundente)'},{d:'5',t:'Vistani canta una canción sobre los aventureros'},{d:'6',t:'Alguien anota vuestra conversación'},{d:'7',t:'Oferta de misión urgente'},{d:'8',t:'Vino raro: CD 14 Con. o Veneno 1h'},{d:'9',t:'Strahd entra y pide una copa. Silencio.'},{d:'10',t:'Noche tranquila. Por ahora.'}],
-};
-function renderEncTable(zone){
-  document.getElementById('enc-table').innerHTML=
-    '<thead><tr><th>d10</th><th>Encuentro</th></tr></thead><tbody>'+
-    (ENCS[zone]||[]).map(r=>`<tr><td style="color:var(--blood-bright);font-weight:bold;">${r.d}</td><td>${r.t}</td></tr>`).join('')+
-    '</tbody>';
-}
-function rollEncounter(){
-  const zone=document.getElementById('enc-zone').value;
-  const rows=ENCS[zone]||[];
-  const roll=Math.floor(Math.random()*10)+1;
-  let res=rows[rows.length-1];
-  for(const r of rows){if(r.d.includes('-')){const[lo,hi]=r.d.split('-').map(Number);if(roll>=lo&&roll<=hi){res=r;break;}}else if(parseInt(r.d)===roll){res=r;break;}}
-  const el=document.getElementById('enc-result');
-  el.innerHTML=`<div class="enc-result"><div style="font-size:.73rem;color:var(--text-dim);margin-bottom:5px;">d10 → <span style="color:var(--blood-bright);font-weight:bold;">${roll}</span></div>${res.t}</div>`;
-  el.style.animation='none';el.offsetHeight;el.style.animation='rollAnim .3s ease';
-}
-
-// ══════ DICE ══════
-let diceHist=[];
-function rollDie(s){showDice(`d${s}`,Math.floor(Math.random()*s)+1,s);}
-function rollCustom(){
-  const n=parseInt(document.getElementById('d-num').value)||1;
-  const s=parseInt(document.getElementById('d-sides').value)||20;
-  const m=parseInt(document.getElementById('d-mod').value)||0;
-  let total=0,rolls=[];
-  for(let i=0;i<n;i++){const r=Math.floor(Math.random()*s)+1;rolls.push(r);total+=r;}
-  total+=m;
-  showDice(`${n}d${s}${m>=0?'+'+m:m}`,total,null,`(${rolls.join('+')})`);
-}
-function showDice(label,value,sides,note=''){
-  const el=document.getElementById('dice-result');
-  el.className='dice-big roll-anim'; el.textContent=value;
-  const crit=sides&&value===sides?' ⭐ ¡Crítico!':sides&&value===1?' 💀 Pifia':'';
-  diceHist.unshift({label,value,note:note+crit,t:new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit',second:'2-digit'})});
-  if(diceHist.length>8)diceHist.pop();
-  document.getElementById('dice-history').innerHTML=diceHist.map(d=>`
-    <div style="font-size:.74rem;color:var(--text-dim);padding:3px 0;border-bottom:1px solid var(--border);">
-      <span style="color:var(--gold)">${d.label}</span> → <span style="color:var(--text)">${d.value}</span>
-      <span style="float:right;font-size:.62rem;">${d.t}</span>
-      ${d.note?`<span style="color:var(--blood-bright);font-style:italic;"> ${d.note}</span>`:''}
-    </div>`).join('');
-}
-
-// ══════ INIT ══════
-window.onload=()=>{
-  renderGrid();
-  switchCat('areas');
-  renderInit();
-  renderQNotes();
-  renderNpcs();
-  renderEncTable('forest');
-};
-</script>
 </body>
 </html>
-
