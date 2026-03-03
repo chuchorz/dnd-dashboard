@@ -23,6 +23,7 @@
   <div class="main-tab"       onclick="switchMain('encounters')">🎲 Encuentros</div>
   <div class="main-tab"       onclick="switchMain('strahd')">⚰️ Strahd</div>
   <div class="main-tab"       onclick="switchMain('tarot')">🔮 Tarot</div>
+  <div class="main-tab"       onclick="switchMain('mapa')">🗺️ Mapa</div>
 </div>
 
 <!-- ══ SOUNDBOARD ══ -->
@@ -318,33 +319,204 @@
 
   <div class="card" style="margin-bottom:12px;">
     <div class="card-title" style="justify-content:space-between;">
-      <span>🔮 La Lectura de Madam Eva</span>
+      <span>🔮 Lectura de Madam Eva — Las Cartas del Tarokka</span>
       <div style="display:flex;gap:8px;">
-        <button class="btn btn-blood btn-sm" onclick="drawTarot()">🃏 Tirar las Cartas</button>
-        <button class="btn btn-ghost btn-sm" onclick="revealAll()">👁 Revelar Todas</button>
+        <button class="btn btn-gold btn-sm"  onclick="revealAll()">👁 Revelar Todas</button>
+        <button class="btn btn-ghost btn-sm" onclick="hideAll()">🙈 Ocultar Todas</button>
       </div>
     </div>
-    <p class="tarot-intro">
-      Las cinco cartas revelan el destino de los aventureros en Barovia. Haz clic en cada carta para revelarla cuando sea el momento dramático adecuado.
+    <p style="font-size:.84rem;color:var(--text-dim);font-style:italic;line-height:1.7;text-align:center;padding:8px 20px;border-bottom:1px solid var(--border);margin-bottom:16px;">
+      Las cartas han sido tiradas. Cinco destinos aguardan ser revelados.<br>
+      Haz clic en cada carta en el momento dramático adecuado para revelarla ante los jugadores.
     </p>
-    <div class="tarot-grid" id="tarot-cards">
-      <div class="no-data" style="grid-column:1/-1;padding:40px;">
-        Haz clic en "Tirar las Cartas" para que Madam Eva haga la lectura...
+    <div id="tarot-cards"></div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══ MAPA ══ -->
+<div id="panel-mapa" class="main-panel">
+<div class="container" style="margin-top:12px;">
+
+  <div class="card" style="margin-bottom:12px;">
+    <div class="card-title" style="justify-content:space-between;">
+      <span>🗺️ Mapa de Barovia</span>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span id="map-selected-name" style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold);letter-spacing:.1em;"></span>
+        <button class="btn btn-ghost btn-sm" onclick="clearMapSelection()">✕ Limpiar</button>
       </div>
     </div>
-  </div>
 
-  <div class="card">
-    <div class="card-title">📖 Las 5 Posiciones</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;">
-      <div class="defense-box"><div class="defense-title">💰 El Tesoro</div>El objeto o arma capaz de destruir o debilitar a Strahd.</div>
-      <div class="defense-box"><div class="defense-title">🛡️ El Tótem</div>La persona, símbolo o lugar que infunde esperanza y fortaleza.</div>
-      <div class="defense-box"><div class="defense-title">📖 El Tomo</div>El conocimiento mágico o el arma arcana necesaria.</div>
-      <div class="defense-box"><div class="defense-title">⛪ La Reliquia</div>El símbolo sagrado que puede proteger contra la oscuridad.</div>
-      <div class="defense-box"><div class="defense-title">🏰 El Señor</div>La carta que describe a Strahd en este momento de la campaña.</div>
+    <!-- Mapa SVG interactivo -->
+    <div style="position:relative;width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:2px;overflow:hidden;">
+      <svg id="barovia-map" viewBox="0 0 900 600" style="width:100%;display:block;cursor:pointer;">
+
+        <!-- Fondo niebla / terreno -->
+        <defs>
+          <radialGradient id="fogGrad" cx="50%" cy="50%" r="60%">
+            <stop offset="0%"   stop-color="#1c1508"/>
+            <stop offset="100%" stop-color="#0e0b07"/>
+          </radialGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <rect width="900" height="600" fill="url(#fogGrad)"/>
+
+        <!-- Montañas (decorativas) -->
+        <g fill="#1a1408" stroke="#2a2010" stroke-width="1" opacity="0.8">
+          <!-- Norte -->
+          <polygon points="0,80 60,20 120,80"/>
+          <polygon points="80,90 150,10 220,90"/>
+          <polygon points="180,85 240,25 300,85"/>
+          <polygon points="580,75 650,5  720,75"/>
+          <polygon points="680,80 740,15 810,80"/>
+          <polygon points="780,85 850,10 920,85"/>
+          <!-- Sur -->
+          <polygon points="0,520 60,460 120,520"/>
+          <polygon points="80,530 150,455 220,530"/>
+          <polygon points="750,515 820,450 890,515"/>
+          <polygon points="820,525 880,460 940,525"/>
+        </g>
+
+        <!-- Río Ivlis -->
+        <path d="M 280,50 C 300,150 270,200 290,280 C 310,360 280,420 300,500" 
+              fill="none" stroke="#203050" stroke-width="8" opacity="0.6"/>
+        <path d="M 280,50 C 300,150 270,200 290,280 C 310,360 280,420 300,500" 
+              fill="none" stroke="#304060" stroke-width="3" opacity="0.4"/>
+
+        <!-- Lago Zarovich -->
+        <ellipse cx="480" cy="180" rx="70" ry="40" fill="#1a2840" stroke="#253550" stroke-width="2" opacity="0.8"/>
+        <text x="480" y="185" text-anchor="middle" fill="#405070" font-size="9" font-style="italic">Lago Zarovich</text>
+
+        <!-- Bosque Svalich (áreas) -->
+        <g fill="#0f1a0a" opacity="0.5">
+          <ellipse cx="200" cy="300" rx="150" ry="120"/>
+          <ellipse cx="600" cy="350" rx="130" ry="100"/>
+          <ellipse cx="400" cy="480" rx="100" ry="70"/>
+        </g>
+
+        <!-- LOCALIZACIONES — puntos interactivos -->
+        <!-- Cada grupo tiene: círculo, icono, label, y onclick -->
+
+        <!-- 1. Aldea de Barovia -->
+        <g class="map-loc" onclick="selectLocation('aldea')" id="loc-aldea" transform="translate(300,400)">
+          <circle r="18" fill="#1c1508" stroke="#5a3020" stroke-width="2" class="loc-circle"/>
+          <text y="5"  text-anchor="middle" font-size="16">🏚️</text>
+          <text y="30" text-anchor="middle" fill="#c4a870" font-size="9" font-family="Cinzel">Aldea de Barovia</text>
+        </g>
+
+        <!-- 2. Vallaki -->
+        <g class="map-loc" onclick="selectLocation('vallaki')" id="loc-vallaki" transform="translate(460,310)">
+          <circle r="18" fill="#1c1508" stroke="#5a3020" stroke-width="2" class="loc-circle"/>
+          <text y="5"  text-anchor="middle" font-size="16">🏘️</text>
+          <text y="30" text-anchor="middle" fill="#c4a870" font-size="9" font-family="Cinzel">Vallaki</text>
+        </g>
+
+        <!-- 3. Castillo Ravenloft -->
+        <g class="map-loc" onclick="selectLocation('ravenloft')" id="loc-ravenloft" transform="translate(550,200)">
+          <circle r="22" fill="#1c0808" stroke="#8b0000" stroke-width="2.5" class="loc-circle"/>
+          <text y="6"  text-anchor="middle" font-size="20">🏰</text>
+          <text y="32" text-anchor="middle" fill="#e8a080" font-size="9" font-family="Cinzel">Castillo Ravenloft</text>
+        </g>
+
+        <!-- 4. Krezk -->
+        <g class="map-loc" onclick="selectLocation('krezk')" id="loc-krezk" transform="translate(200,250)">
+          <circle r="16" fill="#1c1508" stroke="#5a3020" stroke-width="2" class="loc-circle"/>
+          <text y="5"  text-anchor="middle" font-size="14">⛩️</text>
+          <text y="28" text-anchor="middle" fill="#c4a870" font-size="9" font-family="Cinzel">Krezk</text>
+        </g>
+
+        <!-- 5. Tser Pool Vistani -->
+        <g class="map-loc" onclick="selectLocation('tser')" id="loc-tser" transform="translate(370,200)">
+          <circle r="16" fill="#1c1508" stroke="#5a3020" stroke-width="2" class="loc-circle"/>
+          <text y="5"  text-anchor="middle" font-size="14">🔮</text>
+          <text y="28" text-anchor="middle" fill="#c4a870" font-size="9" font-family="Cinzel">Tser Pool</text>
+        </g>
+
+        <!-- 6. Wizards of Wines -->
+        <g class="map-loc" onclick="selectLocation('winery')" id="loc-winery" transform="translate(280,350)">
+          <circle r="15" fill="#1c1508" stroke="#5a3020" stroke-width="2" class="loc-circle"/>
+          <text y="5"  text-anchor="middle" font-size="13">🍷</text>
+          <text y="27" text-anchor="middle" fill="#c4a870" font-size="8" font-family="Cinzel">Wizards of Wines</text>
+        </g>
+
+        <!-- 7. Argynvostholt -->
+        <g class="map-loc" onclick="selectLocation('argyn')" id="loc-argyn" transform="translate(650,320)">
+          <circle r="16" fill="#1c1508" stroke="#4a6090" stroke-width="2" class="loc-circle"/>
+          <text y="5"  text-anchor="middle" font-size="14">🛡️</text>
+          <text y="28" text-anchor="middle" fill="#a0b8e0" font-size="8" font-family="Cinzel">Argynvostholt</text>
+        </g>
+
+        <!-- 8. Torre de Van Richten -->
+        <g class="map-loc" onclick="selectLocation('torre')" id="loc-torre" transform="translate(500,130)">
+          <circle r="16" fill="#1c1508" stroke="#8060c0" stroke-width="2" class="loc-circle"/>
+          <text y="5"  text-anchor="middle" font-size="14">🔭</text>
+          <text y="28" text-anchor="middle" fill="#b090e0" font-size="8" font-family="Cinzel">Torre Van Richten</text>
+        </g>
+
+        <!-- 9. Molino de los Huesos -->
+        <g class="map-loc" onclick="selectLocation('mill')" id="loc-mill" transform="translate(360,460)">
+          <circle r="15" fill="#1c1508" stroke="#5a3020" stroke-width="2" class="loc-circle"/>
+          <text y="5"  text-anchor="middle" font-size="13">⚙️</text>
+          <text y="27" text-anchor="middle" fill="#c4a870" font-size="8" font-family="Cinzel">Molino de Huesos</text>
+        </g>
+
+        <!-- 10. Mansión Wachterhaus -->
+        <g class="map-loc" onclick="selectLocation('wachter')" id="loc-wachter" transform="translate(490,360)">
+          <circle r="15" fill="#1c1508" stroke="#5a3020" stroke-width="2" class="loc-circle"/>
+          <text y="5"  text-anchor="middle" font-size="13">🕯️</text>
+          <text y="27" text-anchor="middle" fill="#c4a870" font-size="8" font-family="Cinzel">Wachterhaus</text>
+        </g>
+
+        <!-- 11. Templo del Ámbar -->
+        <g class="map-loc" onclick="selectLocation('amber')" id="loc-amber" transform="translate(720,150)">
+          <circle r="17" fill="#1c1508" stroke="#c08020" stroke-width="2" class="loc-circle"/>
+          <text y="5"  text-anchor="middle" font-size="15">🔶</text>
+          <text y="29" text-anchor="middle" fill="#e8c060" font-size="8" font-family="Cinzel">Templo del Ámbar</text>
+        </g>
+
+        <!-- 12. Guarida Hombres Lobo -->
+        <g class="map-loc" onclick="selectLocation('wolves')" id="loc-wolves" transform="translate(170,420)">
+          <circle r="15" fill="#1c1508" stroke="#5a3020" stroke-width="2" class="loc-circle"/>
+          <text y="5"  text-anchor="middle" font-size="13">🐺</text>
+          <text y="27" text-anchor="middle" fill="#c4a870" font-size="8" font-family="Cinzel">Guarida Lobos</text>
+        </g>
+
+        <!-- 13. Ruinas de Berez -->
+        <g class="map-loc" onclick="selectLocation('berez')" id="loc-berez" transform="translate(400,530)">
+          <circle r="15" fill="#1c1508" stroke="#5a3020" stroke-width="2" class="loc-circle"/>
+          <text y="5"  text-anchor="middle" font-size="13">🌿</text>
+          <text y="27" text-anchor="middle" fill="#c4a870" font-size="8" font-family="Cinzel">Ruinas de Berez</text>
+        </g>
+
+        <!-- Leyenda: tesoros de la profecía -->
+        <g transform="translate(750,400)">
+          <rect width="140" height="130" rx="2" fill="#12100a" stroke="#3a2e18" stroke-width="1"/>
+          <text x="70" y="18" text-anchor="middle" fill="#e8c87a" font-size="9" font-family="Cinzel">PROFECÍA</text>
+          <line x1="10" y1="24" x2="130" y2="24" stroke="#3a2e18"/>
+          <circle cx="20" cy="40"  r="5" fill="#8060c0" stroke="#6040a0"/>
+          <text x="30" y="44" fill="#b090e0" font-size="8">📖 Tomo — Van Richten</text>
+          <circle cx="20" cy="58"  r="5" fill="#a04020" stroke="#803010"/>
+          <text x="30" y="62" fill="#e0a080" font-size="8">✝️ Símbolo — Argynv.</text>
+          <circle cx="20" cy="76"  r="5" fill="#c08020" stroke="#a06010"/>
+          <text x="30" y="80" fill="#e8c060" font-size="8">☀️ Espada — Ámbar</text>
+          <circle cx="20" cy="94"  r="5" fill="#205080" stroke="#104060"/>
+          <text x="30" y="98" fill="#80b0e0" font-size="8">🌫️ Aliada — Errante</text>
+          <circle cx="20" cy="112" r="5" fill="#7a0000" stroke="#500000"/>
+          <text x="30" y="116" fill="#e08060" font-size="8">⚰️ Strahd — K86</text>
+        </g>
+
+      </svg>
     </div>
-  </div>
 
+    <!-- Panel de info al seleccionar localización -->
+    <div id="map-info-panel" style="display:none;margin-top:12px;"></div>
+
+  </div>
 </div>
 </div>
 
@@ -533,6 +705,7 @@
 <script src="js/encounters.js"></script>
 <script src="js/strahd.js"></script>
 
+<script src="js/mapa.js"></script>
 <script src="js/main.js"></script>
 
 </body>
