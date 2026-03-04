@@ -1,288 +1,408 @@
-// ══════ PANEL DE STRAHD ══════
+// ══════ STRAHD — PANEL DE COMBATE ══════
 
 const STRAHD_PHASES = {
-  1: {
-    name: 'El Señor de Ravenloft', icon: '🧛', color: '#c4a870',
-    hp_range: '144 – 97 PV',
-    desc: 'Aristocrático y calculador. Prefiere el diálogo y la manipulación. Usa Encantamiento y control de mente.',
+  mago: {
+    id: 'mago',
+    name: 'El Mago',
+    icon: '✨',
+    color: '#7050c0',
+    hp: 331,
+    maxHp: 331,
+    ca: 16,
+    vel: '40 pies / trepar 40 pies',
+    saves: 'Des +11, Sab +8, Car +11',
+    skills: 'Arcanos +17, Atletismo +11, Engaño +17, Percepción +14, Religión +11, Sigilo +17',
+    stats: [{s:'FUE',v:'20 (+5)'},{s:'DES',v:'20 (+5)'},{s:'CON',v:'18 (+4)'},{s:'INT',v:'20 (+5)'},{s:'SAB',v:'15 (+2)'},{s:'CAR',v:'20 (+5)'}],
+    traits: [
+      { name:'Lanzamiento Complejo', desc:'Si lanza un conjuro con acción adicional, también puede usar su acción para lanzar un cantrip.' },
+      { name:'Resistencia Legendaria (1/Día)', desc:'Si falla una salvación, puede elegir tener éxito.' },
+      { name:'Regeneración', desc:'Recupera 20 PG al inicio de su turno si tiene ≥1 PG y no está en luz solar.' },
+    ],
     actions: [
-      { name: 'Golpe Múltiple (×3)', roll: '+9', dmg: '1d8+5 contundente + 1d6 necrótico' },
-      { name: 'Mordisco',            roll: '+9', dmg: '1d6+5 perforante + 3d6 necrótico (recupera PV iguales)' },
-      { name: 'Encantamiento',       roll: 'CD 17 Sab', dmg: 'Hechizado hasta 24h. Obedece órdenes verbales.' },
-      { name: 'Forma de Niebla',     roll: '—', dmg: 'Gaseoso. Inmune a todo daño no mágico. Velocidad vuelo 9m.' },
+      { name:'Multiataque', type:'Acción', desc:'Usa Toque Vampírico dos veces, o Toque Vampírico + Telequinesis una vez cada uno.' },
+      { name:'Toque Vampírico', type:'Acción', desc:'Ataque. Impacto: CD 19 Con o queda aturdido hasta inicio del siguiente turno de Strahd.' },
+      { name:'Agarre Telekinético', type:'Acción', desc:'Un objetivo a 18m: CD 19 Fue o se eleva 6m, 28 (7d6) necrótico, inmovilizado hasta fin turno.' },
+      { name:'Círculo de Enfermedad', type:'Adicional', desc:'Radio 3m: CD 19 Con o 28 (8d6) necrótico + desventaja en siguiente ataque.' },
+      { name:'Rayo de Relámpago', type:'Adicional', desc:'Lanza rayo de relámpago.' },
+      { name:'Paso Brumoso', type:'Reacción', desc:'En respuesta a recibir daño, lanza paso brumoso.' },
+      { name:'Ceguera/Sordera', type:'Reacción', desc:'En respuesta a daño cuerpo a cuerpo: CD 19 Con o el atacante queda cegado/sordo + 12 (2d6) necrótico.' },
     ],
-    legendary: [
-      { name: 'Mover',          desc: 'Hasta velocidad completa sin provocar ataques de oportunidad.' },
-      { name: 'Garras',         desc: '+9 impacto · 2d4+5 cortante.' },
-      { name: 'Regenerar',      desc: 'Recupera 20 PV (requiere al menos 1 PV y no luz solar).' },
+    lair: [
+      { name:'Dispersión', desc:'Hasta 3 criaturas a 18m: CD 19 Sab o teletransportadas a espacio en el suelo elegido por Strahd.' },
+      { name:'Esfera Ígnea', desc:'Esfera de fuego (5m diám.) en espacio visible. Criaturas a 1.5m: CD 19 Des o 14 (4d6) fuego por turno.' },
     ],
+    innate: [
+      '3/día: detectar pensamientos, animar a los muertos',
+      '1/día: clarividencia',
+    ],
+    transition: 'Strahd vacila un momento, pero su mirada se endurece. Desenfunda su espada larga — la magia se desvanece. Una nueva fuerza se apodera de él.',
   },
-  2: {
-    name: 'El Soldado Inmortal', icon: '⚔️', color: '#b03020',
-    hp_range: '96 – 49 PV',
-    desc: 'Agresivo y directo. Lucha como el general de guerra que fue. Ataques múltiples y movimiento táctico.',
+
+  soldado: {
+    id: 'soldado',
+    name: 'El Soldado',
+    icon: '⚔️',
+    color: '#b03020',
+    hp: 331,
+    maxHp: 331,
+    ca: 16,
+    vel: '40 pies / trepar 40 pies',
+    saves: 'Des +11, Fue +8, Car +11',
+    skills: 'Arcanos +17, Atletismo +11, Engaño +17, Percepción +14, Religión +11, Sigilo +17',
+    stats: [{s:'FUE',v:'20 (+5)'},{s:'DES',v:'20 (+5)'},{s:'CON',v:'18 (+4)'},{s:'INT',v:'20 (+5)'},{s:'SAB',v:'15 (+2)'},{s:'CAR',v:'20 (+5)'}],
+    traits: [
+      { name:'Conciencia de Campo de Batalla', desc:'Ventaja en salvaciones de Fue y Des contra efectos que pueda ver o escuchar.' },
+      { name:'Resistencia Legendaria (1/Día)', desc:'Si falla una salvación, puede elegir tener éxito.' },
+      { name:'Regeneración', desc:'Recupera 20 PG al inicio de su turno si tiene ≥1 PG y no está en luz solar.' },
+    ],
     actions: [
-      { name: 'Ataque Múltiple (×4)', roll: '+9', dmg: '1d8+5 contundente + 1d6 necrótico cada uno' },
-      { name: 'Carga Devastadora',    roll: '+9', dmg: '2d8+5 + empuja 3m y derriba (CD 17 Fue)' },
-      { name: 'Desarme',              roll: '+9 vs CD Fue', dmg: 'El objetivo suelta su arma.' },
-      { name: 'Mordisco',             roll: '+9', dmg: '1d6+5 perforante + 3d6 necrótico (recupera PV iguales)' },
+      { name:'Multiataque', type:'Acción', desc:'Dos ataques, solo uno puede ser con Red Umbral.' },
+      { name:'Espada Larga', type:'Acción', desc:'+11, 5 pies. Impacto: 11 (1d10+5) cortante + 7 (2d6) necrótico. CD 19 Fue o empujado 5 pies y derribado.' },
+      { name:'Red Umbral', type:'Acción', desc:'+11, alcance 9m/18m. Impacto: 7 (2d6) necrótico + inmovilizado hasta fin del turno.' },
+      { name:'Ola de Trueno', type:'Adicional', desc:'Radio 1.5m: CD 19 Fue o 14 (3d8) trueno + empujado 5 pies.' },
+      { name:'Descarga Oscura', type:'Adicional', desc:'Punto a 36m, radio 3m: CD 19 Des o 18 (4d8) necrótico.' },
+      { name:'Retirada del Comandante', type:'Reacción', desc:'Al recibir daño cuerpo a cuerpo: CD 19 Fue o atacante empujado 5 pies. Luego Strahd mueve hasta su velocidad sin oportunidad.' },
+      { name:'Golpe Vengativo', type:'Reacción', desc:'Al recibir daño a distancia: mueve hasta vel. hacia el atacante y puede atacar con espada larga. Sin oportunidad.' },
     ],
-    legendary: [
-      { name: 'Mover',      desc: 'Hasta velocidad completa sin provocar ataques de oportunidad.' },
-      { name: 'Tajo',       desc: '+9 impacto · 2d6+5 cortante en arco (todos en 1,5m).' },
-      { name: 'Intimidar',  desc: 'CD 17 Sab o Asustado hasta fin del siguiente turno de Strahd.' },
+    lair: [
+      { name:'Manos Fantasmales', desc:'No muertas en cuadrado 3m a 18m: CD 19 Fue o inmovilizadas hasta iniciativa 20 del siguiente turno.' },
+      { name:'Banco de Niebla', desc:'Niebla radio 12m a 18m, muy oscurecida. Strahd puede esconderse como reacción y mover hasta vel.' },
     ],
+    innate: [],
+    transition: 'Un corte profundo atraviesa la armadura de Strahd — sus colmillos crecen y sus ojos arden en rojo bestial. Sus uñas se alargan como garras. La verdadera naturaleza del vampiro despierta.',
   },
-  3: {
-    name: 'La Bestia de la Oscuridad', icon: '🐺', color: '#9060b0',
-    hp_range: '48 – 0 PV',
-    desc: 'Instintivo y salvaje. Transformación parcial. Ataques brutales. Prioriza la supervivencia a toda costa.',
+
+  vampiro: {
+    id: 'vampiro',
+    name: 'El Vampiro',
+    icon: '🩸',
+    color: '#8b0000',
+    hp: 331,
+    maxHp: 331,
+    ca: 16,
+    vel: '40 pies / trepar 40 pies',
+    saves: 'Des +11, Sab +8, Car +11',
+    skills: 'Arcanos +17, Atletismo +11, Engaño +17, Percepción +14, Religión +11, Sigilo +17',
+    stats: [{s:'FUE',v:'20 (+5)'},{s:'DES',v:'20 (+5)'},{s:'CON',v:'18 (+4)'},{s:'INT',v:'20 (+5)'},{s:'SAB',v:'15 (+2)'},{s:'CAR',v:'20 (+5)'}],
+    traits: [
+      { name:'Padre de la Noche', desc:'Humanoide muerto por su mordida resucita como vástago vampírico bajo su control al inicio de su siguiente turno.' },
+      { name:'Resistencia Legendaria (1/Día)', desc:'Si falla una salvación, puede elegir tener éxito.' },
+      { name:'Regeneración', desc:'Recupera 20 PG al inicio de su turno si tiene ≥1 PG y no está en luz solar.' },
+    ],
     actions: [
-      { name: 'Garras Furiosas (×3)',  roll: '+9', dmg: '2d6+5 cortante + 1d6 necrótico' },
-      { name: 'Mordisco Devastador',   roll: '+9', dmg: '2d10+5 perforante + recupera PV = daño necrótico' },
-      { name: 'Rugido Aterrador',      roll: 'CD 17 Sab', dmg: 'Todos en 9m: Asustados hasta fin del turno.' },
-      { name: 'Forma de Lobo',         roll: '—', dmg: 'Transforma en lobo. Velocidad 18m. Mantiene estadísticas.' },
+      { name:'Multiataque', type:'Acción', desc:'Dos ataques, puede reemplazar uno con Encanto.' },
+      { name:'Ataque Desarmado', type:'Acción', desc:'+11, 5 pies. Impacto: 10 (1d8+5) contundente. CD 19 Des o agarrado (escapar DC 19).' },
+      { name:'Mordida', type:'Acción', desc:'+11, 5 pies (criatura dispuesta/agarrada/incapacitada). Impacto: 7 (1d6+4) perforante + 10 (3d6) necrótico. Reduce PG máx. Strahd recupera esos PG.' },
+      { name:'Encanto', type:'Acción', desc:'Humanoide a 9m: CD 19 Sab o encantado 1 min/1 h/24 h. Considera a Strahd un amigo de confianza.' },
+      { name:'Frenesí de Murciélagos', type:'Adicional', desc:'Radio 3m: CD 19 Des o 15 (6d4) necrótico + desventaja en siguiente ataque.' },
+      { name:'Furia del Depredador', type:'Adicional', desc:'Dos criaturas a 18m (a 1.5m entre sí): CD 19 Des o 16 (2d10+5) contundente + derribadas.' },
+      { name:'Retiro Nocturno', type:'Reacción', desc:'Al recibir daño: vuela hasta su velocidad sin provocar ataques de oportunidad.' },
+      { name:'Frenesí de Sangre', type:'Reacción', desc:'Al recibir daño: mueve hasta vel. hacia el atacante y realiza un Ataque Desarmado.' },
     ],
-    legendary: [
-      { name: 'Mover',       desc: 'Hasta velocidad completa sin provocar ataques de oportunidad.' },
-      { name: 'Mordisco',    desc: '+9 impacto · 1d6+5 + recupera 7 PV.' },
-      { name: 'Convocar',    desc: 'Aparecen 1d4 Lobos o 1d3 Vampiros Menores en 6m.' },
+    lair: [
+      { name:'Diluvio de Sangre', desc:'Radio 3m a 18m: CD 19 Fue o 7 (2d6) contundente + empujado 3m + derribado + cegado hasta iniciativa 20.' },
+      { name:'Lamentos de los Condenados', desc:'Radio 1.5m a 18m: CD 19 Sab o asustado hasta iniciativa 20 (paralizado + pierde concentración).' },
     ],
+    innate: [],
+    transition: 'El cuerpo de Strahd se tambalea — pero se disuelve en niebla oscura antes de caer. Susurrando una promesa de venganza, la niebla se desliza hacia las sombras.',
   },
 };
 
-const STRAHD_LOCATIONS = [
-  { id: 'unknown',   icon: '❓', name: 'Desconocida',         desc: 'Los PJs no saben dónde está.' },
-  { id: 'ravenloft', icon: '🏰', name: 'Castillo Ravenloft',  desc: 'Trono, catafalco o deambulando por los pasillos.' },
-  { id: 'crypt',     icon: '⚰️', name: 'Cripta K84',          desc: 'Descansando en su ataúd. Momentáneamente vulnerable.' },
-  { id: 'road',      icon: '🌫️', name: 'Caminos de Barovia',  desc: 'Viajando en carruaje negro o como niebla.' },
-  { id: 'village',   icon: '🏚️', name: 'Aldea de Barovia',    desc: 'Visitando o aterrorizando a los aldeanos.' },
-  { id: 'tser',      icon: '🔮', name: 'Tser Pool',           desc: 'Con los Vistani. Observando a los PJs desde lejos.' },
-  { id: 'watching',  icon: '👁️', name: 'Observando (Cuervo)', desc: 'Presente en espíritu a través de un familiar. No en cuerpo.' },
-  { id: 'absent',    icon: '🌑', name: 'Ausente',             desc: 'Ocupado con otros asuntos. No aparecerá esta sesión.' },
+// Estado runtime
+let strahdState = {
+  phase: 'mago',
+  hp: { mago: 331, soldado: 331, vampiro: 331 },
+  mood: 2,   // 0=Amistoso 1=Indiferente 2=Hostil 3=Rabioso
+  location: 'Castillo Ravenloft',
+  legendRes: { mago: true, soldado: true, vampiro: true },
+  fanes: { mountain: true, swamp: true, forest: true },
+};
+
+const MOODS = [
+  { label:'Amistoso',    color:'#4a9a4a', icon:'😌', desc:'Curioso por los PJs. Podría negociar. Invitación a cenar.' },
+  { label:'Indiferente', color:'#8a7050', icon:'😐', desc:'Los observa desde lejos. Prueba su valía sin atacar.' },
+  { label:'Hostil',      color:'#b03020', icon:'😠', desc:'Obstaculiza activamente. Envía siervos.' },
+  { label:'Rabioso',     color:'#7a0000', icon:'😤', desc:'Ataque directo. Sin piedad. Mata o captura.' },
 ];
 
-const STRAHD_MOODS = {
-  curious:    { label: 'Curioso',      icon: '🔍', color: '#a8c8e8', desc: 'Fascinado por los PJs. Dialoga y observa. No ataca salvo provocación directa.' },
-  obsessed:   { label: 'Obsesionado',  icon: '🌹', color: '#e890a0', desc: 'Centrado en Ireena/Tatyana. Ignora el resto salvo que interfieran con ella.' },
-  wrathful:   { label: 'Colérico',     icon: '🔥', color: '#e07030', desc: 'Ofendido o traicionado. Ataca para matar. No hay negociación posible.' },
-  playful:    { label: 'Juguetón',     icon: '😈', color: '#b080d0', desc: 'Disfruta el juego. Deja escapar, tiende trampas, prolonga el sufrimiento.' },
-  melancholy: { label: 'Melancólico',  icon: '🌑', color: '#7090a8', desc: 'Reflexivo, casi humano. Habla de Tatyana, del pasado, de su condena eterna.' },
-  absent:     { label: 'Ausente',      icon: '🌫️', color: '#8a7050', desc: 'No aparece. Está ocupado con otros asuntos en Barovia esta noche.' },
+const ACTION_TYPE_COLORS = {
+  'Acción':    '#c4a870',
+  'Adicional': '#80a0c0',
+  'Reacción':  '#c08060',
+  'Guarida':   '#907070',
 };
 
-let strahdHp = 144;
-const STRAHD_MAX_HP = 144;
-let strahdHpLog = [];
+function buildStrahdPanel() {
+  const el = document.getElementById('strahd-panel-inner');
+  if (!el) return;
 
-function getPhase(hp) {
-  if (hp >= 97) return 1;
-  if (hp >= 49) return 2;
-  return 3;
+  const phase = STRAHD_PHASES[strahdState.phase];
+  const hp = strahdState.hp[strahdState.phase];
+  const pct = Math.max(0, Math.min(100, hp / phase.maxHp * 100));
+  const hpColor = pct > 60 ? '#5a9a5a' : pct > 30 ? '#c07020' : '#b03020';
+  const mood = MOODS[strahdState.mood];
+
+  // Phase buttons
+  const phaseBtns = Object.values(STRAHD_PHASES).map(p => `
+    <button onclick="setPhase('${p.id}')"
+      style="font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.08em;padding:8px 14px;
+             border:1px solid ${strahdState.phase===p.id ? p.color : 'var(--border)'};
+             background:${strahdState.phase===p.id ? 'rgba(100,50,150,.15)' : 'transparent'};
+             color:${strahdState.phase===p.id ? p.color : 'var(--text-dim)'};
+             cursor:pointer;border-radius:1px;transition:all .2s;">
+      ${p.icon} ${p.name}
+    </button>`).join('');
+
+  // Stats row
+  const statsRow = phase.stats.map(s => `
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:2px;padding:7px 10px;text-align:center;min-width:58px;">
+      <div style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.1em;color:var(--text-dim);">${s.s}</div>
+      <div style="font-family:'UnifrakturMaguntia',cursive;font-size:1.3rem;color:var(--gold);">${s.v}</div>
+    </div>`).join('');
+
+  // Actions table
+  const actionsHtml = phase.actions.map(a => {
+    const tc = ACTION_TYPE_COLORS[a.type] || 'var(--text-dim)';
+    return `<tr style="border-bottom:1px solid var(--border);">
+      <td style="padding:7px 10px;font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold);white-space:nowrap;">${a.name}</td>
+      <td style="padding:7px 6px;"><span style="font-size:.58rem;padding:1px 6px;border:1px solid ${tc}44;color:${tc};border-radius:8px;">${a.type}</span></td>
+      <td style="padding:7px 10px;font-size:.78rem;color:var(--text);line-height:1.5;">${a.desc}</td>
+    </tr>`;
+  }).join('');
+
+  // Lair actions
+  const lairHtml = phase.lair.map(a => `
+    <div style="padding:8px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;margin-bottom:6px;">
+      <div style="font-family:'Cinzel',serif;font-size:.63rem;color:var(--text-mid);margin-bottom:3px;">${a.name}</div>
+      <div style="font-size:.78rem;color:var(--text);line-height:1.5;">${a.desc}</div>
+    </div>`).join('');
+
+  // Traits
+  const traitsHtml = phase.traits.map(t => `
+    <div style="padding:8px 10px;background:var(--bg2);border-left:3px solid ${phase.color};border-radius:1px;margin-bottom:6px;">
+      <span style="font-family:'Cinzel',serif;font-size:.63rem;color:var(--gold);">${t.name}.</span>
+      <span style="font-size:.79rem;color:var(--text);line-height:1.55;"> ${t.desc}</span>
+    </div>`).join('');
+
+  // Innate spells
+  const innateHtml = phase.innate.length ? `
+    <div class="card" style="border-color:${phase.color}44;">
+      <div class="card-title">🔮 Conjuros Innatos (Inteligencia)</div>
+      ${phase.innate.map(s => `<div style="font-size:.8rem;color:var(--text-mid);padding:3px 0;">• ${s}</div>`).join('')}
+    </div>` : '';
+
+  // Fanes
+  const fanesHtml = `
+    <div class="card">
+      <div class="card-title">🌑 Poderes de los Fanes de Barovia</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+        ${['mountain','swamp','forest'].map(f => {
+          const labels = {mountain:'⛰️ Montaña',swamp:'🌿 Pantano',forest:'🌲 Bosque'};
+          const active = strahdState.fanes[f];
+          return `<button onclick="toggleFane('${f}')"
+            style="font-family:'Cinzel',serif;font-size:.6rem;padding:5px 10px;
+                   border:1px solid ${active?'var(--gold-dim)':'var(--border)'};
+                   background:${active?'rgba(232,200,122,.1)':'transparent'};
+                   color:${active?'var(--gold)':'var(--text-dim)'};cursor:pointer;border-radius:1px;">
+            ${labels[f]} ${active?'✓':'✗'}
+          </button>`;
+        }).join('')}
+      </div>
+      <div style="font-size:.77rem;color:var(--text-dim);line-height:1.6;">
+        ${strahdState.fanes.mountain?'<div>⛰️ <strong>Montaña:</strong> Controla el clima. Puede lanzar <em>controlar el clima</em> sin recursos.</div>':''}
+        ${strahdState.fanes.swamp?'<div>🌿 <strong>Pantano:</strong> Puede lanzar <em>imagen mayor</em> y <em>mover tierra</em> sin recursos.</div>':''}
+        ${strahdState.fanes.forest?'<div>🌲 <strong>Bosque:</strong> Puede lanzar <em>sentir bestias</em>, <em>localizar criaturas</em> y <em>formas animales</em> sin recursos.</div>':''}
+        ${Object.values(strahdState.fanes).some(v=>v)?'<div style="margin-top:6px;color:var(--blood-bright);">⚠️ <strong>Rejuvenecimiento:</strong> Si es destruido con al menos un Fane, resucita en 24h en su ataúd con todos sus PG y fases.</div>':'<div style="color:var(--text-dim);font-style:italic;">Sin Fanes activos — puede ser destruido permanentemente.</div>'}
+      </div>
+    </div>`;
+
+  // Transition text
+  const transHtml = phase.transition ? `
+    <div style="padding:10px 14px;background:rgba(${phase.id==='mago'?'112,80,192':'phase.id==="soldado"?'176,48,32':'139,0,0'},0.08);border:1px solid ${phase.color}44;border-radius:2px;margin-top:10px;">
+      <div style="font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:5px;">TRANSICIÓN DE FASE</div>
+      <p style="font-size:.8rem;color:var(--text);font-style:italic;line-height:1.65;">"${phase.transition}"</p>
+    </div>` : '';
+
+  el.innerHTML = `
+    <!-- Selector de fase -->
+    <div class="card" style="margin-bottom:12px;border-color:${phase.color};">
+      <div class="card-title" style="justify-content:space-between;border-color:${phase.color}44;">
+        <span>${phase.icon} Fase Activa: ${phase.name}</span>
+        <span style="font-family:'Cinzel',serif;font-size:.6rem;color:var(--text-dim);">CR 21 · 33.000 PX · Prof. +6</span>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">${phaseBtns}</div>
+
+      <!-- Stats -->
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">${statsRow}</div>
+      <div style="font-size:.76rem;color:var(--text-dim);line-height:1.7;margin-bottom:10px;">
+        <strong>CA:</strong> ${phase.ca} &nbsp;·&nbsp;
+        <strong>Velocidad:</strong> ${phase.vel} &nbsp;·&nbsp;
+        <strong>Resistencias Leg.:</strong> 1/día<br>
+        <strong>Salvaciones:</strong> ${phase.saves}<br>
+        <strong>Resistencias:</strong> Necrótico; contundente, perforante y cortante (no mágico)<br>
+        <strong>Sentidos:</strong> Visión en oscuridad 120 pies · Percepción pasiva 24
+      </div>
+
+      <!-- HP -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.1em;color:var(--text-dim);">PUNTOS DE VIDA</span>
+        <span id="strahd-hp-display" style="font-size:1rem;color:${hpColor};font-family:'Cinzel',serif;">${hp} / ${phase.maxHp}</span>
+      </div>
+      <div style="width:100%;height:10px;background:var(--bg3);border-radius:2px;margin-bottom:10px;overflow:hidden;">
+        <div id="strahd-hp-bar" style="height:100%;width:${pct}%;background:${hpColor};transition:all .3s;border-radius:2px;"></div>
+      </div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin-bottom:6px;">
+        <button class="btn btn-blood btn-sm" onclick="adjHp(-20)">−20</button>
+        <button class="btn btn-blood btn-sm" onclick="adjHp(-10)">−10</button>
+        <button class="btn btn-blood btn-sm" onclick="adjHp(-5)">−5</button>
+        <button class="btn btn-blood btn-sm" onclick="adjHp(-1)">−1</button>
+        <button class="btn btn-ghost btn-sm" onclick="adjHp(20)">+20 Reg.</button>
+        <button class="btn btn-ghost btn-sm" onclick="adjHp(331)">↺ Reset fase</button>
+        <span style="margin-left:6px;">
+          <input type="number" id="hp-manual" placeholder="PV exactos" style="width:100px;">
+          <button class="btn btn-gold btn-sm" onclick="setHpManual()">Aplicar</button>
+        </span>
+      </div>
+
+      <!-- Leyenda Resistencia Legendaria -->
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span style="font-family:'Cinzel',serif;font-size:.6rem;color:var(--text-dim);">RES. LEGENDARIA:</span>
+        <button onclick="toggleLegRes()" style="font-family:'Cinzel',serif;font-size:.65rem;padding:4px 10px;
+          border:1px solid ${strahdState.legendRes[strahdState.phase]?'var(--gold-dim)':'var(--border)'};
+          background:${strahdState.legendRes[strahdState.phase]?'rgba(232,200,122,.1)':'transparent'};
+          color:${strahdState.legendRes[strahdState.phase]?'var(--gold)':'var(--text-dim)'};cursor:pointer;border-radius:1px;">
+          ${strahdState.legendRes[strahdState.phase]?'✓ Disponible':'✗ Usada'}
+        </button>
+      </div>
+
+      ${transHtml}
+    </div>
+
+    <!-- Rasgos -->
+    <div class="card" style="margin-bottom:12px;">
+      <div class="card-title">🔱 Rasgos Especiales</div>
+      ${traitsHtml}
+      <div style="margin-top:6px;padding:8px 10px;background:var(--bg2);border-left:3px solid var(--border-bright);border-radius:1px;">
+        <span style="font-family:'Cinzel',serif;font-size:.63rem;color:var(--gold);">Hipersensibilidad a la Luz Solar.</span>
+        <span style="font-size:.79rem;color:var(--text);"> Al inicio de su turno bajo luz solar: 20 daño radiante. Desventaja en ataques y habilidades.</span>
+      </div>
+      <div style="margin-top:6px;padding:8px 10px;background:var(--bg2);border-left:3px solid var(--border-bright);border-radius:1px;">
+        <span style="font-family:'Cinzel',serif;font-size:.63rem;color:var(--gold);">Cambiar de Forma.</span>
+        <span style="font-size:.79rem;color:var(--text);"> Si no está en agua corriente o luz solar, puede transformarse en murciélago diminuto, lobo mediano o nube de niebla. En niebla: inmune a todo daño salvo solar, no puede actuar.</span>
+      </div>
+    </div>
+
+    <!-- Acciones -->
+    <div class="card" style="margin-bottom:12px;">
+      <div class="card-title">⚔️ Acciones</div>
+      <table style="width:100%;border-collapse:collapse;">
+        <thead><tr>
+          <th style="text-align:left;font-family:'Cinzel',serif;font-size:.56rem;color:var(--text-dim);padding:4px 10px;border-bottom:1px solid var(--border);">Nombre</th>
+          <th style="text-align:left;font-family:'Cinzel',serif;font-size:.56rem;color:var(--text-dim);padding:4px 6px;border-bottom:1px solid var(--border);">Tipo</th>
+          <th style="text-align:left;font-family:'Cinzel',serif;font-size:.56rem;color:var(--text-dim);padding:4px 10px;border-bottom:1px solid var(--border);">Descripción</th>
+        </tr></thead>
+        <tbody>${actionsHtml}</tbody>
+      </table>
+    </div>
+
+    ${innateHtml}
+
+    <!-- Acciones de Guarida -->
+    <div class="card" style="margin-bottom:12px;">
+      <div class="card-title">🏰 Acciones en la Guarida <span style="font-size:.65rem;color:var(--text-dim);font-weight:normal;">(solo en Castillo Ravenloft)</span></div>
+      ${lairHtml}
+    </div>
+
+    <!-- Humor y Fanes -->
+    <div class="grid-2" style="gap:12px;margin-bottom:12px;">
+      <div class="card">
+        <div class="card-title">🎭 Estado Actual</div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;">
+          ${MOODS.map((m,i) => `<button onclick="setMood(${i})"
+            style="font-family:'Cinzel',serif;font-size:.58rem;padding:5px 9px;
+                   border:1px solid ${strahdState.mood===i?m.color:'var(--border)'};
+                   background:${strahdState.mood===i?'rgba(176,48,32,.1)':'transparent'};
+                   color:${strahdState.mood===i?m.color:'var(--text-dim)'};cursor:pointer;border-radius:1px;">
+            ${m.icon} ${m.label}
+          </button>`).join('')}
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;padding:8px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;">
+          <span style="font-size:1.4rem;">${mood.icon}</span>
+          <div>
+            <div style="font-family:'Cinzel',serif;font-size:.65rem;color:${mood.color};">${mood.label}</div>
+            <div style="font-size:.78rem;color:var(--text-dim);font-style:italic;margin-top:2px;">${mood.desc}</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">⚠️ Debilidades</div>
+        <div style="font-size:.79rem;color:var(--text);line-height:1.7;">
+          <div>☀️ <strong>Luz solar:</strong> 20 radiante al inicio de turno. Desventaja en todo.</div>
+          <div>💧 <strong>Agua corriente:</strong> 20 ácido al inicio de turno si atraviesa.</div>
+          <div>🥩 <strong>Estaca en corazón:</strong> Paralizado (no destruido).</div>
+          <div>🧄 <strong>Ajo:</strong> No le agrada. Rango de 1.5m le resulta hostil.</div>
+          <div>🚪 <strong>Prohibición:</strong> No puede entrar en residencia sin invitación.</div>
+          <div>☀️ <strong>Descanso:</strong> Solo en su ataúd, entre amanecer y anochecer.</div>
+        </div>
+      </div>
+    </div>
+
+    ${fanesHtml}
+  `;
 }
 
-function renderStrahdPanel() {
-  const phase = getPhase(strahdHp);
-  const pd = STRAHD_PHASES[phase];
-  const pct = Math.max(0, strahdHp / STRAHD_MAX_HP * 100);
-  const hpColor = pct > 67 ? '#5a9a5a' : pct > 33 ? '#c07020' : '#b03020';
-
-  document.getElementById('strahd-hp-bar').style.cssText = `width:${pct}%;background:${hpColor};`;
-  document.getElementById('strahd-hp-val').textContent = strahdHp;
-  document.getElementById('strahd-phase-badge').innerHTML = `${pd.icon} Fase ${phase} &mdash; ${pd.name}`;
-  document.getElementById('strahd-phase-badge').style.color = pd.color;
-  document.getElementById('strahd-phase-range').textContent = pd.hp_range;
-  document.getElementById('strahd-phase-desc').textContent = pd.desc;
-
-  document.getElementById('strahd-actions').innerHTML = pd.actions.map(a => `
-    <tr>
-      <td class="strahd-act-name">${a.name}</td>
-      <td class="strahd-act-roll">${a.roll}</td>
-      <td class="strahd-act-dmg">${a.dmg}</td>
-    </tr>`).join('');
-
-  document.getElementById('strahd-legendary').innerHTML = pd.legendary.map(l => `
-    <div class="strahd-leg"><strong>${l.name}</strong> — ${l.desc}</div>`).join('');
-
-  renderStrahdLog();
-  updateMoodDisplay();
+function adjHp(d) {
+  const p = strahdState.phase;
+  const max = STRAHD_PHASES[p].maxHp;
+  strahdState.hp[p] = Math.max(0, Math.min(max, strahdState.hp[p] + d));
+  buildStrahdPanel();
+  saveStrahd();
 }
 
-function adjStrahdHp(delta) {
-  const prev = strahdHp;
-  strahdHp = Math.max(0, Math.min(STRAHD_MAX_HP, strahdHp + delta));
-  if (strahdHp === prev) return;
-  const sign = delta > 0 ? '+' : '';
-  strahdHpLog.unshift({ txt: `${sign}${delta} PV → ${strahdHp} PV`, t: new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}) });
-  if (strahdHpLog.length > 8) strahdHpLog.pop();
-  checkPhaseAlert(prev, strahdHp);
-  renderStrahdPanel();
-}
-
-function setStrahdHpManual() {
-  const val = parseInt(document.getElementById('strahd-hp-input').value);
-  if (isNaN(val)) return;
-  const prev = strahdHp;
-  strahdHp = Math.max(0, Math.min(STRAHD_MAX_HP, val));
-  strahdHpLog.unshift({ txt: `→ ${strahdHp} PV (manual)`, t: new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}) });
-  if (strahdHpLog.length > 8) strahdHpLog.pop();
-  checkPhaseAlert(prev, strahdHp);
-  renderStrahdPanel();
-  document.getElementById('strahd-hp-input').value = '';
-}
-
-function checkPhaseAlert(prev, curr) {
-  const p1 = getPhase(prev), p2 = getPhase(curr);
-  if (p1 !== p2) {
-    const pd = STRAHD_PHASES[p2];
-    setTimeout(() => alert(`⚠️ ¡CAMBIO DE FASE!\n\n${pd.icon} Strahd entra en Fase ${p2}: ${pd.name}\n\n${pd.desc}`), 50);
+function setHpManual() {
+  const v = parseInt(document.getElementById('hp-manual')?.value);
+  if (!isNaN(v)) {
+    const p = strahdState.phase;
+    strahdState.hp[p] = Math.max(0, Math.min(STRAHD_PHASES[p].maxHp, v));
+    buildStrahdPanel();
+    saveStrahd();
   }
 }
 
-function renderStrahdLog() {
-  const el = document.getElementById('strahd-hp-log');
-  if (!el) return;
-  el.innerHTML = strahdHpLog.length
-    ? strahdHpLog.map(h => `<div class="strahd-log-row"><span>${h.txt}</span><time>${h.t}</time></div>`).join('')
-    : '<div class="no-data" style="padding:8px;">Sin cambios aún...</div>';
+function setPhase(id) {
+  strahdState.phase = id;
+  buildStrahdPanel();
+  saveStrahd();
 }
 
-function setStrahdLocation(id) {
-  document.querySelectorAll('.strahd-loc-btn').forEach(b => b.classList.toggle('active', b.dataset.loc === id));
-  const loc = STRAHD_LOCATIONS.find(l => l.id === id);
-  if (loc) document.getElementById('strahd-loc-desc').textContent = `${loc.icon} ${loc.name} — ${loc.desc}`;
+function setMood(i) {
+  strahdState.mood = i;
+  buildStrahdPanel();
+  saveStrahd();
 }
 
-function updateMoodDisplay() {
-  const val = document.getElementById('strahd-mood-select')?.value || 'curious';
-  const mood = STRAHD_MOODS[val];
-  if (!mood) return;
-  document.getElementById('strahd-mood-icon').textContent  = mood.icon;
-  document.getElementById('strahd-mood-label').textContent = mood.label;
-  document.getElementById('strahd-mood-label').style.color = mood.color;
-  document.getElementById('strahd-mood-desc').textContent  = mood.desc;
+function toggleLegRes() {
+  strahdState.legendRes[strahdState.phase] = !strahdState.legendRes[strahdState.phase];
+  buildStrahdPanel();
+  saveStrahd();
 }
 
-function resetStrahd() {
-  if (!confirm('¿Resetear los PV de Strahd a 144?')) return;
-  strahdHp = STRAHD_MAX_HP;
-  strahdHpLog = [];
-  renderStrahdPanel();
+function toggleFane(f) {
+  strahdState.fanes[f] = !strahdState.fanes[f];
+  buildStrahdPanel();
+  saveStrahd();
 }
 
-
-// ══════ TAROT DE MADAM EVA ══════
-
-const TAROT_POSITIONS = [
-  { id: 'p1', icon: '💎', name: 'El Tesoro',    role: 'Dónde se halla el Símbolo Sagrado de Ravenloft' },
-  { id: 'p2', icon: '🤝', name: 'El Aliado',    role: 'Un poderoso aliado que ayudará a los PJs' },
-  { id: 'p3', icon: '⚰️', name: 'La Tumba',     role: 'El lugar donde duerme el poder de Strahd' },
-  { id: 'p4', icon: '🏰', name: 'La Fortaleza', role: 'Dónde en Ravenloft encontrarán a Strahd' },
-  { id: 'p5', icon: '🌟', name: 'El Lector',    role: 'El héroe de la profecía — quien puede vencer a Strahd' },
-];
-
-const TAROT_DECKS = {
-  p1: [
-    { card: 'El Sol',       suit: '☀️ Espadas', desc: 'En la taberna de Arasek, Vallaki. Bajo el escenario del juglar Rictavio.' },
-    { card: 'La Luna',      suit: '🌙 Copas',   desc: 'En el cofre de Ireena Kolyana, envuelto en tela negra.' },
-    { card: 'La Estrella',  suit: '⭐ Espadas', desc: 'En las catacumbas del Templo de Ámbar, sala K85.' },
-    { card: 'El Ermitaño',  suit: '🕯️ Bastos',  desc: 'Con el Padre Donavich en la Aldea de Barovia. Enterrado bajo el altar.' },
-    { card: 'La Justicia',  suit: '⚖️ Espadas', desc: 'En el altar de la Abadía de Sant Markovia, Krezk.' },
-    { card: 'La Fuerza',    suit: '💪 Oros',    desc: 'Colgado al cuello de una de las novias de Strahd en Ravenloft.' },
-    { card: 'El Mundo',     suit: '🌍 Bastos',  desc: 'En el pajar de la granja de la familia Martikov, entre la paja.' },
-  ],
-  p2: [
-    { card: 'El Loco',        suit: '🃏 Bastos',  desc: 'Ezmerelda d\'Avenir, cazadora de monstruos. Su carro está en el bosque al norte.' },
-    { card: 'El Mago',        suit: '✨ Oros',    desc: 'El espíritu de Sergei von Zarovich. Puede manifestarse en la capilla de Ravenloft.' },
-    { card: 'La Sacerdotisa', suit: '🔮 Copas',   desc: 'Madam Eva en persona, si los PJs se ganan su confianza y respetan a los Vistani.' },
-    { card: 'La Emperatriz',  suit: '👑 Oros',    desc: 'El Abate de Krezk, si los PJs consiguen purificar su locura.' },
-    { card: 'El Hierofante',  suit: '⛪ Espadas', desc: 'Godfrey Gwilym, espectro del Caballero de la Orden del Dragón de Plata.' },
-    { card: 'El Carro',       suit: '🐎 Bastos',  desc: 'Kasimir Velikov, el elfo drow, si supera su rencor y une su causa a la de los PJs.' },
-    { card: 'La Rueda',       suit: '🎡 Oros',    desc: 'Los Guardianes del Bosque — los cuervos de la familia Martikov.' },
-  ],
-  p3: [
-    { card: 'La Torre',      suit: '🗼 Bastos', desc: 'En el lago Zarovich, dentro de un bote hundido. Bajo 6m de agua helada.' },
-    { card: 'El Diablo',     suit: '😈 Oros',   desc: 'Cripta del rey Barov von Zarovich (K85, cripta 39). Protegida por no-muertos.' },
-    { card: 'El Juicio',     suit: '🔔 Copas',  desc: 'En el órgano de la sala de baile de Ravenloft. Entre los tubos metálicos.' },
-    { card: 'La Muerte',     suit: '💀 Espadas', desc: 'Bajo el altar mayor del Templo de Ámbar. Guardado por las Sombras.' },
-    { card: 'La Templanza',  suit: '⚗️ Bastos', desc: 'En el Molino de los Huesos. Dentro de una de las muñecas de trapo.' },
-    { card: 'El Colgado',    suit: '🪢 Oros',   desc: 'En la Torre de Van Richten, sala superior. Tras el espejo mágico.' },
-  ],
-  p4: [
-    { card: 'El Diablo',      suit: '😈 Oros',   desc: 'La sala del trono (K16). Os espera sentado, sereno, como si os invitara.' },
-    { card: 'El Hierofante',  suit: '⛪ Espadas', desc: 'Los jardines del castillo (K6). Bajo la luna llena, entre las estatuas.' },
-    { card: 'La Luna',        suit: '🌙 Copas',   desc: 'El estudio (K37). Entre sus mapas de Barovia y sus libros de magia negra.' },
-    { card: 'El Ermitaño',    suit: '🕯️ Bastos',  desc: 'La capilla (K15). Junto a los restos de Sergei, su hermano asesinado.' },
-    { card: 'La Torre',       suit: '🗼 Bastos',  desc: 'La sala de baile (K28). Bailando solo al ritmo de música invisible.' },
-    { card: 'El Sol',         suit: '☀️ Espadas', desc: 'Las catacumbas (K84). En su propio ataúd. Descansando.' },
-  ],
-  p5: [
-    { card: 'El Loco',       suit: '🃏 Bastos',  desc: 'El PJ que ha perdido algo irreemplazable desde que llegó a Barovia.' },
-    { card: 'El Mago',       suit: '✨ Oros',    desc: 'El PJ que posee el mayor poder arcano o mágico del grupo.' },
-    { card: 'El Carro',      suit: '🐎 Bastos',  desc: 'El PJ más obstinado — el que nunca ha contemplado rendirse.' },
-    { card: 'La Fuerza',     suit: '💪 Oros',    desc: 'El PJ que ha sobrevivido más situaciones de muerte inminente.' },
-    { card: 'La Justicia',   suit: '⚖️ Espadas', desc: 'El PJ que más ha sufrido una injusticia profunda durante la campaña.' },
-    { card: 'La Sacerdotisa',suit: '🔮 Copas',   desc: 'El PJ con mayor conexión divina, espiritual o con los muertos.' },
-  ],
-};
-
-let tarotReading = {};
-
-function drawAllTarot() {
-  TAROT_POSITIONS.forEach(pos => {
-    const deck = TAROT_DECKS[pos.id];
-    tarotReading[pos.id] = deck[Math.floor(Math.random() * deck.length)];
-  });
-  renderTarot();
-  saveTarotToStorage();
+function saveStrahd() {
+  try { localStorage.setItem('strahd_state', JSON.stringify(strahdState)); } catch(e) {}
 }
 
-function drawSingleCard(posId) {
-  const deck = TAROT_DECKS[posId];
-  tarotReading[posId] = deck[Math.floor(Math.random() * deck.length)];
-  renderTarot();
-  saveTarotToStorage();
-}
-
-function resetTarot() {
-  if (!confirm('¿Limpiar la tirada de tarot?')) return;
-  tarotReading = {};
-  renderTarot();
-  localStorage.removeItem('strahd_tarot');
-}
-
-function renderTarot() {
-  const container = document.getElementById('tarot-cards');
-  if (!container) return;
-  container.innerHTML = TAROT_POSITIONS.map(pos => {
-    const card = tarotReading[pos.id];
-    if (!card) return `
-      <div class="tarot-card tarot-empty" onclick="drawSingleCard('${pos.id}')">
-        <div class="tarot-pos-icon">${pos.icon}</div>
-        <div class="tarot-pos-name">${pos.name}</div>
-        <div class="tarot-pos-role">${pos.role}</div>
-        <div class="tarot-draw-hint">Clic para tirar esta carta</div>
-      </div>`;
-    return `
-      <div class="tarot-card tarot-drawn" onclick="drawSingleCard('${pos.id}')">
-        <div class="tarot-pos-icon">${pos.icon}</div>
-        <div class="tarot-pos-name">${pos.name}</div>
-        <div class="tarot-card-name">${card.card}</div>
-        <div class="tarot-suit">${card.suit}</div>
-        <hr style="border-color:var(--border);margin:8px 0;">
-        <div class="tarot-card-desc">${card.desc}</div>
-        <div class="tarot-draw-hint">Clic para redibujar</div>
-      </div>`;
-  }).join('');
-}
-
-function saveTarotToStorage() {
-  localStorage.setItem('strahd_tarot', JSON.stringify(tarotReading));
-}
-
-function loadTarotFromStorage() {
+function loadFromStorageStrahd() {
   try {
-    const saved = JSON.parse(localStorage.getItem('strahd_tarot') || 'null');
-    if (saved && Object.keys(saved).length) { tarotReading = saved; renderTarot(); }
+    const d = JSON.parse(localStorage.getItem('strahd_state') || 'null');
+    if (d) strahdState = { ...strahdState, ...d };
   } catch(e) {}
 }
+
+// renderStrahd alias for main.js compatibility
+function renderStrahd() { buildStrahdPanel(); }
