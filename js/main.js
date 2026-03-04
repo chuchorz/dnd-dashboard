@@ -4,6 +4,9 @@ function switchMain(name) {
   document.querySelectorAll('.main-tab').forEach((t,i) => t.classList.toggle('active', tabs[i]===name));
   document.querySelectorAll('.main-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('panel-'+name).classList.add('active');
+  if (name === 'mapa')   renderMapa();
+  if (name === 'tarot')  renderTarot();
+  if (name === 'strahd') buildStrahdPanel();
 }
 
 // ══════ INIT ══════
