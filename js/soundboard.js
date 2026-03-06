@@ -90,15 +90,16 @@ function switchCat(cat) {
   document.getElementById('cat-info-text').textContent  = text;
 }
 
-// Colores por área para los badges de letras
-const AREA_COLORS = {
-  aldea:'#8a5a3a', vallaki:'#6a5030', krezk:'#3a6a5a', ravenloft:'#8a2020',
-  tser:'#5a3a8a', winery:'#4a6a3a', mill:'#6a4a2a', argyn:'#3a4a8a',
-  wachter:'#6a4a5a', berez:'#3a5a3a', wolves:'#5a4a2a', baratok:'#4a5a7a',
-  lake:'#2a4a7a', amber:'#8a6a20',
-  bosque:'#3a5a3a', cueva:'#4a3a5a', rio:'#2a4a7a', ciudad:'#5a4a3a',
-  taberna:'#6a3a2a', lluvia:'#3a4a6a', tormenta:'#4a3a6a', niebla:'#4a4a5a',
-  noche:'#2a2a4a', nieve:'#4a5a6a', iglesia:'#5a4a6a', pantano:'#3a5a3a',
+// Colores temáticos por localización
+const SB_COLORS = {
+  aldea:'#c03828', vallaki:'#8a6820', krezk:'#2a6a50', ravenloft:'#8a1820',
+  tser:'#6040a0', winery:'#4a6a2a', mill:'#6a4820', argyn:'#3a4880',
+  wachter:'#6a3a50', berez:'#3a5820', wolves:'#5a4020', baratok:'#4a5870',
+  lake:'#2a5878', amber:'#8a6820',
+  bosque:'#3a5820', cueva:'#4a3a50', rio:'#2a5878', ciudad:'#5a4020',
+  taberna:'#6a3820', lluvia:'#3a4868', tormenta:'#4a3868', niebla:'#4a4858',
+  noche:'#2a2848', nieve:'#4a5868', iglesia:'#5a4068', pantano:'#3a5820',
+  ep1:'#8a6820', ep2:'#8a6820', ep3:'#8a6820', ep4:'#8a6820', ep5:'#8a6820', ep6:'#8a6820',
 };
 
 function renderGrid() {
@@ -114,20 +115,21 @@ function renderGrid() {
     return;
   }
   sg.style.display = ''; sl.style.display = 'none';
-  sg.innerHTML = SB[currentCat].map(item => {
-    const col = AREA_COLORS[item.id] || '#4a3a5a';
-    const initial = item.name.trim().charAt(0).toUpperCase();
+  sg.innerHTML = SB[currentCat].map((item, idx) => {
+    const col = SB_COLORS[item.id] || '#524030';
+    const num = String(idx + 1).padStart(2, '0');
     const isPlaying = playingId === item.id;
-    return '<div class="sb-item ' + (isPlaying?'playing':'') + '" onclick="playItem(\'' + item.id + '\')">' +
-      (isPlaying ? '<div class="playing-dot"></div>' : '') +
-      '<div class="sb-item-badge" style="background:' + col + '22;border:1px solid ' + col + '66;">' +
-        '<span style="font-family:\'Cinzel\',serif;font-size:1.4rem;font-weight:700;color:' + col.replace(/(..)$/, 'ee') + ';text-shadow:0 0 20px ' + col + '88;">' + initial + '</span>' +
-      '</div>' +
-      '<span class="sb-item-name">' + item.name + '</span>' +
-      '<span class="sb-item-desc">' + (item.desc||'') + '</span>' +
-      '</div>';
+    return `<div class="sb-item ${isPlaying ? 'playing' : ''}"
+         style="--sb-color:${col};--sb-warm:${col}18;"
+         onclick="playItem('${item.id}')">
+      ${isPlaying ? '<div class="playing-dot"></div>' : ''}
+      <div class="sb-item-num" style="--sb-color:${col};">${num}</div>
+      <span class="sb-item-name">${item.name}</span>
+      <span class="sb-item-desc">${item.desc || ''}</span>
+    </div>`;
   }).join('');
 }
+
 
 function playItem(id) {
   const item = SB[currentCat].find(i=>i.id===id);
