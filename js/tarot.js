@@ -165,7 +165,6 @@ function card(i) {
       `}
     </div>`;
 }
-}
 
 function saveTarotToStorage() {
   localStorage.setItem('strahd_tarot', JSON.stringify({ revealedCards }));
