@@ -141,7 +141,12 @@ function card(i) {
       </div>
 
       ${rev ? `
-        <div style="font-size:2.2rem;text-align:center;padding:6px 0;filter:drop-shadow(0 0 8px ${c.color}88);">${c.suit}</div>
+        <img src="img/tarot-${i+1}.jpg"
+             onerror="this.style.display='none'"
+             style="width:100%;height:110px;object-fit:cover;border-radius:2px;
+                    border:1px solid ${c.color}55;margin-bottom:4px;
+                    box-shadow:0 0 14px ${c.color}33;">
+        <div style="font-size:2.2rem;text-align:center;padding:4px 0;filter:drop-shadow(0 0 8px ${c.color}88);">${c.suit}</div>
         <div style="font-family:'UnifrakturMaguntia',cursive;font-size:1.15rem;color:var(--gilt);text-align:center;
                     text-shadow:0 0 14px var(--gilt-glow);letter-spacing:1px;">${c.cardName}</div>
         <div style="font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.1em;color:var(--vellum-dim);
