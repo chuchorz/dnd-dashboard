@@ -7,17 +7,17 @@
 
 /* ── TOKENS ── */
 :root {
-  /* Dark sepia — pergamino quemado, como la landing */
-  --ink:          #08070a;
-  --ink2:         #0e0b0f;
-  --ink3:         #141018;
+  /* Warm dark sepia — pergamino quemado */
+  --ink:          #09080a;
+  --ink2:         #100d0a;
+  --ink3:         #17120e;
 
-  --surface:      #1a1520;
-  --surface2:     #201a28;
+  --surface:      #1e1710;
+  --surface2:     #261e14;
 
-  --edge:         #2c2535;
-  --edge2:        #3e3450;
-  --edge3:        #564870;
+  --edge:         #35281a;
+  --edge2:        #4a3820;
+  --edge3:        #6a5030;
 
   --vellum:       #f2e8d5;
   --vellum-dim:   #7a6e5a;
