@@ -225,20 +225,38 @@ function buildStrahdPanel() {
     </div>` : '';
 
   el.innerHTML = `
+    <!-- Retrato de Strahd -->
+    <div style="display:flex;gap:20px;align-items:flex-start;margin-bottom:12px;">
+      <div style="flex-shrink:0;width:120px;">
+        <img src="img/strahd-portrait.jpg"
+             onerror="this.parentElement.style.display='none'"
+             style="width:120px;height:160px;object-fit:cover;object-position:top;
+                    border:1px solid ${phase.color}66;border-radius:3px;
+                    box-shadow:0 0 20px ${phase.color}44,0 4px 16px rgba(0,0,0,.6);">
+      </div>
+      <div style="flex:1;">
+        <div style="font-family:'UnifrakturMaguntia',cursive;font-size:1.8rem;color:${phase.color};
+                    text-shadow:0 0 24px ${phase.color}88;letter-spacing:2px;margin-bottom:4px;">
+          Strahd von Zarovich
+        </div>
+        <div style="font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;
+                    color:var(--vellum-d);text-transform:uppercase;margin-bottom:10px;">
+          CR 21 · 33.000 PX · Prof. +6
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">${phaseBtns}</div>
+      </div>
+    </div>
+
     <!-- Selector de fase -->
     <div class="card" style="margin-bottom:12px;border-color:${phase.color};">
       <div class="card-title" style="justify-content:space-between;border-color:${phase.color}44;">
         <span>${phase.icon} Fase Activa: ${phase.name}</span>
-        <span style="font-family:'Cinzel',serif;font-size:.6rem;color:var(--vellum-dim);">CR 21 · 33.000 PX · Prof. +6</span>
+        <span style="font-family:'Cinzel',serif;font-size:.6rem;color:var(--vellum-d);">CA ${phase.ca} · Vel. ${phase.vel}</span>
       </div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">${phaseBtns}</div>
 
       <!-- Stats -->
       <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">${statsRow}</div>
-      <div style="font-size:.76rem;color:var(--vellum-dim);line-height:1.7;margin-bottom:10px;">
-        <strong>CA:</strong> ${phase.ca} &nbsp;·&nbsp;
-        <strong>Velocidad:</strong> ${phase.vel} &nbsp;·&nbsp;
-        <strong>Resistencias Leg.:</strong> 1/día<br>
+      <div style="font-size:.78rem;color:var(--vellum-d);line-height:1.7;margin-bottom:10px;">
         <strong>Salvaciones:</strong> ${phase.saves}<br>
         <strong>Resistencias:</strong> Necrótico; contundente, perforante y cortante (no mágico)<br>
         <strong>Sentidos:</strong> Visión en oscuridad 120 pies · Percepción pasiva 24
