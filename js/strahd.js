@@ -146,49 +146,49 @@ function buildStrahdPanel() {
   const phaseBtns = Object.values(STRAHD_PHASES).map(p => `
     <button onclick="setPhase('${p.id}')"
       style="font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.08em;padding:8px 14px;
-             border:1px solid ${strahdState.phase===p.id ? p.color : 'var(--border)'};
+             border:1px solid ${strahdState.phase===p.id ? p.color : 'var(--edge)'};
              background:${strahdState.phase===p.id ? 'rgba(100,50,150,.15)' : 'transparent'};
-             color:${strahdState.phase===p.id ? p.color : 'var(--text-dim)'};
+             color:${strahdState.phase===p.id ? p.color : 'var(--vellum-dim)'};
              cursor:pointer;border-radius:1px;transition:all .2s;">
       ${p.icon} ${p.name}
     </button>`).join('');
 
   // Stats row
   const statsRow = phase.stats.map(s => `
-    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:2px;padding:7px 10px;text-align:center;min-width:58px;">
-      <div style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.1em;color:var(--text-dim);">${s.s}</div>
-      <div style="font-family:'UnifrakturMaguntia',cursive;font-size:1.3rem;color:var(--gold);">${s.v}</div>
+    <div style="background:var(--ink3);border:1px solid var(--edge);border-radius:2px;padding:7px 10px;text-align:center;min-width:58px;">
+      <div style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.1em;color:var(--vellum-dim);">${s.s}</div>
+      <div style="font-family:'UnifrakturMaguntia',cursive;font-size:1.3rem;color:var(--gilt);">${s.v}</div>
     </div>`).join('');
 
   // Actions table
   const actionsHtml = phase.actions.map(a => {
-    const tc = ACTION_TYPE_COLORS[a.type] || 'var(--text-dim)';
-    return `<tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:7px 10px;font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold);white-space:nowrap;">${a.name}</td>
+    const tc = ACTION_TYPE_COLORS[a.type] || 'var(--vellum-dim)';
+    return `<tr style="border-bottom:1px solid var(--edge);">
+      <td style="padding:7px 10px;font-family:'Cinzel',serif;font-size:.65rem;color:var(--gilt);white-space:nowrap;">${a.name}</td>
       <td style="padding:7px 6px;"><span style="font-size:.58rem;padding:1px 6px;border:1px solid ${tc}44;color:${tc};border-radius:8px;">${a.type}</span></td>
-      <td style="padding:7px 10px;font-size:.78rem;color:var(--text);line-height:1.5;">${a.desc}</td>
+      <td style="padding:7px 10px;font-size:.78rem;color:var(--vellum);line-height:1.5;">${a.desc}</td>
     </tr>`;
   }).join('');
 
   // Lair actions
   const lairHtml = phase.lair.map(a => `
-    <div style="padding:8px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;margin-bottom:6px;">
-      <div style="font-family:'Cinzel',serif;font-size:.63rem;color:var(--text-mid);margin-bottom:3px;">${a.name}</div>
-      <div style="font-size:.78rem;color:var(--text);line-height:1.5;">${a.desc}</div>
+    <div style="padding:8px 10px;background:var(--ink3);border:1px solid var(--edge);border-radius:1px;margin-bottom:6px;">
+      <div style="font-family:'Cinzel',serif;font-size:.63rem;color:var(--vellum-mid);margin-bottom:3px;">${a.name}</div>
+      <div style="font-size:.78rem;color:var(--vellum);line-height:1.5;">${a.desc}</div>
     </div>`).join('');
 
   // Traits
   const traitsHtml = phase.traits.map(t => `
-    <div style="padding:8px 10px;background:var(--bg2);border-left:3px solid ${phase.color};border-radius:1px;margin-bottom:6px;">
-      <span style="font-family:'Cinzel',serif;font-size:.63rem;color:var(--gold);">${t.name}.</span>
-      <span style="font-size:.79rem;color:var(--text);line-height:1.55;"> ${t.desc}</span>
+    <div style="padding:8px 10px;background:var(--ink3);border-left:3px solid ${phase.color};border-radius:1px;margin-bottom:6px;">
+      <span style="font-family:'Cinzel',serif;font-size:.63rem;color:var(--gilt);">${t.name}.</span>
+      <span style="font-size:.79rem;color:var(--vellum);line-height:1.55;"> ${t.desc}</span>
     </div>`).join('');
 
   // Innate spells
   const innateHtml = phase.innate.length ? `
     <div class="card" style="border-color:${phase.color}44;">
       <div class="card-title">🔮 Conjuros Innatos (Inteligencia)</div>
-      ${phase.innate.map(s => `<div style="font-size:.8rem;color:var(--text-mid);padding:3px 0;">• ${s}</div>`).join('')}
+      ${phase.innate.map(s => `<div style="font-size:.8rem;color:var(--vellum-mid);padding:3px 0;">• ${s}</div>`).join('')}
     </div>` : '';
 
   // Fanes
@@ -201,26 +201,27 @@ function buildStrahdPanel() {
           const active = strahdState.fanes[f];
           return `<button onclick="toggleFane('${f}')"
             style="font-family:'Cinzel',serif;font-size:.6rem;padding:5px 10px;
-                   border:1px solid ${active?'var(--gold-dim)':'var(--border)'};
+                   border:1px solid ${active?'var(--gilt-dim)':'var(--edge)'};
                    background:${active?'rgba(232,200,122,.1)':'transparent'};
-                   color:${active?'var(--gold)':'var(--text-dim)'};cursor:pointer;border-radius:1px;">
+                   color:${active?'var(--gilt)':'var(--vellum-dim)'};cursor:pointer;border-radius:1px;">
             ${labels[f]} ${active?'✓':'✗'}
           </button>`;
         }).join('')}
       </div>
-      <div style="font-size:.77rem;color:var(--text-dim);line-height:1.6;">
+      <div style="font-size:.77rem;color:var(--vellum-dim);line-height:1.6;">
         ${strahdState.fanes.mountain?'<div>⛰️ <strong>Montaña:</strong> Controla el clima. Puede lanzar <em>controlar el clima</em> sin recursos.</div>':''}
         ${strahdState.fanes.swamp?'<div>🌿 <strong>Pantano:</strong> Puede lanzar <em>imagen mayor</em> y <em>mover tierra</em> sin recursos.</div>':''}
         ${strahdState.fanes.forest?'<div>🌲 <strong>Bosque:</strong> Puede lanzar <em>sentir bestias</em>, <em>localizar criaturas</em> y <em>formas animales</em> sin recursos.</div>':''}
-        ${Object.values(strahdState.fanes).some(v=>v)?'<div style="margin-top:6px;color:var(--blood-bright);">⚠️ <strong>Rejuvenecimiento:</strong> Si es destruido con al menos un Fane, resucita en 24h en su ataúd con todos sus PG y fases.</div>':'<div style="color:var(--text-dim);font-style:italic;">Sin Fanes activos — puede ser destruido permanentemente.</div>'}
+        ${Object.values(strahdState.fanes).some(v=>v)?'<div style="margin-top:6px;color:var(--crimson3);">⚠️ <strong>Rejuvenecimiento:</strong> Si es destruido con al menos un Fane, resucita en 24h en su ataúd con todos sus PG y fases.</div>':'<div style="color:var(--vellum-dim);font-style:italic;">Sin Fanes activos — puede ser destruido permanentemente.</div>'}
       </div>
     </div>`;
 
   // Transition text
+  const transBg = phase.id==='mago' ? 'rgba(112,80,192,0.08)' : phase.id==='soldado' ? 'rgba(176,48,32,0.08)' : 'rgba(139,0,0,0.08)';
   const transHtml = phase.transition ? `
-    <div style="padding:10px 14px;background:rgba(${phase.id==='mago'?'112,80,192':'phase.id==="soldado"?'176,48,32':'139,0,0'},0.08);border:1px solid ${phase.color}44;border-radius:2px;margin-top:10px;">
-      <div style="font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:5px;">TRANSICIÓN DE FASE</div>
-      <p style="font-size:.8rem;color:var(--text);font-style:italic;line-height:1.65;">"${phase.transition}"</p>
+    <div style="padding:10px 14px;background:${transBg};border:1px solid ${phase.color}44;border-radius:2px;margin-top:10px;">
+      <div style="font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;color:var(--vellum-dim);margin-bottom:5px;">TRANSICIÓN DE FASE</div>
+      <p style="font-size:.8rem;color:var(--vellum);font-style:italic;line-height:1.65;">"${phase.transition}"</p>
     </div>` : '';
 
   el.innerHTML = `
@@ -228,13 +229,13 @@ function buildStrahdPanel() {
     <div class="card" style="margin-bottom:12px;border-color:${phase.color};">
       <div class="card-title" style="justify-content:space-between;border-color:${phase.color}44;">
         <span>${phase.icon} Fase Activa: ${phase.name}</span>
-        <span style="font-family:'Cinzel',serif;font-size:.6rem;color:var(--text-dim);">CR 21 · 33.000 PX · Prof. +6</span>
+        <span style="font-family:'Cinzel',serif;font-size:.6rem;color:var(--vellum-dim);">CR 21 · 33.000 PX · Prof. +6</span>
       </div>
       <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">${phaseBtns}</div>
 
       <!-- Stats -->
       <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">${statsRow}</div>
-      <div style="font-size:.76rem;color:var(--text-dim);line-height:1.7;margin-bottom:10px;">
+      <div style="font-size:.76rem;color:var(--vellum-dim);line-height:1.7;margin-bottom:10px;">
         <strong>CA:</strong> ${phase.ca} &nbsp;·&nbsp;
         <strong>Velocidad:</strong> ${phase.vel} &nbsp;·&nbsp;
         <strong>Resistencias Leg.:</strong> 1/día<br>
@@ -245,10 +246,10 @@ function buildStrahdPanel() {
 
       <!-- HP -->
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-        <span style="font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.1em;color:var(--text-dim);">PUNTOS DE VIDA</span>
+        <span style="font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.1em;color:var(--vellum-dim);">PUNTOS DE VIDA</span>
         <span id="strahd-hp-display" style="font-size:1rem;color:${hpColor};font-family:'Cinzel',serif;">${hp} / ${phase.maxHp}</span>
       </div>
-      <div style="width:100%;height:10px;background:var(--bg3);border-radius:2px;margin-bottom:10px;overflow:hidden;">
+      <div style="width:100%;height:10px;background:var(--surface);border-radius:2px;margin-bottom:10px;overflow:hidden;">
         <div id="strahd-hp-bar" style="height:100%;width:${pct}%;background:${hpColor};transition:all .3s;border-radius:2px;"></div>
       </div>
       <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin-bottom:6px;">
@@ -266,11 +267,11 @@ function buildStrahdPanel() {
 
       <!-- Leyenda Resistencia Legendaria -->
       <div style="display:flex;gap:8px;align-items:center;">
-        <span style="font-family:'Cinzel',serif;font-size:.6rem;color:var(--text-dim);">RES. LEGENDARIA:</span>
+        <span style="font-family:'Cinzel',serif;font-size:.6rem;color:var(--vellum-dim);">RES. LEGENDARIA:</span>
         <button onclick="toggleLegRes()" style="font-family:'Cinzel',serif;font-size:.65rem;padding:4px 10px;
-          border:1px solid ${strahdState.legendRes[strahdState.phase]?'var(--gold-dim)':'var(--border)'};
+          border:1px solid ${strahdState.legendRes[strahdState.phase]?'var(--gilt-dim)':'var(--edge)'};
           background:${strahdState.legendRes[strahdState.phase]?'rgba(232,200,122,.1)':'transparent'};
-          color:${strahdState.legendRes[strahdState.phase]?'var(--gold)':'var(--text-dim)'};cursor:pointer;border-radius:1px;">
+          color:${strahdState.legendRes[strahdState.phase]?'var(--gilt)':'var(--vellum-dim)'};cursor:pointer;border-radius:1px;">
           ${strahdState.legendRes[strahdState.phase]?'✓ Disponible':'✗ Usada'}
         </button>
       </div>
@@ -282,13 +283,13 @@ function buildStrahdPanel() {
     <div class="card" style="margin-bottom:12px;">
       <div class="card-title">🔱 Rasgos Especiales</div>
       ${traitsHtml}
-      <div style="margin-top:6px;padding:8px 10px;background:var(--bg2);border-left:3px solid var(--border-bright);border-radius:1px;">
-        <span style="font-family:'Cinzel',serif;font-size:.63rem;color:var(--gold);">Hipersensibilidad a la Luz Solar.</span>
-        <span style="font-size:.79rem;color:var(--text);"> Al inicio de su turno bajo luz solar: 20 daño radiante. Desventaja en ataques y habilidades.</span>
+      <div style="margin-top:6px;padding:8px 10px;background:var(--ink3);border-left:3px solid var(--edge2);border-radius:1px;">
+        <span style="font-family:'Cinzel',serif;font-size:.63rem;color:var(--gilt);">Hipersensibilidad a la Luz Solar.</span>
+        <span style="font-size:.79rem;color:var(--vellum);"> Al inicio de su turno bajo luz solar: 20 daño radiante. Desventaja en ataques y habilidades.</span>
       </div>
-      <div style="margin-top:6px;padding:8px 10px;background:var(--bg2);border-left:3px solid var(--border-bright);border-radius:1px;">
-        <span style="font-family:'Cinzel',serif;font-size:.63rem;color:var(--gold);">Cambiar de Forma.</span>
-        <span style="font-size:.79rem;color:var(--text);"> Si no está en agua corriente o luz solar, puede transformarse en murciélago diminuto, lobo mediano o nube de niebla. En niebla: inmune a todo daño salvo solar, no puede actuar.</span>
+      <div style="margin-top:6px;padding:8px 10px;background:var(--ink3);border-left:3px solid var(--edge2);border-radius:1px;">
+        <span style="font-family:'Cinzel',serif;font-size:.63rem;color:var(--gilt);">Cambiar de Forma.</span>
+        <span style="font-size:.79rem;color:var(--vellum);"> Si no está en agua corriente o luz solar, puede transformarse en murciélago diminuto, lobo mediano o nube de niebla. En niebla: inmune a todo daño salvo solar, no puede actuar.</span>
       </div>
     </div>
 
@@ -297,9 +298,9 @@ function buildStrahdPanel() {
       <div class="card-title">⚔️ Acciones</div>
       <table style="width:100%;border-collapse:collapse;">
         <thead><tr>
-          <th style="text-align:left;font-family:'Cinzel',serif;font-size:.56rem;color:var(--text-dim);padding:4px 10px;border-bottom:1px solid var(--border);">Nombre</th>
-          <th style="text-align:left;font-family:'Cinzel',serif;font-size:.56rem;color:var(--text-dim);padding:4px 6px;border-bottom:1px solid var(--border);">Tipo</th>
-          <th style="text-align:left;font-family:'Cinzel',serif;font-size:.56rem;color:var(--text-dim);padding:4px 10px;border-bottom:1px solid var(--border);">Descripción</th>
+          <th style="text-align:left;font-family:'Cinzel',serif;font-size:.56rem;color:var(--vellum-dim);padding:4px 10px;border-bottom:1px solid var(--edge);">Nombre</th>
+          <th style="text-align:left;font-family:'Cinzel',serif;font-size:.56rem;color:var(--vellum-dim);padding:4px 6px;border-bottom:1px solid var(--edge);">Tipo</th>
+          <th style="text-align:left;font-family:'Cinzel',serif;font-size:.56rem;color:var(--vellum-dim);padding:4px 10px;border-bottom:1px solid var(--edge);">Descripción</th>
         </tr></thead>
         <tbody>${actionsHtml}</tbody>
       </table>
@@ -309,7 +310,7 @@ function buildStrahdPanel() {
 
     <!-- Acciones de Guarida -->
     <div class="card" style="margin-bottom:12px;">
-      <div class="card-title">🏰 Acciones en la Guarida <span style="font-size:.65rem;color:var(--text-dim);font-weight:normal;">(solo en Castillo Ravenloft)</span></div>
+      <div class="card-title">🏰 Acciones en la Guarida <span style="font-size:.65rem;color:var(--vellum-dim);font-weight:normal;">(solo en Castillo Ravenloft)</span></div>
       ${lairHtml}
     </div>
 
@@ -320,23 +321,23 @@ function buildStrahdPanel() {
         <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;">
           ${MOODS.map((m,i) => `<button onclick="setMood(${i})"
             style="font-family:'Cinzel',serif;font-size:.58rem;padding:5px 9px;
-                   border:1px solid ${strahdState.mood===i?m.color:'var(--border)'};
+                   border:1px solid ${strahdState.mood===i?m.color:'var(--edge)'};
                    background:${strahdState.mood===i?'rgba(176,48,32,.1)':'transparent'};
-                   color:${strahdState.mood===i?m.color:'var(--text-dim)'};cursor:pointer;border-radius:1px;">
+                   color:${strahdState.mood===i?m.color:'var(--vellum-dim)'};cursor:pointer;border-radius:1px;">
             ${m.icon} ${m.label}
           </button>`).join('')}
         </div>
-        <div style="display:flex;gap:10px;align-items:flex-start;padding:8px;background:var(--bg2);border:1px solid var(--border);border-radius:1px;">
+        <div style="display:flex;gap:10px;align-items:flex-start;padding:8px;background:var(--ink3);border:1px solid var(--edge);border-radius:1px;">
           <span style="font-size:1.4rem;">${mood.icon}</span>
           <div>
             <div style="font-family:'Cinzel',serif;font-size:.65rem;color:${mood.color};">${mood.label}</div>
-            <div style="font-size:.78rem;color:var(--text-dim);font-style:italic;margin-top:2px;">${mood.desc}</div>
+            <div style="font-size:.78rem;color:var(--vellum-dim);font-style:italic;margin-top:2px;">${mood.desc}</div>
           </div>
         </div>
       </div>
       <div class="card">
         <div class="card-title">⚠️ Debilidades</div>
-        <div style="font-size:.79rem;color:var(--text);line-height:1.7;">
+        <div style="font-size:.79rem;color:var(--vellum);line-height:1.7;">
           <div>☀️ <strong>Luz solar:</strong> 20 radiante al inicio de turno. Desventaja en todo.</div>
           <div>💧 <strong>Agua corriente:</strong> 20 ácido al inicio de turno si atraviesa.</div>
           <div>🥩 <strong>Estaca en corazón:</strong> Paralizado (no destruido).</div>
