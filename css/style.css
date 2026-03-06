@@ -93,7 +93,7 @@ header {
   border-bottom:1px solid var(--edge);
   background:
     linear-gradient(180deg, rgba(10,8,6,.85) 0%, rgba(10,8,6,.75) 50%, rgba(10,8,6,.95) 100%),
-    url('../img/bg-barovia.jpg') center center / cover no-repeat;
+    url('/dnd-dashboard/img/bg-barovia.jpg') center center / cover no-repeat;
   position:relative;z-index:10;overflow:hidden;
 }
 header::before {
